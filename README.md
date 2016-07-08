@@ -13,25 +13,21 @@ import sgreben.mre.Mre;
 
 // Build a regular expression with capture groups
 CaptureGroup word = Mre.capture(Mre.word());
-CaptureGroup sentence = Mre.capture(Mre.seq(
+CaptureGroup sentence = Mre.capture(Mre.sequence(
     Mre.sepBy(Mre.whitespace(), word),
-    Mre.seq(
-        Mre.character('.'), 
-        Mre.whitespaceOpt()
-    )
+    Mre.character('.'), 
+    Mre.optional(Mre.whitespace())
 ));
-Mre expression = Mre.many(sentence);
+Mre sentences = Mre.many(sentence);
 
 // Compile the expression into a matcher and process a string.
-Matcher m = Mre.compile();
-String s = "There are things. Things have properties.";
-m.read(s)
+Matcher sentencesMatcher = Mre.compile(sentences);
+sentencesMatcher.read("There are things. Things have properties.")
 
 // Comfortably extract matches and sub-matches
 Captured capturedSentences = sentence.getCaptured();
-Captured sentence1 = capturedSentences.get(0);
-Captured sentence1Words = sentence1.getNested(word);
-String sentence1Word2 = sentence1Words.getString(2);
-assertEquals("things", word1);
-  
+Captured capturedSentence1 = capturedSentences.get(0);
+Captured capturedSentence1Words = capturedSentence1.getNested(word);
+String capturedSentence1Word2 = capturedSentence1Words.getString(2);
+assertEquals("things", capturedSentence1word2);
 ```

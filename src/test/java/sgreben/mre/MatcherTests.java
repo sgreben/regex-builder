@@ -18,7 +18,7 @@ public class MatcherTests {
 	@Test
 	public void matchAnyNumberAny_matchedIsTrue() {
 		String s = "abc 123 def";
-		Matcher m = Mre.compile(Mre.seq(
+		Matcher m = Mre.compile(Mre.sequence(
 			Mre.anyChar(),
 			Mre.number(),
 			Mre.anyChar()
@@ -42,7 +42,7 @@ public class MatcherTests {
 	public void matchAnyNumberAnyCaptureNumber_returnsNumber() {
 		String s = "abc 123 def";
 		CaptureGroup number = Mre.capture(Mre.number());
-		Matcher m = Mre.compile(Mre.seq(
+		Matcher m = Mre.compile(Mre.sequence(
 			Mre.anyChar(),
 			number,
 			Mre.anyChar()
@@ -74,12 +74,10 @@ public class MatcherTests {
 		CaptureGroup word = Mre.capture(
 			Mre.word()
 		);
-		CaptureGroup sentence = Mre.capture(Mre.seq(
+		CaptureGroup sentence = Mre.capture(Mre.sequence(
 			Mre.sepBy(Mre.whitespace(), word),
-			Mre.seq(
-				Mre.character('.'), 
-				Mre.whitespaceOpt()
-			)
+			Mre.character('.'), 
+			Mre.optional(Mre.whitespace())
 		));
 		Matcher m = Mre.compile(Mre.many(sentence));
 		m.read(s);
@@ -89,11 +87,11 @@ public class MatcherTests {
 		assertEquals(6, words.length());
 		assertEquals("There are things. ", sentences.getString(0));
 		assertEquals("Things have properties.", sentences.getString(1));
-		Captured sentence1 = sentences.getString(0);
+		Captured sentence1 = sentences.get(0);
 		assertEquals("There", sentence1.getNested(word).getString(0));
 		assertEquals("are", sentence1.getNested(word).getString(1));
 		assertEquals("things", sentence1.getNested(word).getString(2));
-		Captured sentence2 = sentences.getString(1);
+		Captured sentence2 = sentences.get(1);
 		assertEquals("Things", sentence2.getNested(word).getString(0));
 		assertEquals("have", sentence3.getNested(word).getString(1));
 		assertEquals("properties", sentence4.getNested(word).getString(2));	
