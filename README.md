@@ -28,8 +28,8 @@ String s = "There are things. Things have properties.";
 m.read(s)
 
 // Comfortably extract matches and sub-matches
-Captured sentences = sentence.getCaptured();
-Captured sentence1 = sentence.get(0);
+Captured capturedSentences = sentence.getCaptured();
+Captured sentence1 = capturedSentences.get(0);
 Captured sentence1Words = sentence1.getNested(word);
 String sentence1Word2 = sentence1Words.getString(2);
 assertEquals("things", word1);
