@@ -20,7 +20,7 @@ CaptureGroup sentence = Mre.capture(Mre.sequence(
 ));
 Mre sentences = Mre.many(sentence);
 
-// Compile the expression into a matcher and process a string.
+// Compile the expression and process a string.
 Matcher sentencesMatcher = Mre.compile(sentences);
 sentencesMatcher.read("There are things. Things have properties.")
 
