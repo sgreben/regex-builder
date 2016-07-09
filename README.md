@@ -29,7 +29,6 @@ Matcher sentencesMatcher = Mre.compile(sentences);
 sentencesMatcher.read("There are things. Things have properties.")
 
 // Comfortably extract matches and sub-matches
-Captured capturedSentences = ;
 Captured firstSentence = sentence.getCaptured().get(0);
 Captured thirdWord = firstSentence.getNested(word).get(2);
 assertEquals("things", thirdWord.getString());
