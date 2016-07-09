@@ -1,4 +1,4 @@
-import org.junit.Assert.*;
+import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 
@@ -54,11 +54,11 @@ public class MatcherTests {
 	}
 
 	@Test
-	public void matchNumbers_sepBySpaces() {
+	public void matchNumbers_separatedBySpaces() {
 		String s = "123 456 789";
 		CaptureGroup number = Mre.capture(Mre.number());
 		Matcher m = Mre.compile(
-			Mre.sepBy(Mre.whitespace(), number);
+			Mre.separatedBy(Mre.whitespace(), number)
 		);
 		m.read(s);
 		Captured captured = number.getCaptured();
@@ -75,7 +75,7 @@ public class MatcherTests {
 			Mre.word()
 		);
 		CaptureGroup sentence = Mre.capture(Mre.sequence(
-			Mre.sepBy(Mre.whitespace(), word),
+			Mre.separatedBy(Mre.whitespace(), word),
 			Mre.character('.'), 
 			Mre.optional(Mre.whitespace())
 		));
@@ -93,7 +93,7 @@ public class MatcherTests {
 		assertEquals("things", sentence1.getNested(word).getString(2));
 		Captured sentence2 = sentences.get(1);
 		assertEquals("Things", sentence2.getNested(word).getString(0));
-		assertEquals("have", sentence3.getNested(word).getString(1));
-		assertEquals("properties", sentence4.getNested(word).getString(2));	
+		assertEquals("have", sentence2.getNested(word).getString(1));
+		assertEquals("properties", sentence2.getNested(word).getString(2));	
 	}
 }
