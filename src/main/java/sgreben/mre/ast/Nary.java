@@ -2,10 +2,10 @@ package sgreben.mre.ast;
 
 import java.util.List;
 import java.util.Arrays;
-import java.util.Iterator;
+import java.lang.Iterable;
 import java.util.Collections;
 
-public class Nary implements Ast {
+abstract class Nary extends AstBase implements Ast {
 	private final List<Ast> children;
 	
 	public Nary(final Ast... childrenArray) {
@@ -14,7 +14,7 @@ public class Nary implements Ast {
 		);
 	}
 	
-	public Iterator<Ast> children() {
-		return children.iterator();
+	public Iterable<Ast> children() {
+		return children;
 	}
 }

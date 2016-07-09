@@ -1,9 +1,12 @@
+package sgreben.mre;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 
 import sgreben.mre.CaptureGroup;
 import sgreben.mre.Captured;
+import sgreben.mre.Matcher;
 import sgreben.mre.Mre;
 
 public class MatcherTests {
@@ -19,9 +22,9 @@ public class MatcherTests {
 	public void matchAnyNumberAny_matchedIsTrue() {
 		String s = "abc 123 def";
 		Matcher m = Mre.compile(Mre.sequence(
-			Mre.anyChar(),
+			Mre.anyCharacter(),
 			Mre.number(),
-			Mre.anyChar()
+			Mre.anyCharacter()
 		));
 		m.read(s);
 		assertTrue(m.hasMatched());
@@ -43,9 +46,9 @@ public class MatcherTests {
 		String s = "abc 123 def";
 		CaptureGroup number = Mre.capture(Mre.number());
 		Matcher m = Mre.compile(Mre.sequence(
-			Mre.anyChar(),
+			Mre.anyCharacter(),
 			number,
-			Mre.anyChar()
+			Mre.anyCharacter()
 		));
 		m.read(s);
 		Captured captured = number.getCaptured();

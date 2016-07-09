@@ -1,6 +1,7 @@
 package sgreben.mre;
 
 import sgreben.mre.ast.Ast;
+import sgreben.mre.charclass.CharClass;
 
 public class Mre {
 	public static Ast string(String s) {
@@ -8,6 +9,9 @@ public class Mre {
 	}
 	public static Ast character(char c) {
 		return string(""+c);
+	}
+	public static Ast anyCharacter() {
+		return new sgreben.mre.ast.AnyCharacter();
 	}
 	public static Ast charClass(CharClass charClass) {
 		return new sgreben.mre.ast.CharClass(charClass);
@@ -62,6 +66,12 @@ public class Mre {
 	}
 	public static Ast whitespace1() {
 		return many1(whitespaceCharacter());
+	}
+	public static CaptureGroup capture(Ast ast) {
+		return new CaptureGroup(ast);
+	}
+	public static Matcher compile(Ast ast) {
+		return null;
 	}
 
 }

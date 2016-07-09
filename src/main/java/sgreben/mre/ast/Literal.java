@@ -8,4 +8,7 @@ public class Literal extends Nullary {
 	public String getLiteral() {
 		return literal;
 	}
+	public void compile(StringBuilder sb) {
+		sb.append(literal);
+	}
 }

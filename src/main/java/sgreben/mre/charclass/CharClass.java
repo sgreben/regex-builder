@@ -1,4 +1,4 @@
-package sgreben.mre;
+package sgreben.mre.charclass;
 
 public class CharClass {
 	private final String regexString;

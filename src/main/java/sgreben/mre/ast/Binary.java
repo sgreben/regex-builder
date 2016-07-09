@@ -2,10 +2,10 @@ package sgreben.mre.ast;
 
 import java.util.List;
 import java.util.LinkedList;
-import java.util.Iterator;
+import java.lang.Iterable;
 import java.util.Collections;
 
-public class Binary implements Ast {
+abstract class Binary extends AstBase implements Ast {
 	private final Ast leftChild;
 	private final Ast rightChild;
 	private final List<Ast> children;
@@ -19,7 +19,7 @@ public class Binary implements Ast {
 		this.children = Collections.unmodifiableList(children);
 	}
 	
-	public Iterator<Ast> children() {
-		return children.iterator();
+	public Iterable<Ast> children() {
+		return children;
 	}
 }
