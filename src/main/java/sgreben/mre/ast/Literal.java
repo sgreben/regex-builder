@@ -1,4 +1,4 @@
-package sgreben.mre.ast;
+package sgreben.mre.expression;
 
 public class Literal extends Nullary {
 	private final String literal; 

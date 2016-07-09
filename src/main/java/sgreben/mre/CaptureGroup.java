@@ -1,14 +1,14 @@
 package sgreben.mre;
 
 import java.util.List;
-import sgreben.mre.ast.*;
+import sgreben.mre.expression.*;
 
-public class CaptureGroup extends Unary implements Ast {
+public class CaptureGroup extends Unary implements Expression {
 	private List<CaptureGroup> nested;
 	private int index;
 	private boolean seen;
 	
-	public CaptureGroup(Ast ast) { super(ast); }
+	public CaptureGroup(Expression expression) { super(expression); }
 	
 	public void clear() {
 		this.nested = null;
@@ -37,7 +37,7 @@ public class CaptureGroup extends Unary implements Ast {
 	}
 	
 	public void compile(StringBuilder sb) {
-		for(Ast child : children()) {
+		for(Expression child : children()) {
 			child.compile(sb);
 		}
 	}

@@ -1,25 +1,25 @@
-package sgreben.mre.ast;
+package sgreben.mre.expression;
 
 import java.util.List;
 import java.util.LinkedList;
 import java.lang.Iterable;
 import java.util.Collections;
 
-abstract class Binary extends AstBase implements Ast {
-	private final Ast leftChild;
-	private final Ast rightChild;
-	private final List<Ast> children;
+abstract class Binary extends ExpressionBase implements Expression {
+	private final Expression leftChild;
+	private final Expression rightChild;
+	private final List<Expression> children;
 	
-	public Binary(Ast leftChild, Ast rightChild) {
+	public Binary(Expression leftChild, Expression rightChild) {
 		this.leftChild = leftChild;
 		this.rightChild = rightChild;
-		List<Ast> children = new LinkedList<Ast>();
+		List<Expression> children = new LinkedList<Expression>();
 		children.add(leftChild);
 		children.add(rightChild);
 		this.children = Collections.unmodifiableList(children);
 	}
 	
-	public Iterable<Ast> children() {
+	public Iterable<Expression> children() {
 		return children;
 	}
 }

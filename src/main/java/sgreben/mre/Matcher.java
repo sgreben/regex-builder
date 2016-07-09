@@ -1,8 +1,20 @@
 package sgreben.mre;
 
 public class Matcher {
-	public void read(String s) {}
-	public boolean hasMatched() {
+	private final java.util.regex.Matcher matcher;
+	public Matcher(java.util.regex.Matcher matcher) {
+		this.matcher = matcher;
+	}
+	public boolean matches() {
 		return false;
+	}
+	public boolean find() {
+		return false;
+	}
+	public boolean find(int offset) {
+		return false;
+	}
+	public Captured captured() {
+		return null;
 	}
 }

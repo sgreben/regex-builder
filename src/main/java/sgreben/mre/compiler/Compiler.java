@@ -7,15 +7,19 @@ import java.util.List;
 import java.util.Set;
 
 import sgreben.mre.CaptureGroup;
-import sgreben.mre.ast.*;
+import sgreben.mre.Pattern;
+import sgreben.mre.expression.*;
 
 public class Compiler {
-	public void compile(Ast ast) {
+	public static Pattern compile(Expression expression) {
 		CaptureGroupVisitor visitor = new CaptureGroupVisitor();
-		final StringBuilder expression = new StringBuilder();
-		ast.accept(visitor);
-		
-		final Set<CaptureGroup> captureGroups;
+		final StringBuilder sb = new StringBuilder();
+		expression.accept(visitor);
+		String regexString = sb.toString();
+		java.util.regex.Pattern rawPattern =
+			java.util.regex.Pattern.compile(regexString);
+		Set<CaptureGroup> captureGroups = visitor.getCaptureGroups();
+		return new Pattern(rawPattern);
 	}
 	
 }

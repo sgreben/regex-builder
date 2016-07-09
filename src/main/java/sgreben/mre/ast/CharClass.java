@@ -1,14 +1,11 @@
-package sgreben.mre.ast;
+package sgreben.mre.expression;
 
 public class CharClass extends Nullary {
-	private final sgreben.mre.charclass.CharClass charClass; 
-	public CharClass(sgreben.mre.charclass.CharClass charClass) {
-		this.charClass = charClass;
-	}
-	public String getRegexString() {
-		return charClass.getRegexString();
+	private final String rawClass; 
+	public CharClass(String rawClass) {
+		this.rawClass = rawClass;
 	}
 	public void compile(StringBuilder sb) {
-		sb.append(charClass.getRegexString());
+		sb.append(rawClass);
 	}
 }

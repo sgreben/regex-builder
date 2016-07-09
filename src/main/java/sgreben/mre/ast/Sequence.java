@@ -1,10 +1,10 @@
-package sgreben.mre.ast;
+package sgreben.mre.expression;
 
 public class Sequence extends Nary {
-	public Sequence(Ast... children) { super(children); }
+	public Sequence(Expression... children) { super(children); }
 	
 	public void compile(StringBuilder sb) {
-		for(Ast child : children()) {
+		for(Expression child : children()) {
 			child.compile(sb);
 		}
 	}

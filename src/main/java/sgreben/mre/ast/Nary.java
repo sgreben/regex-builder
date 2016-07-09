@@ -1,20 +1,20 @@
-package sgreben.mre.ast;
+package sgreben.mre.expression;
 
 import java.util.List;
 import java.util.Arrays;
 import java.lang.Iterable;
 import java.util.Collections;
 
-abstract class Nary extends AstBase implements Ast {
-	private final List<Ast> children;
+abstract class Nary extends ExpressionBase implements Expression {
+	private final List<Expression> children;
 	
-	public Nary(final Ast... childrenArray) {
+	public Nary(final Expression... childrenArray) {
 		this.children = Collections.unmodifiableList(
 			Arrays.asList(childrenArray)
 		);
 	}
 	
-	public Iterable<Ast> children() {
+	public Iterable<Expression> children() {
 		return children;
 	}
 }

@@ -6,16 +6,16 @@ import java.util.Set;
 import java.util.Collections;
 
 import sgreben.mre.CaptureGroup;
-import sgreben.mre.ast.AstVisitor;
-import sgreben.mre.ast.Ast;
+import sgreben.mre.expression.ExpressionVisitor;
+import sgreben.mre.expression.Expression;
 
-class CaptureGroupVisitor implements AstVisitor {
+class CaptureGroupVisitor implements ExpressionVisitor {
 	private static class Frame {
 		public CaptureGroup group;
 		public LinkedList<CaptureGroup> nested;
 		public Frame(CaptureGroup group) {
 			this.group = group;
-			this.nested = new LinkedList();
+			this.nested = new LinkedList<CaptureGroup>();
 		}
 	}
 	
@@ -28,11 +28,12 @@ class CaptureGroupVisitor implements AstVisitor {
 	}
 	
 	public CaptureGroupVisitor() {
-		this.stack = new LinkedList();;
+		this.stack = new LinkedList<Frame>();
+		this.groups = new HashSet<CaptureGroup>();
 		this.groupIndex = 0;
 	}
 	
-	public void visitPre(Ast node) {
+	public void visitPre(Expression node) {
 		if(node.getClass() == CaptureGroup.class) {
 			CaptureGroup group = (CaptureGroup)node;
 			group.setIndex(groupIndex);
@@ -41,7 +42,7 @@ class CaptureGroupVisitor implements AstVisitor {
 		}
 	}
 	
-	public void visitPost(Ast node) {
+	public void visitPost(Expression node) {
 		if(node.getClass() == CaptureGroup.class) {
 			Frame top = stack.removeFirst();
 			top.group.setNested(top.nested); 

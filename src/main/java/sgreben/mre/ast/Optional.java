@@ -1,10 +1,10 @@
-package sgreben.mre.ast;
+package sgreben.mre.expression;
 
 public class Optional extends Unary {
-	public Optional(Ast child) { super(child); }
+	public Optional(Expression child) { super(child); }
 	public void compile(StringBuilder sb) {
 		sb.append("(");
-		for(Ast child : children()) {
+		for(Expression child : children()) {
 			child.compile(sb);
 		}
 		sb.append(")?");

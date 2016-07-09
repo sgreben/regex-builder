@@ -9,33 +9,33 @@ import sgreben.mre.Captured;
 import sgreben.mre.Matcher;
 import sgreben.mre.Mre;
 
-public class MatcherTests {
+public class MatcherTest {
 	@Test
 	public void matchNumber_matchedIsTrue() {
 		String s = "123";
-		Matcher m = Mre.compile(Mre.number());
-		m.read(s);
-		assertTrue(m.hasMatched());
+		Pattern p = Mre.compile(Mre.number());
+		Matcher m = p.matcher(s);
+		assertTrue(m.matches());
 	}
 	
 	@Test
 	public void matchAnyNumberAny_matchedIsTrue() {
 		String s = "abc 123 def";
-		Matcher m = Mre.compile(Mre.sequence(
+		Pattern p = Mre.compile(Mre.sequence(
 			Mre.anyCharacter(),
 			Mre.number(),
 			Mre.anyCharacter()
 		));
-		m.read(s);
-		assertTrue(m.hasMatched());
+		Matcher m = p.matcher(s);
+		assertTrue(m.matches());
 	}
 
 	@Test
 	public void matchNumberCaptureNumber_returnsNumber() {
 		String s = "123";
 		CaptureGroup number = Mre.capture(Mre.number());
-		Matcher m = Mre.compile(number);
-		m.read(s);
+		Pattern p = Mre.compile(number);
+		Matcher m = p.matcher(s);
 		Captured captured = number.getCaptured();
 		assertEquals(1, captured.length());
 		assertEquals("123", captured.getString(0));
@@ -45,12 +45,12 @@ public class MatcherTests {
 	public void matchAnyNumberAnyCaptureNumber_returnsNumber() {
 		String s = "abc 123 def";
 		CaptureGroup number = Mre.capture(Mre.number());
-		Matcher m = Mre.compile(Mre.sequence(
+		Pattern p = Mre.compile(Mre.sequence(
 			Mre.anyCharacter(),
 			number,
 			Mre.anyCharacter()
 		));
-		m.read(s);
+		Matcher m = p.matcher(s);
 		Captured captured = number.getCaptured();
 		assertEquals(1, captured.length());
 		assertEquals("123", captured.getString(0));
@@ -60,10 +60,10 @@ public class MatcherTests {
 	public void matchNumbers_separatedBySpaces() {
 		String s = "123 456 789";
 		CaptureGroup number = Mre.capture(Mre.number());
-		Matcher m = Mre.compile(
+		Pattern p = Mre.compile(
 			Mre.separatedBy(Mre.whitespace(), number)
 		);
-		m.read(s);
+		Matcher m = p.matcher(s);
 		Captured captured = number.getCaptured();
 		assertEquals(3, captured.length());
 		assertEquals("123", captured.getString(0));
@@ -82,8 +82,8 @@ public class MatcherTests {
 			Mre.character('.'), 
 			Mre.optional(Mre.whitespace())
 		));
-		Matcher m = Mre.compile(Mre.many(sentence));
-		m.read(s);
+		Pattern p = Mre.compile(Mre.many(sentence));
+		Matcher m = p.matcher(s);
 		Captured sentences = sentence.getCaptured();
 		Captured words = word.getCaptured();
 		assertEquals(2, sentences.length());
