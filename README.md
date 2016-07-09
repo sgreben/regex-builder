@@ -2,7 +2,7 @@
 
 A maintainable way of writing regexes in Java. No more opaque regex strings -- everything is expressed as **plain Java code**.
 
-**MRE** is implemented as a light-weight wrapper around `java.util.regex`.
+The **mre** library is implemented as a light-weight wrapper around `java.util.regex`.
 
 ## Example
 
