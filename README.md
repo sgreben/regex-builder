@@ -9,6 +9,7 @@ A maintainable (and commentable!) way to write regexes in Java code. No more opa
 
 import sgreben.mre.CaptureGroup;
 import sgreben.mre.Captured;
+import sgreben.mre.ast.Ast;
 import sgreben.mre.Mre;
 
 // Build a regular expression with capture groups
@@ -22,7 +23,7 @@ CaptureGroup sentence = Mre.capture(
       Mre.optional(Mre.whitespace())           // (and perhaps more whitespace).
     )
 );
-Mre sentences = Mre.many(sentence);
+Ast sentences = Mre.many(sentence);
 
 // Compile the expression and process a string.
 Matcher sentencesMatcher = Mre.compile(sentences);
