@@ -11,11 +11,15 @@ import sgreben.mre.Captured;
 import sgreben.mre.Mre;
 
 // Build a regular expression with capture groups
-CaptureGroup word = Mre.capture(Mre.word());
-CaptureGroup sentence = Mre.capture(Mre.sequence(
-    Mre.separatedBy(Mre.whitespace(), word),
-    Mre.character('.'), 
-    Mre.optional(Mre.whitespace())
+CaptureGroup word = Mre.capture(
+    Mre.word()
+);
+CaptureGroup sentence = Mre.capture(
+    Mre.sequence(                              // A sentence is a sequence of
+      Mre.separatedBy(Mre.whitespace(), word), // words separated by whitespace
+      Mre.character('.'),                      // and followed by a period
+      Mre.optional(Mre.whitespace()            // (and perhaps more whitespace).
+    )
 ));
 Mre sentences = Mre.many(sentence);
 
