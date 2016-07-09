@@ -1,6 +1,6 @@
 # Maintainable Regular Expressions
 
-A maintainable (and commentable!) way to write regexes in Java code. No more opaque regex strings -- everything is expressed as *plain Java code*.
+A maintainable (and commentable!) way to write regexes in Java. No more opaque regex strings -- everything is expressed as **plain Java code**.
 
 
 ## Example
@@ -9,7 +9,7 @@ A maintainable (and commentable!) way to write regexes in Java code. No more opa
 
 import sgreben.mre.CaptureGroup;
 import sgreben.mre.Captured;
-import sgreben.mre.ast.Ast;
+import sgreben.mre.expression.Expression;
 import sgreben.mre.Mre;
 
 // Build a regular expression with capture groups
@@ -23,11 +23,11 @@ CaptureGroup sentence = Mre.capture(
       Mre.optional(Mre.whitespace())           // (and perhaps more whitespace).
     )
 );
-Ast sentences = Mre.many(sentence);
+Expression sentences = Mre.many(sentence);
 
 // Compile the expression and process a string.
-Matcher sentencesMatcher = Mre.compile(sentences);
-sentencesMatcher.read("There are things. Things have properties.")
+Pattern sentencesPattern = Mre.compile(sentences);
+Matcher sentencesMatcher = sentencesPattern.matcher("There are things. Things have properties.");
 
 // Comfortably extract matches and sub-matches
 Captured firstSentence = sentence.getCaptured().get(0);
