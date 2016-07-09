@@ -14,7 +14,7 @@ import sgreben.mre.Mre;
 // Build a regular expression with capture groups
 CaptureGroup word = Mre.capture(Mre.word());
 CaptureGroup sentence = Mre.capture(Mre.sequence(
-    Mre.sepBy(Mre.whitespace(), word),
+    Mre.separatedBy(Mre.whitespace(), word),
     Mre.character('.'), 
     Mre.optional(Mre.whitespace())
 ));
