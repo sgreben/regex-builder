@@ -7,6 +7,9 @@
   <version>1.0-SNAPSHOT</version>
   <name>mre</name>
   <url>http://maven.apache.org</url>
+  <prerequisites>
+	  <maven>3.0</maven>
+  </prerequisites>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
