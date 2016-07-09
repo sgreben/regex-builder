@@ -1,6 +1,6 @@
 # Maintainable Regular Expressions
 
-A maintainable (and commentable!) way to write regexes in Java code. No more opaque regex strings -- everything is expressed as *plain Java code*; regex fragments can be reused across patterns. 
+A maintainable (and commentable!) way to write regexes in Java code. No more opaque regex strings -- everything is expressed as *plain Java code*.
 
 
 ## Example
