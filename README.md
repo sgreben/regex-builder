@@ -1,5 +1,4 @@
 # Maintainable Regular Expressions
-### Matchers, Ready To Eat
 
 A maintainable (and commentable!) way to write regexes in Java code. Everything is expressed as plain Java code; regex fragments can be reused across patterns. No more opaque regex strings!
 
