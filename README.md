@@ -19,9 +19,9 @@ CaptureGroup sentence = Mre.capture(
     Mre.sequence(                              // A sentence is a sequence of
       Mre.separatedBy(Mre.whitespace(), word), // words separated by whitespace
       Mre.character('.'),                      // and followed by a period
-      Mre.optional(Mre.whitespace()            // (and perhaps more whitespace).
+      Mre.optional(Mre.whitespace())           // (and perhaps more whitespace).
     )
-));
+);
 Mre sentences = Mre.many(sentence);
 
 // Compile the expression and process a string.
