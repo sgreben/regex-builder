@@ -100,5 +100,4 @@ public class Re {
 	public static Pattern compile(Expression expression) {
 		return Compiler.compile(expression);
 	}
-
 }
