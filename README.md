@@ -4,41 +4,14 @@ Write regexes as **plain Java code**. Unlike opaque regex strings, commenting yo
 
 The **regex-builder** library is implemented as a light-weight wrapper around `java.util.regex`.
 
-## Example
+## Examples
 
+Imports:
 ```java
-
 import sgreben.regex_builder.CaptureGroup;
-import sgreben.regex_builder.expression.Expression;
+import sgreben.regex_builder.Expression;
 import sgreben.regex_builder.Re;
-
-// Build a regular expression with capture groups
-CaptureGroup word = Re.capture(
-  Re.word()
-);
-CaptureGroup sentence = Re.capture(
-  Re.sequence(                             // A sentence is a sequence of
-    Re.separatedBy(Re.whitespace(), word), // words separated by whitespace
-    Re.character('.')                      // and followed by a period.
-  )
-);
-      
-// Compile the expression and process a string.
-Pattern sentencePattern = Re.compile(
-  Re.sequence(sentence, Re.optional(Re.whitespace())) // Optional whitespace at the end
-);
-Matcher sentenceMatcher = sentencePattern.matcher("There are things. Things have properties.");
-
-// Comfortably extract matches and sub-matches
-sentenceMatcher.find();
-String firstSentence = sentenceMatcher.group(sentence);
-assertEqual("There are things", firstSentence);
-sentenceMatcher.find();
-String secondSentence = sentenceMatcher.group(sentence);
-assertEqual("Things have properties", secondSentence);
 ```
-
-## More examples
 
 ### Hex color
 
@@ -47,15 +20,26 @@ assertEqual("Things have properties", secondSentence);
 ```java
 Expression hexDigit = Re.charClass("[a-fA-F0-9]");
 Expression threeHexDigits = Re.repeat(hexDigit, 3);
-Expression hexValue = Re.sequence(
-  threeHexDigits, Re.optional(threeHexDigits),
+CaptureGroup hexValue = Re.capture(
+  Re.sequence(
+    threeHexDigits, Re.optional(threeHexDigits),
+  )
 );
 Expression hexColor = Re.sequence(
   Re.beginLine(), 
   Re.character('#'), hexValue, // #FFF or #FFFFFF 
   Re.endLine()
 );
+```
 
+Use the expression like this:
+```
+Pattern p = Re.compile(hexColor)
+Matcher m = p.matcher("#0FAFF3 and #1bf");
+m.find();
+assertEquals("0FAFF3", m.group(hexValue));
+m.find();
+assertEquals("1bf", m.group(hexValue));
 ```
 
 ### Date (DD/MM/YYYY HH:MM:SS)
