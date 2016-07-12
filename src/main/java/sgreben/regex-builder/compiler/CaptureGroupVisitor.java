@@ -1,4 +1,4 @@
-package sgreben.mre.compiler;
+package sgreben.regex_builder.compiler;
 
 import java.util.LinkedList;
 import java.util.HashSet;
@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.Collections;
 
-import sgreben.mre.CaptureGroup;
-import sgreben.mre.CaptureGroupIndex;
-import sgreben.mre.expression.ExpressionVisitor;
-import sgreben.mre.expression.Expression;
+import sgreben.regex_builder.CaptureGroup;
+import sgreben.regex_builder.CaptureGroupIndex;
+import sgreben.regex_builder.expression.ExpressionVisitor;
+import sgreben.regex_builder.expression.Expression;
 
 class CaptureGroupVisitor implements ExpressionVisitor {
 	private static class Frame {
@@ -22,21 +22,15 @@ class CaptureGroupVisitor implements ExpressionVisitor {
 	}
 	
 	private LinkedList<Frame> stack;
-	private HashSet<CaptureGroup> groups;
 	private CaptureGroupIndex groupIndex;
 	private int maxGroupIndex;
 	
 	public CaptureGroupVisitor() {
 		this.stack = new LinkedList<Frame>();
-		this.groups = new HashSet<CaptureGroup>();
 		this.groupIndex = new CaptureGroupIndex();
 		this.maxGroupIndex = 1;
 	}
 		
-	public Set<CaptureGroup> getCaptureGroups() {
-		return Collections.unmodifiableSet(groups);
-	}
-
 	public CaptureGroupIndex getIndex() {
 		return groupIndex;
 	}

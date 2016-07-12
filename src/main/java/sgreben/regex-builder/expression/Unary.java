@@ -1,4 +1,4 @@
-package sgreben.mre.expression;
+package sgreben.regex_builder.expression;
 
 import java.util.List;
 import java.util.LinkedList;

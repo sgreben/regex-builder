@@ -1,4 +1,4 @@
-package sgreben.mre.expression;
+package sgreben.regex_builder.expression;
 
 public interface ExpressionVisitor {
 	void visitPre(Expression node);

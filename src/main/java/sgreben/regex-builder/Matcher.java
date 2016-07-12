@@ -1,13 +1,11 @@
-package sgreben.mre;
+package sgreben.regex_builder;
 
 public class Matcher {
 	private final java.util.regex.Matcher matcher;
-	private final CaptureGroup entireMatch;
 	private final CaptureGroupIndex groupIndex;
 	
-	public Matcher(java.util.regex.Matcher matcher, CaptureGroup entireMatch, CaptureGroupIndex groupIndex) {
+	public Matcher(java.util.regex.Matcher matcher, CaptureGroupIndex groupIndex) {
 		this.matcher = matcher;
-		this.entireMatch = entireMatch;
 		this.groupIndex = groupIndex;
 	}
 	

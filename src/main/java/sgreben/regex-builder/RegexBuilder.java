@@ -1,9 +1,9 @@
-package sgreben.mre;
+package sgreben.regex_builder;
 
-import sgreben.mre.expression.*;
-import sgreben.mre.compiler.Compiler;
+import sgreben.regex_builder.expression.*;
+import sgreben.regex_builder.compiler.Compiler;
 
-public class Mre {
+public class RegexBuilder {
 	public static Expression string(String s) {
 		return new Literal(s);
 	}

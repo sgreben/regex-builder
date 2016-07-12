@@ -1,6 +1,6 @@
-package sgreben.mre.expression;
+package sgreben.regex_builder.expression;
 
-import sgreben.mre.tokens.*;
+import sgreben.regex_builder.tokens.*;
 
 public class Sequence extends Nary {
 	public Sequence(Expression... children) { super(children); }

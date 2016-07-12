@@ -1,4 +1,4 @@
-package sgreben.mre.tokens;
+package sgreben.regex_builder.tokens;
 
 public class DOT implements TOKEN {
 	public String regexString() {

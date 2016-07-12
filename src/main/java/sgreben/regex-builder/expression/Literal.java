@@ -1,7 +1,7 @@
-package sgreben.mre.expression;
+package sgreben.regex_builder.expression;
 
-import sgreben.mre.tokens.TOKEN;
-import sgreben.mre.tokens.LITERAL;
+import sgreben.regex_builder.tokens.TOKEN;
+import sgreben.regex_builder.tokens.LITERAL;
 
 public class Literal extends Nullary {
 	private final String literal; 

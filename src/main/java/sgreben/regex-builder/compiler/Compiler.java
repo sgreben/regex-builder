@@ -1,4 +1,4 @@
-package sgreben.mre.compiler;
+package sgreben.regex_builder.compiler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,11 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import sgreben.mre.CaptureGroup;
-import sgreben.mre.CaptureGroupIndex;
-import sgreben.mre.Pattern;
-import sgreben.mre.expression.*;
-import sgreben.mre.tokens.*;
+import sgreben.regex_builder.CaptureGroup;
+import sgreben.regex_builder.CaptureGroupIndex;
+import sgreben.regex_builder.Pattern;
+import sgreben.regex_builder.expression.*;
+import sgreben.regex_builder.tokens.*;
 
 public class Compiler {
 	public static Pattern compile(Expression expression) {
@@ -25,10 +25,8 @@ public class Compiler {
 			sb.append(op.regexString());
 		}
 		String regexString = sb.toString();
-		java.util.regex.Pattern rawPattern =
-			java.util.regex.Pattern.compile(regexString);
-		Set<CaptureGroup> captureGroups = visitor.getCaptureGroups();
-		return new Pattern(rawPattern, entireMatch, index);
+		java.util.regex.Pattern rawPattern = java.util.regex.Pattern.compile(regexString);
+		return new Pattern(rawPattern, index);
 	}
 	
 }

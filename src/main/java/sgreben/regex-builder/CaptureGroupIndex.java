@@ -1,4 +1,4 @@
-package sgreben.mre;
+package sgreben.regex_builder;
 
 import java.util.*;
 

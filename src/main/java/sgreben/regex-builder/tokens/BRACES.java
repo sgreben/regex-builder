@@ -1,4 +1,4 @@
-package sgreben.mre.tokens;
+package sgreben.regex_builder.tokens;
 
 public class BRACES implements TOKEN {
 	private final int[] numbers;

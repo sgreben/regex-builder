@@ -1,4 +1,4 @@
-package sgreben.mre.tokens;
+package sgreben.regex_builder.tokens;
 
 import java.util.regex.Pattern;
 
