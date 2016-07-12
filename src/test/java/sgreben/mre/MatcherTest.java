@@ -82,15 +82,18 @@ public class MatcherTest {
 		CaptureGroup word = Mre.capture(
 			Mre.word()
 		);
-		CaptureGroup sentence = Mre.capture(Mre.sequence(
-			Mre.separatedBy(Mre.whitespace(), word),
-			Mre.character('.'), 
-			Mre.optional(Mre.whitespace())
-		));
-		Pattern p = Mre.compile(sentence);
+		CaptureGroup sentence = Mre.capture(
+			Mre.sequence(
+				Mre.separatedBy(Mre.whitespace(), word),
+				Mre.character('.')
+			)
+		);
+		Pattern p = Mre.compile(
+			Mre.sequence(sentence, Mre.optional(Mre.whitespace()))
+		);
 		Matcher m = p.matcher(s);
 		m.find();
-		assertEquals("There are things. ", m.group(sentence));
+		assertEquals("There are things.", m.group(sentence));
 		m.find();
 		assertEquals("Things have properties.", m.group(sentence));	
 	}
