@@ -64,3 +64,18 @@ Expression dateExpression = Re.sequence(
   hour, colon, minute, colon, second,    // HH:MM:SS
   Re.endLine(),
 );
+```
+
+
+Use the expression like this:
+```java
+Pattern p = Re.compile(dateExpression)
+Matcher m = p.matcher("01/05/2015 12:30:22");
+m.find();
+assertEquals("01", m.group(day));
+assertEquals("05", m.group(month));
+assertEquals("2015", m.group(year));
+assertEquals("12", m.group(hour));
+assertEquals("30", m.group(minute));
+assertEquals("22", m.group(second));
+```
