@@ -3,7 +3,7 @@ package sgreben.regex_builder;
 import sgreben.regex_builder.expression.*;
 import sgreben.regex_builder.compiler.Compiler;
 
-public class RegexBuilder {
+public class Re {
 	public static Expression string(String s) {
 		return new Literal(s);
 	}

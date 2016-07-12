@@ -8,13 +8,13 @@ import sgreben.regex_builder.CaptureGroup;
 import sgreben.regex_builder.Captured;
 import sgreben.regex_builder.Matcher;
 import sgreben.regex_builder.expression.Expression;
-import sgreben.regex_builder.RegexBuilder;
+import sgreben.regex_builder.Re;
 
 public class MatcherTest {
 	@Test
 	public void matchNumber_matchedIsTrue() {
 		String s = "123";
-		Pattern p = RegexBuilder.compile(RegexBuilder.number());
+		Pattern p = Re.compile(Re.number());
 		Matcher m = p.matcher(s);
 		assertTrue(m.matches());
 	}
@@ -22,10 +22,10 @@ public class MatcherTest {
 	@Test
 	public void matchAnyNumberAny_matchedIsTrue() {
 		String s = "abc 123 def";
-		Expression nonNumbers = RegexBuilder.many(RegexBuilder.nonDigit()); 
-		Pattern p = RegexBuilder.compile(RegexBuilder.sequence(
+		Expression nonNumbers = Re.many(Re.nonDigit()); 
+		Pattern p = Re.compile(Re.sequence(
 			nonNumbers,
-			RegexBuilder.number(),
+			Re.number(),
 			nonNumbers
 		));
 		Matcher m = p.matcher(s);
@@ -35,8 +35,8 @@ public class MatcherTest {
 	@Test
 	public void matchNumberCaptureNumber_returnsNumber() {
 		String s = "123";
-		CaptureGroup number = RegexBuilder.capture(RegexBuilder.number());
-		Pattern p = RegexBuilder.compile(number);
+		CaptureGroup number = Re.capture(Re.number());
+		Pattern p = Re.compile(number);
 		Matcher m = p.matcher(s);
 		m.matches();
 		assertEquals("123", m.group(number));
@@ -45,9 +45,9 @@ public class MatcherTest {
 	@Test
 	public void matchAnyNumberAnyCaptureNumber_returnsNumber() {
 		String s = "abc 123 def";
-		CaptureGroup number = RegexBuilder.capture(RegexBuilder.number());
-		Expression nonNumbers = RegexBuilder.many(RegexBuilder.nonDigit()); 
-		Pattern p = RegexBuilder.compile(RegexBuilder.sequence(
+		CaptureGroup number = Re.capture(Re.number());
+		Expression nonNumbers = Re.many(Re.nonDigit()); 
+		Pattern p = Re.compile(Re.sequence(
 			nonNumbers,
 			number,
 			nonNumbers
@@ -60,11 +60,11 @@ public class MatcherTest {
 	@Test
 	public void matchNumbers_separatedBySpaces() {
 		String s = "123 456 789";
-		CaptureGroup number = RegexBuilder.capture(RegexBuilder.number());
-		Pattern p = RegexBuilder.compile(
-			RegexBuilder.sequence(
+		CaptureGroup number = Re.capture(Re.number());
+		Pattern p = Re.compile(
+			Re.sequence(
 				number,
-				RegexBuilder.optional(RegexBuilder.whitespace())
+				Re.optional(Re.whitespace())
 			)
 		);
 		Matcher m = p.matcher(s);
@@ -79,17 +79,17 @@ public class MatcherTest {
 	@Test
 	public void nestedCapture_returnsBoth() {
 		String s = "There are things. Things have properties.";
-		CaptureGroup word = RegexBuilder.capture(
-			RegexBuilder.word()
+		CaptureGroup word = Re.capture(
+			Re.word()
 		);
-		CaptureGroup sentence = RegexBuilder.capture(
-			RegexBuilder.sequence(
-				RegexBuilder.separatedBy(RegexBuilder.whitespace(), word),
-				RegexBuilder.character('.')
+		CaptureGroup sentence = Re.capture(
+			Re.sequence(
+				Re.separatedBy(Re.whitespace(), word),
+				Re.character('.')
 			)
 		);
-		Pattern p = RegexBuilder.compile(
-			RegexBuilder.sequence(sentence, RegexBuilder.optional(RegexBuilder.whitespace()))
+		Pattern p = Re.compile(
+			Re.sequence(sentence, Re.optional(Re.whitespace()))
 		);
 		Matcher m = p.matcher(s);
 		m.find();
