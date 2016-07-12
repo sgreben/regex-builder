@@ -33,7 +33,7 @@ Expression hexColor = Re.sequence(
 ```
 
 Use the expression like this:
-```
+```java
 Pattern p = Re.compile(hexColor)
 Matcher m = p.matcher("#0FAFF3 and #1bf");
 m.find();
