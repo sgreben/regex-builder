@@ -13,18 +13,19 @@ import sgreben.regex_builder.expression.Expression;
 import sgreben.regex_builder.RegexBuilder;
 
 // Build a regular expression with capture groups
-CaptureGroup word = Mre.capture(
-    Mre.word()
+CaptureGroup word = RegexBuilder.capture(
+    RegexBuilder.word()
 );
-CaptureGroup sentence = Mre.capture(
-    Mre.sequence(                              // A sentence is a sequence of
-      Mre.separatedBy(Mre.whitespace(), word), // words separated by whitespace
-      Mre.character('.'),                      // and followed by a period
-      Mre.optional(Mre.whitespace())           // (and perhaps more whitespace).
-    )
-);
+CaptureGroup sentence = RegexBuilder.capture(
+          RegexBuilder.sequence(
+              RegexBuilder.separatedBy(RegexBuilder.whitespace(), word),
+              RegexBuilder.character('.')
+          )
+      );
 // Compile the expression and process a string.
-Pattern sentencePattern = Mre.compile(sentence);
+Pattern sentencePattern = RegexBuilder.compile(
+    RegexBuilder.sequence(sentence, RegexBuilder.optional(RegexBuilder.whitespace()))
+);
 Matcher sentenceMatcher = sentencePattern.matcher("There are things. Things have properties.");
 sentenceMatcher.find();
 
