@@ -14,18 +14,18 @@ import sgreben.regex_builder.Re;
 
 // Build a regular expression with capture groups
 CaptureGroup word = Re.capture(
-    Re.word()
+  Re.word()
 );
 CaptureGroup sentence = Re.capture(
-          Re.sequence(
-              Re.separatedBy(Re.whitespace(), word),
-              Re.character('.')
-          )
-      );
+  Re.sequence(                             // A sentence is a sequence of
+    Re.separatedBy(Re.whitespace(), word), // words separated by whitespace
+    Re.character('.')                      // and followed by a period.
+  )
+);
       
 // Compile the expression and process a string.
 Pattern sentencePattern = Re.compile(
-    Re.sequence(sentence, Re.optional(Re.whitespace()))
+  Re.sequence(sentence, Re.optional(Re.whitespace())) // Optional whitespace at the end
 );
 Matcher sentenceMatcher = sentencePattern.matcher("There are things. Things have properties.");
 sentenceMatcher.find();
