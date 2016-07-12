@@ -2,10 +2,12 @@ package sgreben.mre.compiler;
 
 import java.util.LinkedList;
 import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.Collections;
 
 import sgreben.mre.CaptureGroup;
+import sgreben.mre.CaptureGroupIndex;
 import sgreben.mre.expression.ExpressionVisitor;
 import sgreben.mre.expression.Expression;
 
@@ -21,31 +23,37 @@ class CaptureGroupVisitor implements ExpressionVisitor {
 	
 	private LinkedList<Frame> stack;
 	private HashSet<CaptureGroup> groups;
-	private int groupIndex;
-	
-	public Set<CaptureGroup> getCaptureGroups() {
-		return Collections.unmodifiableSet(groups);
-	}
+	private CaptureGroupIndex groupIndex;
+	private int maxGroupIndex;
 	
 	public CaptureGroupVisitor() {
 		this.stack = new LinkedList<Frame>();
 		this.groups = new HashSet<CaptureGroup>();
-		this.groupIndex = 0;
+		this.groupIndex = new CaptureGroupIndex();
+		this.maxGroupIndex = 1;
 	}
-	
+		
+	public Set<CaptureGroup> getCaptureGroups() {
+		return Collections.unmodifiableSet(groups);
+	}
+
+	public CaptureGroupIndex getIndex() {
+		return groupIndex;
+	}
+
 	public void visitPre(Expression node) {
 		if(node.getClass() == CaptureGroup.class) {
 			CaptureGroup group = (CaptureGroup)node;
-			group.setIndex(groupIndex);
+			groupIndex.setIndex(group, maxGroupIndex);
 			stack.addFirst(new Frame(group));
-			groupIndex += 1;
+			maxGroupIndex += 1;
 		}
 	}
 	
 	public void visitPost(Expression node) {
 		if(node.getClass() == CaptureGroup.class) {
 			Frame top = stack.removeFirst();
-			top.group.setNested(top.nested); 
+			groupIndex.setNested(top.group, top.nested); 
 			if(stack.size() > 0) {
 				stack.peekFirst().nested.add(top.group);
 			}

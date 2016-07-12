@@ -37,6 +37,12 @@ public class Mre {
 	public static Expression many(Expression e) {
 		return new Many(e);
 	}
+	public static Expression repeat(Expression e, int times) {
+		return new Repeat(e, times);
+	}
+	public static Expression repeat(Expression e, int timesMin, int timesMax) {
+		return new Repeat(e, timesMin, timesMax);
+	}
 	public static Expression many1(Expression e) {
 		return new Many1(e);
 	}

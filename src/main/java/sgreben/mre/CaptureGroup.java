@@ -2,43 +2,18 @@ package sgreben.mre;
 
 import java.util.List;
 import sgreben.mre.expression.*;
+import sgreben.mre.tokens.*;
 
 public class CaptureGroup extends Unary implements Expression {
-	private List<CaptureGroup> nested;
-	private int index;
-	private boolean seen;
+	private java.util.regex.Matcher rawMatcher;
 	
 	public CaptureGroup(Expression expression) { super(expression); }
 	
-	public void clear() {
-		this.nested = null;
-		this.index = -1;
-		this.seen = false;
-	}
-	
-	public void setNested(List<CaptureGroup> nested) {
-		this.nested = nested;
-	}
-	
-	public void setIndex(int index) {
-		this.index = index;
-	}
-	
-	public void setSeen(boolean seen) {
-		this.seen = seen;
-	}
-	
-	public boolean getSeen() {
-		return seen;
-	}
-	
-	public Captured getCaptured() {
-		return null;
-	}
-	
-	public void compile(StringBuilder sb) {
+	public void compile(java.util.List<TOKEN> output) {
+		output.add(new START_GROUP());
 		for(Expression child : children()) {
-			child.compile(sb);
+			child.compile(output);
 		}
+		output.add(new END_GROUP());
 	}
 }

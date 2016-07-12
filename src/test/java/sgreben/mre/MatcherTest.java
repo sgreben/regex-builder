@@ -7,6 +7,7 @@ import org.junit.Before;
 import sgreben.mre.CaptureGroup;
 import sgreben.mre.Captured;
 import sgreben.mre.Matcher;
+import sgreben.mre.expression.Expression;
 import sgreben.mre.Mre;
 
 public class MatcherTest {
@@ -21,10 +22,11 @@ public class MatcherTest {
 	@Test
 	public void matchAnyNumberAny_matchedIsTrue() {
 		String s = "abc 123 def";
+		Expression nonNumbers = Mre.many(Mre.nonDigit()); 
 		Pattern p = Mre.compile(Mre.sequence(
-			Mre.anyCharacter(),
+			nonNumbers,
 			Mre.number(),
-			Mre.anyCharacter()
+			nonNumbers
 		));
 		Matcher m = p.matcher(s);
 		assertTrue(m.matches());
@@ -36,24 +38,23 @@ public class MatcherTest {
 		CaptureGroup number = Mre.capture(Mre.number());
 		Pattern p = Mre.compile(number);
 		Matcher m = p.matcher(s);
-		Captured captured = number.getCaptured();
-		assertEquals(1, captured.length());
-		assertEquals("123", captured.getString(0));
+		m.matches();
+		assertEquals("123", m.group(number));
 	}
 
 	@Test
 	public void matchAnyNumberAnyCaptureNumber_returnsNumber() {
 		String s = "abc 123 def";
 		CaptureGroup number = Mre.capture(Mre.number());
+		Expression nonNumbers = Mre.many(Mre.nonDigit()); 
 		Pattern p = Mre.compile(Mre.sequence(
-			Mre.anyCharacter(),
+			nonNumbers,
 			number,
-			Mre.anyCharacter()
+			nonNumbers
 		));
 		Matcher m = p.matcher(s);
-		Captured captured = number.getCaptured();
-		assertEquals(1, captured.length());
-		assertEquals("123", captured.getString(0));
+		m.matches();
+		assertEquals("123", m.group(number));
 	}
 
 	@Test
@@ -61,14 +62,18 @@ public class MatcherTest {
 		String s = "123 456 789";
 		CaptureGroup number = Mre.capture(Mre.number());
 		Pattern p = Mre.compile(
-			Mre.separatedBy(Mre.whitespace(), number)
+			Mre.sequence(
+				number,
+				Mre.optional(Mre.whitespace())
+			)
 		);
 		Matcher m = p.matcher(s);
-		Captured captured = number.getCaptured();
-		assertEquals(3, captured.length());
-		assertEquals("123", captured.getString(0));
-		assertEquals("456", captured.getString(1));
-		assertEquals("789", captured.getString(3));
+		m.find();
+		assertEquals("123", m.group(number));
+		m.find();
+		assertEquals("456", m.group(number));
+		m.find();
+		assertEquals("789", m.group(number));
 	}
 	
 	@Test
@@ -82,21 +87,11 @@ public class MatcherTest {
 			Mre.character('.'), 
 			Mre.optional(Mre.whitespace())
 		));
-		Pattern p = Mre.compile(Mre.many(sentence));
+		Pattern p = Mre.compile(sentence);
 		Matcher m = p.matcher(s);
-		Captured sentences = sentence.getCaptured();
-		Captured words = word.getCaptured();
-		assertEquals(2, sentences.length());
-		assertEquals(6, words.length());
-		assertEquals("There are things. ", sentences.getString(0));
-		assertEquals("Things have properties.", sentences.getString(1));
-		Captured sentence1 = sentences.get(0);
-		assertEquals("There", sentence1.getNested(word).getString(0));
-		assertEquals("are", sentence1.getNested(word).getString(1));
-		assertEquals("things", sentence1.getNested(word).getString(2));
-		Captured sentence2 = sentences.get(1);
-		assertEquals("Things", sentence2.getNested(word).getString(0));
-		assertEquals("have", sentence2.getNested(word).getString(1));
-		assertEquals("properties", sentence2.getNested(word).getString(2));	
+		m.find();
+		assertEquals("There are things. ", m.group(sentence));
+		m.find();
+		assertEquals("Things have properties.", m.group(sentence));	
 	}
 }
