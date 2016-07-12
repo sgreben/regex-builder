@@ -2,10 +2,10 @@ package sgreben.regex_builder.tokens;
 
 import java.util.regex.Pattern;
 
-public class CHAR_CLASS implements TOKEN {
+public class RAW implements TOKEN {
 	private final String charClassRegex;
 	
-	public CHAR_CLASS(String charClassRegex) {
+	public RAW(String charClassRegex) {
 		this.charClassRegex = charClassRegex; 
 	}
 	

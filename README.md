@@ -28,10 +28,55 @@ Pattern sentencePattern = Re.compile(
   Re.sequence(sentence, Re.optional(Re.whitespace())) // Optional whitespace at the end
 );
 Matcher sentenceMatcher = sentencePattern.matcher("There are things. Things have properties.");
-sentenceMatcher.find();
 
 // Comfortably extract matches and sub-matches
+sentenceMatcher.find();
 String firstSentence = sentenceMatcher.group(sentence);
+assertEqual("There are things", firstSentence);
 sentenceMatcher.find();
 String secondSentence = sentenceMatcher.group(sentence);
+assertEqual("Things have properties", secondSentence);
 ```
+
+## More examples
+
+### Hex color
+
+- Regex string: `^#([a-fA-F0-9]){3}(([a-fA-F0-9]){3})?$`
+- Java code:
+```java
+Expression hexDigit = Re.charClass('[a-fA-F0-9]');
+Expression threeHexDigits = Re.repeat(hexDigit, 3);
+Expression hexValue = Re.sequence(
+  threeHexDigits, Re.optional(threeHexDigits),
+);
+Expression hexColor = Re.sequence(
+  Re.beginLine(), 
+  Re.character('#'), hexValue, // #FFF or #FFFFFF 
+  Re.endLine()
+);
+
+```
+
+### Date (DD/MM/YYYY HH:MM:SS)
+
+- Regex string: `^(\d\d\)/(\d\d)\/(\d\d\d\d) (\d\d):(\d\d):(\d\d)$`
+- Java code:
+```java
+Expression twoDigits = Re.sequence(Re.digit(), Re.digit());
+Expression fourDigits = Re.repeat(Re.digit(), 4);
+Expression slash = Re.character('/');
+Expression colon = Re.character(':');
+Expression space = Re.character(' ');
+CaptureGroup day = Re.capture(twoDigits);
+CaptureGroup month = Re.capture(twoDigits);
+CaptureGroup year = Re.capture(fourDigits);
+CaptureGroup hour = Re.capture(twoDigits);
+CaptureGroup minute = Re.capture(twoDigits);
+CaptureGroup second = Re.capture(twoDigits);
+Expression dateExpression = Re.sequence(
+  Re.beginLine(),
+  day, slash, month, slash, year, space, // DD/MM/YYY
+  hour, colon, minute, colon, second,    // HH:MM:SS
+  Re.endLine(),
+);

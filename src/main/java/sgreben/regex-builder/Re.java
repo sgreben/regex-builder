@@ -10,29 +10,50 @@ public class Re {
 	public static Expression character(char c) {
 		return string(""+c);
 	}
+	public static Expression beginInput() {
+		return new Raw("\\A");
+	}
+	public static Expression endInput() {
+		return new Raw("\\z");
+	}
+	public static Expression endInputBeforeFinalTerminator() {
+		return new Raw("\\Z");
+	}
+	public static Expression beginLine() {
+		return new Raw("^");
+	}
+	public static Expression endLine() {
+		return new Raw("$");
+	}
 	public static Expression anyCharacter() {
 		return new AnyCharacter();
 	}
 	public static Expression charClass(String charClass) {
-		return new CharClass(charClass);
+		return new Raw(charClass);
 	}
 	public static Expression wordCharacter() {
-		return new CharClass(("\\w"));
+		return new Raw("\\w");
 	}
 	public static Expression nonWordCharacter() {
-		return new CharClass(("\\W"));
+		return new Raw("\\W");
+	}
+	public static Expression wordBoundary() {
+		return new Raw("\\b");
+	}
+	public static Expression nonWordBoundary() {
+		return new Raw("\\B");
 	}
 	public static Expression digit() {
-		return new CharClass(("\\d"));
+		return new Raw("\\d");
 	}
 	public static Expression nonDigit() {
-		return new CharClass(("\\D"));
+		return new Raw("\\D");
 	}
 	public static Expression whitespaceCharacter() {
-		return new CharClass(("\\s"));
+		return new Raw("\\s");
 	}
 	public static Expression nonWhitespaceCharacter() {
-		return new CharClass(("\\S"));
+		return new Raw("\\S");
 	}
 	public static Expression many(Expression e) {
 		return new Many(e);
