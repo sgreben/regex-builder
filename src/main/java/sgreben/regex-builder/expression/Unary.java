@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.LinkedList;
 import java.lang.Iterable;
 import java.util.Collections;
+import sgreben.regex_builder.Expression;
 
 public abstract class Unary extends ExpressionBase implements Expression {
 	private final Expression child;

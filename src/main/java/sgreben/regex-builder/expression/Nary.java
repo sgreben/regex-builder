@@ -1,5 +1,6 @@
 package sgreben.regex_builder.expression;
 
+import sgreben.regex_builder.Expression;
 import java.util.List;
 import java.util.Arrays;
 import java.lang.Iterable;

@@ -5,9 +5,8 @@ import org.junit.Test;
 import org.junit.Before;
 
 import sgreben.regex_builder.CaptureGroup;
-import sgreben.regex_builder.Captured;
 import sgreben.regex_builder.Matcher;
-import sgreben.regex_builder.expression.Expression;
+import sgreben.regex_builder.Expression;
 import sgreben.regex_builder.Re;
 
 public class MatcherTest {

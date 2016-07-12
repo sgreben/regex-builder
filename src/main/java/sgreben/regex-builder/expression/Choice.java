@@ -1,6 +1,7 @@
 package sgreben.regex_builder.expression;
 
 import sgreben.regex_builder.tokens.*;
+import sgreben.regex_builder.Expression;
 
 public class Choice extends Nary {
 	public Choice(Expression... children) { super(children); }

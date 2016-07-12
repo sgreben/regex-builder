@@ -9,6 +9,7 @@ import java.util.Set;
 import sgreben.regex_builder.CaptureGroup;
 import sgreben.regex_builder.CaptureGroupIndex;
 import sgreben.regex_builder.Pattern;
+import sgreben.regex_builder.Expression;
 import sgreben.regex_builder.expression.*;
 import sgreben.regex_builder.tokens.*;
 

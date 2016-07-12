@@ -9,7 +9,7 @@ import java.util.Collections;
 import sgreben.regex_builder.CaptureGroup;
 import sgreben.regex_builder.CaptureGroupIndex;
 import sgreben.regex_builder.expression.ExpressionVisitor;
-import sgreben.regex_builder.expression.Expression;
+import sgreben.regex_builder.Expression;
 
 class CaptureGroupVisitor implements ExpressionVisitor {
 	private static class Frame {
