@@ -1,17 +1,16 @@
-# Maintainable Regular Expressions
+# Regex Builder for Java
 
 A maintainable way of writing regexes in Java. No more opaque regex strings -- everything is expressed as **plain Java code**.
 
-The **mre** library is implemented as a light-weight wrapper around `java.util.regex`.
+The **regex-builder** library is implemented as a light-weight wrapper around `java.util.regex`.
 
 ## Example
 
 ```java
 
-import sgreben.mre.CaptureGroup;
-import sgreben.mre.Captured;
-import sgreben.mre.expression.Expression;
-import sgreben.mre.Mre;
+import sgreben.regex_builder.CaptureGroup;
+import sgreben.regex_builder.expression.Expression;
+import sgreben.regex_builder.RegexBuilder;
 
 // Build a regular expression with capture groups
 CaptureGroup word = Mre.capture(
@@ -24,14 +23,13 @@ CaptureGroup sentence = Mre.capture(
       Mre.optional(Mre.whitespace())           // (and perhaps more whitespace).
     )
 );
-Expression sentences = Mre.many(sentence);
-
 // Compile the expression and process a string.
-Pattern sentencesPattern = Mre.compile(sentences);
-Matcher sentencesMatcher = sentencesPattern.matcher("There are things. Things have properties.");
+Pattern sentencePattern = Mre.compile(sentence);
+Matcher sentenceMatcher = sentencePattern.matcher("There are things. Things have properties.");
+sentenceMatcher.find();
 
 // Comfortably extract matches and sub-matches
-Captured firstSentence = sentence.getCaptured().get(0);
-Captured thirdWord = firstSentence.getNested(word).get(2);
-assertEquals("things", thirdWord.getString());
+String firstSentence = sentenceMatcher.group(sentence);
+sentenceMatcher.find();
+String secondSentence = sentenceMatcher.group(sentence);
 ```
