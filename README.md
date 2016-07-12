@@ -22,6 +22,7 @@ CaptureGroup sentence = RegexBuilder.capture(
               RegexBuilder.character('.')
           )
       );
+      
 // Compile the expression and process a string.
 Pattern sentencePattern = RegexBuilder.compile(
     RegexBuilder.sequence(sentence, RegexBuilder.optional(RegexBuilder.whitespace()))
