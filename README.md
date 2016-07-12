@@ -45,7 +45,7 @@ assertEqual("Things have properties", secondSentence);
 - Regex string: `^#([a-fA-F0-9]){3}(([a-fA-F0-9]){3})?$`
 - Java code:
 ```java
-Expression hexDigit = Re.charClass('[a-fA-F0-9]');
+Expression hexDigit = Re.charClass("[a-fA-F0-9]");
 Expression threeHexDigits = Re.repeat(hexDigit, 3);
 Expression hexValue = Re.sequence(
   threeHexDigits, Re.optional(threeHexDigits),
