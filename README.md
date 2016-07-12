@@ -1,4 +1,4 @@
-# Regex Builder for Java
+# Java Regex Builder
 
 Write regexes as **plain Java code**. Unlike opaque regex strings, commenting your expressions and reusing regex fragments is straightforward.
 
