@@ -3,13 +3,13 @@ package sgreben.regex_builder.tokens;
 import java.util.regex.Pattern;
 
 public class RAW implements TOKEN {
-	private final String charClassRegex;
+	private final String rawRegex;
 	
-	public RAW(String charClassRegex) {
-		this.charClassRegex = charClassRegex; 
+	public RAW(String rawRegex) {
+		this.rawRegex = rawRegex; 
 	}
 	
 	public String regexString() {
-		return charClassRegex;
+		return rawRegex;
 	}
 }
