@@ -2,7 +2,9 @@
 
 Write regexes as **plain Java code**. Unlike opaque regex strings, commenting your expressions and reusing regex fragments is straightforward.
 
-The **regex-builder** library is implemented as a light-weight wrapper around `java.util.regex`.
+The **regex-builder** library is implemented as a light-weight wrapper around `java.util.regex`.     
+
+There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgrebenregexbuilder_write_regular/) of this project over on the Java reddit.
 
 ## Examples
 
