@@ -76,11 +76,44 @@ public class MatcherTest {
 	}
 	
 	@Test
+	public void matchNumbers_replaceByParenthesized() {
+		String s = "123 456 789";
+		CaptureGroup number = Re.capture(Re.number());
+		Pattern p = Re.compile(
+			Re.sequence(
+				number,
+				Re.optional(Re.whitespace())
+			)
+		);
+		Matcher m = p.matcher(s);
+		String result = m.replaceAll(Re.replacement("(number ",number,")"));
+		assertEquals("(number 123)(number 456)(number 789)", result);
+	}
+
+	@Test
+	public void matchWords_replaceByDoubled() {
+		String s = "abc def ghi";
+		CaptureGroup word = Re.capture(Re.word());
+		Pattern p = Re.compile(word);
+		Matcher m = p.matcher(s);
+		String result = m.replaceAll(Re.replacement(word, word));
+		assertEquals("abcabc defdef ghighi", result);
+	}
+	
+	@Test
+	public void matchChar_replaceByDoubled() {
+		String s = "abc def ghi";
+		CaptureGroup b = Re.capture(Re.character('b'));
+		Pattern p = Re.compile(b);
+		Matcher m = p.matcher(s);
+		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
+		assertEquals("a<bb>c def ghi", result);
+	}
+
+	@Test
 	public void nestedCapture_returnsBoth() {
 		String s = "There are things. Things have properties.";
-		CaptureGroup word = Re.capture(
-			Re.word()
-		);
+		CaptureGroup word = Re.capture(Re.word());
 		CaptureGroup sentence = Re.capture(
 			Re.sequence(
 				Re.separatedBy(Re.whitespace(), word),

@@ -32,4 +32,9 @@ public class Matcher {
 	public String group(CaptureGroup group) {
 		return matcher.group(groupIndex.getIndex(group));
 	}
+	
+	public String replaceAll(Replacement replacement) {
+		String replacementString = replacement.toReplacementString(groupIndex);
+		return matcher.replaceAll(replacementString);
+	}
 }

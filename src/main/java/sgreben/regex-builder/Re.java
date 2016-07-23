@@ -100,4 +100,19 @@ public class Re {
 	public static Pattern compile(Expression expression) {
 		return Compiler.compile(expression);
 	}
+	public static Replacement replacement(Object... os) {
+		Replacement replacement = new Replacement();
+		for(Object o : os) {
+			if(o instanceof String) {
+				replacement.addPart(
+					new StringReplacementPart((String)o)
+				);
+			} else if(o instanceof CaptureGroup) {
+				replacement.addPart(
+					new CaptureGroupReplacementPart((CaptureGroup)o)
+				);
+			}
+		}
+		return replacement;
+	}
 }
