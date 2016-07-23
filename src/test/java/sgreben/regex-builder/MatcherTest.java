@@ -109,6 +109,48 @@ public class MatcherTest {
 		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
 		assertEquals("a<bb>c def ghi", result);
 	}
+	
+	@Test
+	public void matchChar_literalSyntaxString_replaceByDoubled() {
+		String s = "abc def ghi";
+		CaptureGroup b = Re.capture("b");
+		Pattern p = Re.compile(b);
+		Matcher m = p.matcher(s);
+		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
+		assertEquals("a<bb>c def ghi", result);
+	}
+
+	@Test
+	public void matchChar_literalSyntaxChar_replaceByDoubled() {
+		String s = "abc def ghi";
+		CaptureGroup b = Re.capture('b');
+		Pattern p = Re.compile(b);
+		Matcher m = p.matcher(s);
+		String result = m.replaceAll(Re.replacement('<', b, b, '>'));
+		assertEquals("a<bb>c def ghi", result);
+	}
+
+	@Test
+	public void matchCharTwoGroup_replaceByDoubled() {
+		String s = "abc def ghi";
+		CaptureGroup a = Re.capture(Re.character('a'));
+		CaptureGroup b = Re.capture(Re.character('b'));
+		Pattern p = Re.compile(Re.sequence(a, b));
+		Matcher m = p.matcher(s);
+		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
+		assertEquals("<bb>c def ghi", result);
+	}
+	
+	@Test
+	public void matchChars_literalSyntax_replaceByDoubled() {
+		String s = "abc def ghi";
+		CaptureGroup a = Re.capture("a");
+		CaptureGroup b = Re.capture("b");
+		Pattern p = Re.compile(Re.sequence(a, b, "c"));
+		Matcher m = p.matcher(s);
+		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
+		assertEquals("<bb> def ghi", result);
+	}
 
 	@Test
 	public void nestedCapture_returnsBoth() {
