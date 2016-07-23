@@ -56,7 +56,9 @@ CaptureGroup hexValue = Re.capture(Re.sequence(
     threeHexDigits,              // #FFF  
     Re.optional(threeHexDigits)  // #FFFFFF
 ));
-Expression hexColor = Re.sequence('#', hexValue);
+Expression hexColor = Re.sequence(
+  '#', hexValue
+);
 ```
 
 Use the expression like this:
