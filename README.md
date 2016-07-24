@@ -101,7 +101,7 @@ assertEquals("1bf", m.group(hexValue));```
 
 | Builder method                        | `java.util.regex` syntax |
 |---------------------------------------|--------------------------|
-| CharClass.range(from, to)             | [<from>-<to>]            |
+| CharClass.range(from, to)             | [from-to]                |
 | CharClass.range(f1, t1, ..., fN, tN)  | [f1-t1f2-t2...fN-tN]     |
 | CharClass.union(class1, ..., classN)  | [[class1]...[classN]]    |
 | CharClass.complement(class1)          | [^[class1]]              |
