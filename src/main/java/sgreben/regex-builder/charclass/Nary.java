@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.lang.Iterable;
 import java.util.Collections;
 
-abstract class Nary extends CharClassBase implements CharClass {
+abstract class Nary extends CharClassBase {
 	private final List<CharClass> children;
 	
 	public Nary(final CharClass... childrenArray) {

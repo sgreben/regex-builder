@@ -2,6 +2,7 @@ package sgreben.regex_builder;
 
 import sgreben.regex_builder.expression.*;
 import sgreben.regex_builder.compiler.Compiler;
+import sgreben.regex_builder.CharClass;
 
 public class Re {
 	public static Expression string(String s) {
@@ -25,29 +26,29 @@ public class Re {
 	public static Expression endLine() {
 		return new Raw("$");
 	}
-	public static Expression anyCharacter() {
-		return new AnyCharacter();
+	public static Expression charClass(CharClass charClass) {
+		return new CharClassExpression(charClass);
 	}
-	public static Expression charClass(String charClass) {
-		return new Raw(charClass);
+	public static Expression anyCharacter() {
+		return charClass(CharClass.anyChar());
 	}
 	public static Expression wordCharacter() {
-		return new Raw("\\w");
+		return charClass(CharClass.wordChar());
 	}
 	public static Expression nonWordCharacter() {
-		return new Raw("\\W");
+		return charClass(CharClass.nonWordChar());
 	}
 	public static Expression wordBoundary() {
-		return new Raw("\\b");
+		return charClass(CharClass.wordBoundary());
 	}
 	public static Expression nonWordBoundary() {
-		return new Raw("\\B");
+		return charClass(CharClass.nonWordBoundary());
 	}
 	public static Expression digit() {
-		return new Raw("\\d");
+		return charClass(CharClass.digit());
 	}
 	public static Expression nonDigit() {
-		return new Raw("\\D");
+		return charClass(CharClass.nonDigit());
 	}
 	public static Expression whitespaceCharacter() {
 		return new Raw("\\s");

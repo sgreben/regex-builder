@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.lang.Iterable;
 import java.util.Collections;
 
-abstract class Binary extends CharClassBase implements CharClass {
+abstract class Binary extends CharClassBase {
 	private final CharClass leftChild;
 	private final CharClass rightChild;
 	private final List<CharClass> children;

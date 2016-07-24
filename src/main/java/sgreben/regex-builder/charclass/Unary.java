@@ -6,7 +6,7 @@ import java.lang.Iterable;
 import java.util.Collections;
 import sgreben.regex_builder.CharClass;
 
-public abstract class Unary extends CharClassBase implements CharClass {
+public abstract class Unary extends CharClassBase {
 	private final CharClass child;
 	private final List<CharClass> children;
 	

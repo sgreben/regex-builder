@@ -7,6 +7,7 @@ import org.junit.Before;
 import sgreben.regex_builder.CaptureGroup;
 import sgreben.regex_builder.Matcher;
 import sgreben.regex_builder.Expression;
+import sgreben.regex_builder.CharClass;
 import sgreben.regex_builder.Re;
 
 public class MatcherTest {
@@ -188,7 +189,11 @@ public class MatcherTest {
 	
 	@Test
 	public void hexColorExampleFromReadme() {
-		Expression hexDigit = Re.charClass("[a-fA-F0-9]");
+		Expression hexDigit = Re.charClass(CharClass.union(
+			CharClass.range('a','f'),
+			CharClass.range('A','F'),
+			CharClass.digit()
+		));
 		Expression threeHexDigits = Re.repeat(hexDigit, 3);
 		CaptureGroup hexValue = Re.capture(Re.sequence(
 			threeHexDigits,              // #FFF  
@@ -202,10 +207,11 @@ public class MatcherTest {
 		m.find();
 		assertEquals("1bf", m.group(hexValue));
 	}
-	
 	@Test
-	public void hexColorExampleFromReadme_alternativeNotation() {
-		Expression hexDigit = Re.charClass("[[a-f][A-F][0-9]]");
+	public void hexColorExampleFromReadme_alternativeBuild() {
+		Expression hexDigit = Re.charClass(CharClass.range(
+			'a','f', 'A','F', '0','9'
+		));
 		Expression threeHexDigits = Re.repeat(hexDigit, 3);
 		CaptureGroup hexValue = Re.capture(Re.sequence(
 			threeHexDigits,              // #FFF  

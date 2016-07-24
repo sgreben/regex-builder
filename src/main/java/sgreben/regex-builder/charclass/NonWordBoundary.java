@@ -2,8 +2,9 @@ package sgreben.regex_builder.charclass;
 
 import sgreben.regex_builder.tokens.*;
 
-public class AnyCharacter extends Nullary {
+public class NonWordBoundary extends Nullary {
+	public NonWordBoundary() {}
 	public void compile(java.util.List<TOKEN> output) {
-		output.add(new DOT());
+		output.add(new RAW("\\B"));
 	}
 }

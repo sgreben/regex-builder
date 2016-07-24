@@ -6,7 +6,7 @@ import java.lang.Iterable;
 import java.util.Collections;
 import sgreben.regex_builder.CharClass;
 
-abstract class Nullary extends CharClassBase implements CharClass {
+abstract class Nullary extends CharClassBase {
 	private static final List<CharClass> empty = 
 		Collections.unmodifiableList(new LinkedList<CharClass>());
 	
