@@ -6,27 +6,6 @@ The **regex-builder** library is implemented as a light-weight wrapper around `j
 
 There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgrebenregexbuilder_write_regular/) of this project over on the Java reddit.
 
-## API
-
-| Builder method                 | `java.util.regex` syntax |
-|--------------------------------|--------------------------|
-| Re.repeat(e, N)                | e{N}                     |
-| Re.many(e)                     | e*                       |
-| Re.many1(e)                    | e+                       |
-| Re.optional(e)                 | e?                       |
-| Re.capture(e)                  | (e)                      |
-| Re.backReference(g)            | \g                       |
-| Re.separatedBy(sep, e)         | (?:e((?:sep)(?:e))*)?    |
-| Re.separatedBy1(sep, e)        | e(?:(?:sep)(?:e))*       |
-| Re.choice(e1,...,eN)           | (?:e1\|...\| eN)         |
-| Re.sequence(e1,...,eN)         | e1...eN                  |
-| Re.string(s)                   | \\Qs\\E                  |
-| Re.word()                      | \w+                      |
-| Re.number()                    | \d+                      |
-| Re.whitespace()                | \s*                      |
-| Re.whitespace1()               | \s+                      |
-| CaptureGroup g = Re.capture(e) | (?g e)                   |
-
 ## Examples
 
 Imports:
@@ -42,7 +21,7 @@ import sgreben.regex_builder.Re;
 - Regex string: `(\d\d\)/(\d\d)\/(\d\d\d\d) (\d\d):(\d\d):(\d\d)`
 - Java code:
 ```java
-Expression twoDigits = Re.sequence(Re.digit(), Re.digit());
+Expression twoDigits = Re.repeat(Re.digit(), 2);
 Expression fourDigits = Re.repeat(Re.digit(), 4);
 CaptureGroup day = Re.capture(twoDigits);
 CaptureGroup month = Re.capture(twoDigits);
@@ -74,8 +53,7 @@ assertEquals("22", m.group(second));
 - Regex string: `#([a-fA-F0-9]){3}(([a-fA-F0-9]){3})?`
 - Java code:
 ```java
-Expression hexDigit = Re.charClass("[a-fA-F0-9]");
-Expression threeHexDigits = Re.repeat(hexDigit, 3);
+Expression threeHexDigits = Re.repeat(Re.hexDigit(), 3);
 CaptureGroup hexValue = Re.capture(Re.sequence(
     threeHexDigits,              // #FFF  
     Re.optional(threeHexDigits)  // #FFFFFF
@@ -94,3 +72,51 @@ assertEquals("0FAFF3", m.group(hexValue));
 m.find();
 assertEquals("1bf", m.group(hexValue));```
 ```
+
+
+## API
+
+### Expression builder
+
+| Builder method                 | `java.util.regex` syntax |
+|--------------------------------|--------------------------|
+| Re.repeat(e, N)                | e{N}                     |
+| Re.many(e)                     | e*                       |
+| Re.many1(e)                    | e+                       |
+| Re.optional(e)                 | e?                       |
+| Re.capture(e)                  | (e)                      |
+| Re.backReference(g)            | \g                       |
+| Re.separatedBy(sep, e)         | (?:e((?:sep)(?:e))*)?    |
+| Re.separatedBy1(sep, e)        | e(?:(?:sep)(?:e))*       |
+| Re.choice(e1,...,eN)           | (?:e1\|...\| eN)         |
+| Re.sequence(e1,...,eN)         | e1...eN                  |
+| Re.string(s)                   | \Qs\E                    |
+| Re.word()                      | \w+                      |
+| Re.number()                    | \d+                      |
+| Re.whitespace()                | \s*                      |
+| Re.whitespace1()               | \s+                      |
+| CaptureGroup g = Re.capture(e) | (?g e)                   |
+
+### CharClass builder
+
+| Builder method                        | `java.util.regex` syntax |
+|---------------------------------------|--------------------------|
+| CharClass.range(from, to)             | [<from>-<to>]            |
+| CharClass.range(f1, t1, ..., fN, tN)  | [f1-t1f2-t2...fN-tN]     |
+| CharClass.union(class1, ..., classN)  | [[class1]...[classN]]    |
+| CharClass.complement(class1)          | [^[class1]]              |
+| CharClass.anyChar()                   | .                        |
+| CharClass.digit()                     | \d                       |
+| CharClass.nonDigit()                  | \D                       |
+| CharClass.hexDigit()                  | [a-fA-F0-9]              |
+| CharClass.nonHexDigit()               | [^[a-fA-F0-9]]           |
+| CharClass.wordChar()                  | \w                       |
+| CharClass.nonWordChar()               | \W                       |
+| CharClass.wordBoundary()              | \b                       |
+| CharClass.nonWordBoundary()           | \B                       |
+| CharClass.whitespaceChar()            | \s                       |
+| CharClass.nonWhitespaceChar()         | \S                       |
+| CharClass.verticalWhitespaceChar()    | \v                       |
+| CharClass.nonVerticalWhitespaceChar() | \V                       |
+| CharClass.horizontalWhitespaceChar()  | \h                       |
+| CharClass.nonHorizontalWhitespaceChar()| \H                      |
