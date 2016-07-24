@@ -23,7 +23,7 @@ public class Compiler {
 		entireMatch.compile(tokens);
 		StringBuilder sb = new StringBuilder();
 		for(TOKEN op : tokens) {
-			sb.append(op.regexString());
+			sb.append(op.regexString(index));
 		}
 		String regexString = sb.toString();
 		java.util.regex.Pattern rawPattern = java.util.regex.Pattern.compile(regexString);

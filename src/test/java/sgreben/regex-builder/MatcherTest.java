@@ -119,6 +119,20 @@ public class MatcherTest {
 		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
 		assertEquals("a<bb>c def ghi", result);
 	}
+	
+	@Test
+	public void matchWithBackReference_capturesCorrectly() {
+		String s = "abc abc def";
+		CaptureGroup word = Re.capture(Re.word());
+		CaptureGroup sameWordTwice = Re.capture(
+			Re.sequence(word, Re.whitespace1(), Re.backReference(word))
+		);
+		Pattern p = Re.compile(sameWordTwice);
+		Matcher m = p.matcher(s);
+		m.find();
+		assertEquals("abc abc", m.group(sameWordTwice));
+		assertEquals("abc", m.group(word));
+	}
 
 	@Test
 	public void matchChar_literalSyntaxChar_replaceByDoubled() {

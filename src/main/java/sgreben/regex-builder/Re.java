@@ -184,6 +184,9 @@ public class Re {
 	public static CaptureGroup capture(char e) {
 		return new CaptureGroup(character(e));
 	}
+	public static Expression backReference(CaptureGroup group) {
+		return new BackReference(group);
+	}
 	public static Pattern compile(Expression expression) {
 		return Compiler.compile(expression);
 	}
