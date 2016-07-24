@@ -32,29 +32,11 @@ public class Re {
 	public static Expression anyCharacter() {
 		return charClass(CharClass.anyChar());
 	}
-	public static Expression wordCharacter() {
-		return charClass(CharClass.wordChar());
-	}
-	public static Expression nonWordCharacter() {
-		return charClass(CharClass.nonWordChar());
-	}
-	public static Expression wordBoundary() {
-		return charClass(CharClass.wordBoundary());
-	}
-	public static Expression nonWordBoundary() {
-		return charClass(CharClass.nonWordBoundary());
-	}
 	public static Expression digit() {
 		return charClass(CharClass.digit());
 	}
 	public static Expression nonDigit() {
 		return charClass(CharClass.nonDigit());
-	}
-	public static Expression whitespaceCharacter() {
-		return new Raw("\\s");
-	}
-	public static Expression nonWhitespaceCharacter() {
-		return new Raw("\\S");
 	}
 	public static Expression many(Expression e) {
 		return new Many(e);
@@ -165,16 +147,16 @@ public class Re {
 		return separatedBy1(character(separator), character(e));
 	}
 	public static Expression word() {
-		return many1(wordCharacter());
+		return many1(charClass(CharClass.wordChar()));
 	}
 	public static Expression number() {
 		return many1(digit());
 	}
 	public static Expression whitespace() {
-		return many(whitespaceCharacter());
+		return many(charClass(CharClass.whitespaceChar()));
 	}
 	public static Expression whitespace1() {
-		return many1(whitespaceCharacter());
+		return many1(charClass(CharClass.whitespaceChar()));
 	}
 	public static CaptureGroup capture(Expression expression) {
 		return new CaptureGroup(expression);
