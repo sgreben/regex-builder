@@ -22,15 +22,15 @@ public class Matcher {
 	}
 	
 	public int start(CaptureGroup group) {
-		return matcher.start(groupIndex.getIndex(group));
+		return matcher.start(groupIndex.get(group));
 	}
 	
 	public int end(CaptureGroup group) {
-		return matcher.end(groupIndex.getIndex(group));
+		return matcher.end(groupIndex.get(group));
 	}
 	
 	public String group(CaptureGroup group) {
-		return matcher.group(groupIndex.getIndex(group));
+		return matcher.group(groupIndex.get(group));
 	}
 	
 	public String replaceAll(Replacement replacement) {

@@ -5,13 +5,13 @@ import sgreben.regex_builder.CaptureGroup;
 import sgreben.regex_builder.CaptureGroupIndex;
 
 public class BACK_REFERENCE implements TOKEN {
-	private final CaptureGroup group;
+	private final int groupIndex;
 	
-	public BACK_REFERENCE(CaptureGroup group) {
-		this.group = group; 
+	public BACK_REFERENCE(int groupIndex) {
+		this.groupIndex = groupIndex; 
 	}
 	
-	public String regexString(sgreben.regex_builder.CaptureGroupIndex index) {
-		return "\\"+index.getIndex(group);
+	public String regexString() {
+		return "\\"+groupIndex;
 	}
 }

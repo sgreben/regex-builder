@@ -9,7 +9,7 @@ public class BackReference extends Nullary {
 	public BackReference(CaptureGroup group) {
 		this.group = group;
 	}
-	public void compile(java.util.List<TOKEN> output) {
-		output.add(new BACK_REFERENCE(group));
+	public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
+		output.add(new BACK_REFERENCE(index.get(group)));
 	}
 }

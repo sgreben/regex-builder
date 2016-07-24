@@ -202,4 +202,21 @@ public class MatcherTest {
 		m.find();
 		assertEquals("1bf", m.group(hexValue));
 	}
+	
+	@Test
+	public void hexColorExampleFromReadme_alternativeNotation() {
+		Expression hexDigit = Re.charClass("[[a-f][A-F][0-9]]");
+		Expression threeHexDigits = Re.repeat(hexDigit, 3);
+		CaptureGroup hexValue = Re.capture(Re.sequence(
+			threeHexDigits,              // #FFF  
+			Re.optional(threeHexDigits)  // #FFFFFF
+	    ));
+		Expression hexColor = Re.sequence('#', hexValue);
+		Pattern p = Pattern.compile(hexColor);
+		Matcher m = p.matcher("#0FAFF3 and #1bf");
+		m.find();
+		assertEquals("0FAFF3", m.group(hexValue));
+		m.find();
+		assertEquals("1bf", m.group(hexValue));
+	}
 }

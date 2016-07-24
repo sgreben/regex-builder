@@ -29,14 +29,14 @@ class CaptureGroupVisitor implements ExpressionVisitor {
 		this.maxGroupIndex = 1;
 	}
 		
-	public CaptureGroupIndex getIndex() {
+	public CaptureGroupIndex get() {
 		return groupIndex;
 	}
 
 	public void visitPre(Expression node) {
 		if(node.getClass() == CaptureGroup.class) {
 			CaptureGroup group = (CaptureGroup)node;
-			groupIndex.setIndex(group, maxGroupIndex);
+			groupIndex.put(group, maxGroupIndex);
 			stack.addFirst(new Frame(group));
 			maxGroupIndex += 1;
 		}

@@ -11,7 +11,7 @@ public class Literal extends Nullary {
 	public String getLiteral() {
 		return literal;
 	}
-	public void compile(java.util.List<TOKEN> output) {
+	public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
 		output.add(new LITERAL(literal));
 	}
 }

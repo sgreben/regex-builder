@@ -9,11 +9,11 @@ public class CaptureGroupIndex {
 		this.groupIndex = new HashMap<CaptureGroup, Integer>();
 	}
 	
-	public Integer getIndex(CaptureGroup group) {
+	public Integer get(CaptureGroup group) {
 		return groupIndex.get(group);
 	}
 	
-	public void setIndex(CaptureGroup group, Integer index) {
+	public void put(CaptureGroup group, Integer index) {
 		groupIndex.put(group, index);
 	}
 }

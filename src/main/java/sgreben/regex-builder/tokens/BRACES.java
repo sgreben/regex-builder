@@ -23,7 +23,7 @@ public class BRACES implements TOKEN {
 		}
 	}
 	
-	public String regexString(sgreben.regex_builder.CaptureGroupIndex index) {
+	public String regexString() {
 		return bracesString;
 	}
 }

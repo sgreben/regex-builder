@@ -8,6 +8,6 @@ class CaptureGroupReplacementPart implements ReplacementPart {
 	}
 	
 	public String toReplacementString(CaptureGroupIndex index) {
-		return "$"+index.getIndex(group);		
+		return "$"+index.get(group);		
 	}
 }

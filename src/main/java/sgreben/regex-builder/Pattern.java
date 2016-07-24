@@ -6,6 +6,14 @@ public class Pattern {
 	private final java.util.regex.Pattern rawPattern;
 	private final CaptureGroupIndex groupIndex;
 	
+	public static Pattern compile(Expression expression) {
+		return Compiler.compile(expression);
+	}
+	
+	public static Pattern quote(String literal) {
+		return Compiler.compile(Re.string(literal));
+	}
+	
 	public Pattern(java.util.regex.Pattern rawPattern, 
 				   CaptureGroupIndex groupIndex) {
 		this.rawPattern = rawPattern;
@@ -17,13 +25,16 @@ public class Pattern {
 		return new Matcher(matcher, groupIndex);
 	}
 	
-	public static Pattern compile(Expression expression) {
-		return Compiler.compile(expression);
+	public String[] split(CharSequence input) {
+		return rawPattern.split(input);
 	}
-	public static Pattern quote(String literal) {
-		return Compiler.compile(Re.string(literal));
+	
+	public String[] split(CharSequence input, int limit) {
+		return rawPattern.split(input, limit);
 	}
-	public static Pattern compile(char literal) {
-		return Compiler.compile(Re.character(literal));
+	
+	@Override
+	public String toString() {
+		return rawPattern.toString();
 	}
 }

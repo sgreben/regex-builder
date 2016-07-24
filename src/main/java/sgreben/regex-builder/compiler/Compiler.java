@@ -18,12 +18,12 @@ public class Compiler {
 		CaptureGroupVisitor visitor = new CaptureGroupVisitor();
 		CaptureGroup entireMatch = new CaptureGroup(expression);
 		entireMatch.accept(visitor);
-		CaptureGroupIndex index = visitor.getIndex();
+		CaptureGroupIndex index = visitor.get();
 		LinkedList<TOKEN> tokens = new LinkedList<TOKEN>();
-		entireMatch.compile(tokens);
+		entireMatch.compile(index, tokens);
 		StringBuilder sb = new StringBuilder();
 		for(TOKEN op : tokens) {
-			sb.append(op.regexString(index));
+			sb.append(op.regexString());
 		}
 		String regexString = sb.toString();
 		java.util.regex.Pattern rawPattern = java.util.regex.Pattern.compile(regexString);

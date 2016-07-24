@@ -9,7 +9,7 @@ public class RAW implements TOKEN {
 		this.rawRegex = rawRegex; 
 	}
 	
-	public String regexString(sgreben.regex_builder.CaptureGroupIndex index) {
+	public String regexString() {
 		return rawRegex;
 	}
 }

@@ -9,7 +9,7 @@ public class LITERAL implements TOKEN {
 		this.literalRegex = Pattern.quote(literal); 
 	}
 	
-	public String regexString(sgreben.regex_builder.CaptureGroupIndex index) {
+	public String regexString() {
 		return literalRegex;
 	}
 }

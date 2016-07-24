@@ -12,7 +12,7 @@ public class Raw extends Nullary {
 		this.rawClass = rawClass;
 	}
 	
-	public void compile(java.util.List<TOKEN> output) {
+	public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
 		output.add(new RAW(rawClass));
 	}
 }
