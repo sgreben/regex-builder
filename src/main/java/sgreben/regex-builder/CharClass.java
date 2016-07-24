@@ -29,6 +29,12 @@ public abstract class CharClass {
 	public static CharClass nonDigit() {
 		return new NonDigit();
 	}
+	public static CharClass hexDigit() {
+		return range('a','f', 'A','F', '0','9');
+	}
+	public static CharClass nonHexDigit() {
+		return complement(hexDigit());
+		} 
 	public static CharClass wordChar() {
 		return new WordCharacter();
 	}

@@ -32,6 +32,12 @@ public class Re {
 	public static Expression anyCharacter() {
 		return charClass(CharClass.anyChar());
 	}
+	public static Expression hexDigit() {
+		return charClass(CharClass.hexDigit());
+	}
+	public static Expression nonHexDigit() {
+		return charClass(CharClass.complement(CharClass.hexDigit()));
+	}
 	public static Expression digit() {
 		return charClass(CharClass.digit());
 	}
