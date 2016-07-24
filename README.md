@@ -18,7 +18,7 @@ There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgre
 | Re.backReference(g)            | \g                       |
 | Re.separatedBy(sep, e)         | (?:e((?:sep)(?:e))*)?    |
 | Re.separatedBy1(sep, e)        | e(?:(?:sep)(?:e))*       |
-| Re.choice(e1,...,eN)           | (?:e1|...|eN)            |
+| Re.choice(e1,...,eN)           | (?:e1\|...\| eN)         |
 | Re.sequence(e1,...,eN)         | e1...eN                  |
 | Re.string(s)                   | \\Qs\\E                  |
 | Re.word()                      | \w+                      |
