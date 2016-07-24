@@ -13,6 +13,7 @@ Imports:
 import sgreben.regex_builder.CaptureGroup;
 import sgreben.regex_builder.Expression;
 import sgreben.regex_builder.Pattern;
+import sgreben.regex_builder.CharClass;
 import sgreben.regex_builder.Re;
 ```
 
