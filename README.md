@@ -6,6 +6,26 @@ The **regex-builder** library is implemented as a light-weight wrapper around `j
 
 There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgrebenregexbuilder_write_regular/) of this project over on the Java reddit.
 
+## API
+
+| Builder method                 | `java.util.regex` syntax |
+|--------------------------------|--------------------------|
+| Re.repeat(e, N)                | e{N}                     |
+| Re.many(e)                     | e*                       |
+| Re.many1(e)                    | e+                       |
+| Re.optional(e)                 | e?                       |
+| Re.separatedBy(sep, e)         | (?:e((?:sep)(?:e))*)?    |
+| Re.separatedBy1(sep, e)        | e(?:(?:sep)(?:e))*       |
+| Re.choice(e1,...,eN)           | (?:e1|...|eN)            |
+| Re.sequence(e1,...,eN)         | e1...eN                  |
+| Re.string(s)                   | \\Qs\\E                  |
+| Re.capture(e)                  | (e)                      |
+| Re.word()                      | \w+                      |
+| Re.number()                    | \d+                      |
+| Re.whitespace()                | \s*                      |
+| Re.whitespace1()               | \s+                      |
+| CaptureGroup g = Re.capture(e) | (?g e)                   |
+
 ## Examples
 
 Imports:
