@@ -14,10 +14,8 @@ import sgreben.regex_builder.Expression;
 class CaptureGroupVisitor implements ExpressionVisitor {
 	private static class Frame {
 		public CaptureGroup group;
-		public LinkedList<CaptureGroup> nested;
 		public Frame(CaptureGroup group) {
 			this.group = group;
-			this.nested = new LinkedList<CaptureGroup>();
 		}
 	}
 	
@@ -46,11 +44,7 @@ class CaptureGroupVisitor implements ExpressionVisitor {
 	
 	public void visitPost(Expression node) {
 		if(node.getClass() == CaptureGroup.class) {
-			Frame top = stack.removeFirst();
-			groupIndex.setNested(top.group, top.nested); 
-			if(stack.size() > 0) {
-				stack.peekFirst().nested.add(top.group);
-			}
+			stack.removeFirst();
 		}
 	}
 }
