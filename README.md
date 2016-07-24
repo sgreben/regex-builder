@@ -33,6 +33,7 @@ Imports:
 ```java
 import sgreben.regex_builder.CaptureGroup;
 import sgreben.regex_builder.Expression;
+import sgreben.regex_builder.Pattern;
 import sgreben.regex_builder.Re;
 ```
 
@@ -57,7 +58,7 @@ Expression dateExpression = Re.sequence(
 
 Use the expression like this:
 ```java
-Pattern p = Re.compile(dateExpression)
+Pattern p = Pattern.compile(dateExpression)
 Matcher m = p.matcher("01/05/2015 12:30:22");
 m.find();
 assertEquals("01", m.group(day));
@@ -86,7 +87,7 @@ Expression hexColor = Re.sequence(
 
 Use the expression like this:
 ```java
-Pattern p = Re.compile(hexColor);
+Pattern p = Pattern.compile(hexColor);
 Matcher m = p.matcher("#0FAFF3 and #1bf");
 m.find();
 assertEquals("0FAFF3", m.group(hexValue));

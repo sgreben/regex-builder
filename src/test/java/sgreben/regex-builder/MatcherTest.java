@@ -13,7 +13,7 @@ public class MatcherTest {
 	@Test
 	public void matchNumber_matchedIsTrue() {
 		String s = "123";
-		Pattern p = Re.compile(Re.number());
+		Pattern p = Pattern.compile(Re.number());
 		Matcher m = p.matcher(s);
 		assertTrue(m.matches());
 	}
@@ -22,7 +22,7 @@ public class MatcherTest {
 	public void matchAnyNumberAny_matchedIsTrue() {
 		String s = "abc 123 def";
 		Expression nonNumbers = Re.many(Re.nonDigit()); 
-		Pattern p = Re.compile(Re.sequence(
+		Pattern p = Pattern.compile(Re.sequence(
 			nonNumbers,
 			Re.number(),
 			nonNumbers
@@ -35,7 +35,7 @@ public class MatcherTest {
 	public void matchNumberCaptureNumber_returnsNumber() {
 		String s = "123";
 		CaptureGroup number = Re.capture(Re.number());
-		Pattern p = Re.compile(number);
+		Pattern p = Pattern.compile(number);
 		Matcher m = p.matcher(s);
 		m.matches();
 		assertEquals("123", m.group(number));
@@ -46,7 +46,7 @@ public class MatcherTest {
 		String s = "abc 123 def";
 		CaptureGroup number = Re.capture(Re.number());
 		Expression nonNumbers = Re.many(Re.nonDigit()); 
-		Pattern p = Re.compile(Re.sequence(
+		Pattern p = Pattern.compile(Re.sequence(
 			nonNumbers,
 			number,
 			nonNumbers
@@ -60,7 +60,7 @@ public class MatcherTest {
 	public void matchNumbers_separatedBySpaces() {
 		String s = "123 456 789";
 		CaptureGroup number = Re.capture(Re.number());
-		Pattern p = Re.compile(
+		Pattern p = Pattern.compile(
 			Re.sequence(
 				number,
 				Re.optional(Re.whitespace())
@@ -79,7 +79,7 @@ public class MatcherTest {
 	public void matchNumbers_replaceByParenthesized() {
 		String s = "123 456 789";
 		CaptureGroup number = Re.capture(Re.number());
-		Pattern p = Re.compile(
+		Pattern p = Pattern.compile(
 			Re.sequence(
 				number,
 				Re.optional(Re.whitespace())
@@ -94,7 +94,7 @@ public class MatcherTest {
 	public void matchWords_replaceByDoubled() {
 		String s = "abc def ghi";
 		CaptureGroup word = Re.capture(Re.word());
-		Pattern p = Re.compile(word);
+		Pattern p = Pattern.compile(word);
 		Matcher m = p.matcher(s);
 		String result = m.replaceAll(Re.replacement(word, word));
 		assertEquals("abcabc defdef ghighi", result);
@@ -104,7 +104,7 @@ public class MatcherTest {
 	public void matchChar_replaceByDoubled() {
 		String s = "abc def ghi";
 		CaptureGroup b = Re.capture(Re.character('b'));
-		Pattern p = Re.compile(b);
+		Pattern p = Pattern.compile(b);
 		Matcher m = p.matcher(s);
 		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
 		assertEquals("a<bb>c def ghi", result);
@@ -114,7 +114,7 @@ public class MatcherTest {
 	public void matchChar_literalSyntaxString_replaceByDoubled() {
 		String s = "abc def ghi";
 		CaptureGroup b = Re.capture("b");
-		Pattern p = Re.compile(b);
+		Pattern p = Pattern.compile(b);
 		Matcher m = p.matcher(s);
 		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
 		assertEquals("a<bb>c def ghi", result);
@@ -127,7 +127,7 @@ public class MatcherTest {
 		CaptureGroup sameWordTwice = Re.capture(
 			Re.sequence(word, Re.whitespace1(), Re.backReference(word))
 		);
-		Pattern p = Re.compile(sameWordTwice);
+		Pattern p = Pattern.compile(sameWordTwice);
 		Matcher m = p.matcher(s);
 		m.find();
 		assertEquals("abc abc", m.group(sameWordTwice));
@@ -138,7 +138,7 @@ public class MatcherTest {
 	public void matchChar_literalSyntaxChar_replaceByDoubled() {
 		String s = "abc def ghi";
 		CaptureGroup b = Re.capture('b');
-		Pattern p = Re.compile(b);
+		Pattern p = Pattern.compile(b);
 		Matcher m = p.matcher(s);
 		String result = m.replaceAll(Re.replacement('<', b, b, '>'));
 		assertEquals("a<bb>c def ghi", result);
@@ -149,7 +149,7 @@ public class MatcherTest {
 		String s = "abc def ghi";
 		CaptureGroup a = Re.capture(Re.character('a'));
 		CaptureGroup b = Re.capture(Re.character('b'));
-		Pattern p = Re.compile(Re.sequence(a, b));
+		Pattern p = Pattern.compile(Re.sequence(a, b));
 		Matcher m = p.matcher(s);
 		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
 		assertEquals("<bb>c def ghi", result);
@@ -160,7 +160,7 @@ public class MatcherTest {
 		String s = "abc def ghi";
 		CaptureGroup a = Re.capture("a");
 		CaptureGroup b = Re.capture("b");
-		Pattern p = Re.compile(Re.sequence(a, b, "c"));
+		Pattern p = Pattern.compile(Re.sequence(a, b, "c"));
 		Matcher m = p.matcher(s);
 		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
 		assertEquals("<bb> def ghi", result);
@@ -176,7 +176,7 @@ public class MatcherTest {
 				Re.character('.')
 			)
 		);
-		Pattern p = Re.compile(
+		Pattern p = Pattern.compile(
 			Re.sequence(sentence, Re.optional(Re.whitespace()))
 		);
 		Matcher m = p.matcher(s);
@@ -195,7 +195,7 @@ public class MatcherTest {
 			Re.optional(threeHexDigits)  // #FFFFFF
 	    ));
 		Expression hexColor = Re.sequence('#', hexValue);
-		Pattern p = Re.compile(hexColor);
+		Pattern p = Pattern.compile(hexColor);
 		Matcher m = p.matcher("#0FAFF3 and #1bf");
 		m.find();
 		assertEquals("0FAFF3", m.group(hexValue));

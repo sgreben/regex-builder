@@ -187,15 +187,6 @@ public class Re {
 	public static Expression backReference(CaptureGroup group) {
 		return new BackReference(group);
 	}
-	public static Pattern compile(Expression expression) {
-		return Compiler.compile(expression);
-	}
-	public static Pattern compile(String literal) {
-		return Compiler.compile(string(literal));
-	}
-	public static Pattern compile(char literal) {
-		return Compiler.compile(character(literal));
-	}
 	public static Replacement replacement(Object... os) {
 		Replacement replacement = new Replacement();
 		for(Object o : os) {
