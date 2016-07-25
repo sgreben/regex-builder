@@ -225,4 +225,31 @@ public class MatcherTest {
 		m.find();
 		assertEquals("1bf", m.group(hexValue));
 	}
+	@Test
+	public void possessiveQualifierTest() {
+		Expression xxy = Re.sequence(
+			Re.manyPossessive(Re.sequence(
+				Re.manyPossessive('x'),
+				Re.manyPossessive('x')
+			)),
+			'y'
+		);
+		Pattern p = Pattern.compile(xxy);
+		Matcher m = p.matcher("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		assertEquals(false, m.matches());
+	}
+	
+	@Test
+	public void possessiveQualifierTest_positive() {
+		Expression xxy = Re.sequence(
+			Re.manyPossessive(Re.sequence(
+				Re.manyPossessive('x'),
+				Re.manyPossessive('x')
+			)),
+			'y'
+		);
+		Pattern p = Pattern.compile(xxy);
+		Matcher m = p.matcher("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxy");
+		assertEquals(true, m.matches());
+	}
 }
