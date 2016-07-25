@@ -14,7 +14,7 @@ public class Repeat extends Unary {
 	}
 	
 	public Repeat(Expression child, Integer bound) { 
-		this(child, bound, null); 
+		this(child, bound, bound); 
 	}
 	
 	public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
@@ -23,10 +23,10 @@ public class Repeat extends Unary {
 			child.compile(index, output);
 		}
 		output.add(new END_GROUP());
-		if(lowerBound != null && upperBound != null) {
+		if(lowerBound != null && upperBound != null && lowerBound != upperBound) {
 			output.add(new BRACES(lowerBound, upperBound));
 		} else if (lowerBound != null) {
-			output.add(new BRACES(lowerBound));
+			output.add(new BRACES(lowerBound, null));
 		} else if (upperBound != null) {
 			output.add(new BRACES(upperBound));
 		}
