@@ -20,9 +20,13 @@ public class Pattern {
 		this.groupIndex = groupIndex;
 	}
 	
-	public Matcher matcher(String text) {
-		java.util.regex.Matcher matcher = rawPattern.matcher(text);
+	public Matcher matcher(CharSequence input) {
+		java.util.regex.Matcher matcher = rawPattern.matcher(input);
 		return new Matcher(matcher, groupIndex);
+	}
+	
+	public static boolean matches(Expression regex, CharSequence input) {
+		return compile(regex).matcher(input).matches();
 	}
 	
 	public String[] split(CharSequence input) {
@@ -31,6 +35,10 @@ public class Pattern {
 	
 	public String[] split(CharSequence input, int limit) {
 		return rawPattern.split(input, limit);
+	}
+	
+	public java.util.stream.Stream<String> splitAsStream(CharSequence input) {
+		return rawPattern.splitAsStream(input);
 	}
 	
 	@Override

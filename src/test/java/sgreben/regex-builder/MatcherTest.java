@@ -20,6 +20,18 @@ public class MatcherTest {
 	}
 	
 	@Test
+	public void matchNumber_matchedIsTrue_static() {
+		String s = "123";
+		assertTrue(Pattern.matches(Re.number(), s));
+	}
+	
+	@Test
+	public void matchNumber_matchedIsFalse_static() {
+		String s = "abc";
+		assertFalse(Pattern.matches(Re.number(), s));
+	}
+
+	@Test
 	public void matchAnyNumberAny_matchedIsTrue() {
 		String s = "abc 123 def";
 		Expression nonNumbers = Re.many(Re.nonDigit()); 
@@ -226,6 +238,22 @@ public class MatcherTest {
 		assertEquals("1bf", m.group(hexValue));
 	}
 	@Test
+	public void hexColorExampleFromReadme_alternativeBuildUsingBuiltinHexdigit() {
+		Expression hexDigit = Re.hexDigit();
+		Expression threeHexDigits = Re.repeat(hexDigit, 3);
+		CaptureGroup hexValue = Re.capture(Re.sequence(
+			threeHexDigits,              // #FFF  
+			Re.optional(threeHexDigits)  // #FFFFFF
+	    ));
+		Expression hexColor = Re.sequence('#', hexValue);
+		Pattern p = Pattern.compile(hexColor);
+		Matcher m = p.matcher("#0FAFF3 and #1bf");
+		m.find();
+		assertEquals("0FAFF3", m.group(hexValue));
+		m.find();
+		assertEquals("1bf", m.group(hexValue));
+	}
+	@Test
 	public void possessiveQualifierTest() {
 		Expression xxy = Re.sequence(
 			Re.manyPossessive(Re.sequence(
@@ -243,8 +271,8 @@ public class MatcherTest {
 	public void possessiveQualifierTest_positive() {
 		Expression xxy = Re.sequence(
 			Re.manyPossessive(Re.sequence(
-				Re.manyPossessive('x'),
-				Re.manyPossessive('x')
+				Re.many('x').possessive(),
+				Re.many('x').possessive()
 			)),
 			'y'
 		);
