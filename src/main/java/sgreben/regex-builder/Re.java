@@ -12,13 +12,13 @@ public class Re {
 		return string(""+c);
 	}
 	public static Expression beginInput() {
-		return new Raw("\\A");
+		return charClass(CharClass.beginInput());
 	}
 	public static Expression endInput() {
-		return new Raw("\\z");
+		return charClass(CharClass.endInput());
 	}
 	public static Expression endInputBeforeFinalTerminator() {
-		return new Raw("\\Z");
+		return charClass(CharClass.endInputBeforeFinalTerminator());
 	}
 	public static Expression beginLine() {
 		return new Raw("^");
@@ -272,6 +272,8 @@ public class Re {
 	public static Expression backReference(CaptureGroup group) {
 		return new BackReference(group);
 	}
+	/** A replacement expression consisting of a sequence of strings and capture groups.
+	 */
 	public static Replacement replacement(Object... os) {
 		Replacement replacement = new Replacement();
 		for(Object o : os) {
@@ -291,6 +293,7 @@ public class Re {
 		}
 		return replacement;
 	}
+	
 	private static Expression[] convertStrings(Object[] os) {
 		Expression[] es = new Expression[os.length];
 		for(int i = 0; i < os.length; ++i) {

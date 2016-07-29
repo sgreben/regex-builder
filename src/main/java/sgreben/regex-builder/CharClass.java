@@ -65,4 +65,13 @@ public abstract class CharClass {
 	public static CharClass nonHorizontalWhitespaceChar() {
 		return new NonHorizontalWhitespace();
 	}
+	public static CharClass beginInput() {
+		return new BeginInput();
+	}
+	public static CharClass endInput() {
+		return new EndInput();
+	}
+	public static CharClass endInputBeforeFinalTerminator() {
+		return new EndInputBeforeFinalTerminator();
+	}
 }
