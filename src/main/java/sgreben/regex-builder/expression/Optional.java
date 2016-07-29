@@ -14,4 +14,8 @@ public class Optional extends Unary {
 		output.add(new END_GROUP());
 		output.add(new QUESTION());
 	}
+	
+	public Expression possessive() {
+		return new OptionalGreedy(child());
+	}
 }

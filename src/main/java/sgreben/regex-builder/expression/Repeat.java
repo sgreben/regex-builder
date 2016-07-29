@@ -31,4 +31,8 @@ public class Repeat extends Unary {
 			output.add(new BRACES(upperBound));
 		}
 	}
+	
+	public Expression possessive() {
+		return new RepeatGreedy(child(), lowerBound, upperBound);
+	}
 }

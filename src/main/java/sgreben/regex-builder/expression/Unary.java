@@ -20,4 +20,8 @@ public abstract class Unary extends ExpressionBase implements Expression {
 	public Iterable<Expression> children() {
 		return children;
 	}
+	
+	public Expression child() {
+		return child;
+	}
 }

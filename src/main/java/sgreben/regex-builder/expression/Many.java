@@ -14,4 +14,7 @@ public class Many extends Unary {
 		output.add(new END_GROUP());
 		output.add(new STAR());
 	}
+	public Expression possessive() {
+		return new ManyGreedy(child());
+	}
 }

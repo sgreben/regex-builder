@@ -44,40 +44,40 @@ public class Re {
 	public static Expression nonDigit() {
 		return charClass(CharClass.nonDigit());
 	}
-	public static Expression many(Expression e) {
+	public static Many many(Expression e) {
 		return new Many(e);
 	}
-	public static Expression many(String e) {
+	public static Many many(String e) {
 		return many(string(e));
 	}
-	public static Expression many(char e) {
+	public static Many many(char e) {
 		return many(character(e));
 	}
-	public static Expression manyPossessive(Expression e) {
+	public static ManyGreedy manyPossessive(Expression e) {
 		return new ManyGreedy(e);
 	}
-	public static Expression manyPossessive(String e) {
+	public static ManyGreedy manyPossessive(String e) {
 		return manyPossessive(string(e));
 	}
-	public static Expression manyPossessive(char e) {
+	public static ManyGreedy manyPossessive(char e) {
 		return manyPossessive(character(e));
 	}
-	public static Expression repeat(Expression e, int times) {
+	public static Repeat repeat(Expression e, int times) {
 		return new Repeat(e, times);
 	}
-	public static Expression repeat(String e, int times) {
+	public static Repeat repeat(String e, int times) {
 		return repeat(string(e), times);
 	}
-	public static Expression repeat(char e, int times) {
+	public static Repeat repeat(char e, int times) {
 		return repeat(character(e), times);
 	}
-	public static Expression repeat(Expression e, int timesMin, int timesMax) {
+	public static Repeat repeat(Expression e, int timesMin, int timesMax) {
 		return new Repeat(e, timesMin, timesMax);
 	}
-	public static Expression repeat(String e, int timesMin, int timesMax) {
+	public static Repeat repeat(String e, int timesMin, int timesMax) {
 		return repeat(string(e), timesMin, timesMax);
 	}
-	public static Expression repeat(char e, int timesMin, int timesMax) {
+	public static Repeat repeat(char e, int timesMin, int timesMax) {
 		return repeat(character(e), timesMin, timesMax);
 	}
 	public static Expression repeatPossessive(Expression e, int times) {
@@ -98,22 +98,22 @@ public class Re {
 	public static Expression repeatPossessive(char e, int timesMin, int timesMax) {
 		return repeatPossessive(character(e), timesMin, timesMax);
 	}
-	public static Expression many1(Expression e) {
+	public static Many1 many1(Expression e) {
 		return new Many1(e);
 	}
-	public static Expression many1(String e) {
+	public static Many1 many1(String e) {
 		return many1(string(e));
 	}
-	public static Expression many1(char e) {
+	public static Many1 many1(char e) {
 		return many1(character(e));
 	}
-	public static Expression many1Possessive(Expression e) {
+	public static Many1Greedy many1Possessive(Expression e) {
 		return new Many1Greedy(e);
 	}
-	public static Expression many1Possessive(String e) {
+	public static Many1Greedy many1Possessive(String e) {
 		return many1Possessive(string(e));
 	}
-	public static Expression many1Possessive(char e) {
+	public static Many1Greedy many1Possessive(char e) {
 		return many1Possessive(character(e));
 	}
 	public static Expression sequence(Expression... es) {
@@ -128,13 +128,13 @@ public class Re {
 	public static Expression choice(Object... es) {
 		return sequence(convertStrings(es));
 	}
-	public static Expression optional(Expression e) {
+	public static Optional optional(Expression e) {
 		return new Optional(e);
 	}
-	public static Expression optional(String e) {
+	public static Optional optional(String e) {
 		return optional(string(e));
 	}
-	public static Expression optional(char e) {
+	public static Optional optional(char e) {
 		return optional(character(e));
 	}
 	public static Expression optionalGreedy(Expression e) {

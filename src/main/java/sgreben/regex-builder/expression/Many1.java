@@ -14,4 +14,7 @@ public class Many1 extends Unary {
 		output.add(new END_GROUP());
 		output.add(new PLUS());
 	}
+	public Expression possessive() {
+		return new Many1Greedy(child());
+	}
 }
