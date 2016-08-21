@@ -295,4 +295,48 @@ public class MatcherTest {
 		assertTrue(m2.matches());
 		
 	}
+	@Test
+	public void positiveLookaheadTest() {
+		Expression abc = Re.sequence(
+			"abc", Re.positiveLookahead("def")
+		);
+		Pattern p = Pattern.compile(abc);
+		assertFalse(p.matcher("123abc").find());
+		assertTrue(p.matcher("123abcdef").find());
+		assertFalse(p.matcher("123abc123def").find());
+		assertTrue(p.matcher("abcdef123").find());
+	}
+	@Test
+	public void positiveLookbehindTest() {
+		Expression abc = Re.sequence(
+			Re.positiveLookbehind("def"), "abc"
+		);
+		Pattern p = Pattern.compile(abc);
+		assertFalse(p.matcher("def123abc").find());
+		assertTrue(p.matcher("123defabc").find());
+		assertFalse(p.matcher("def123abc123def").find());
+		assertTrue(p.matcher("defabc123").find());
+	}
+	@Test
+	public void negativeLookbehindTest() {
+		Expression abc = Re.sequence(
+			Re.negativeLookbehind("def"), "abc"
+		);
+		Pattern p = Pattern.compile(abc);
+		assertTrue(p.matcher("def123abc").find());
+		assertFalse(p.matcher("123defabc").find());
+		assertTrue(p.matcher("def123abc123def").find());
+		assertFalse(p.matcher("defabc123").find());
+	}
+	@Test
+	public void negativeLookaheadTest() {
+		Expression abc = Re.sequence(
+			"abc", Re.negativeLookahead("def")
+		);
+		Pattern p = Pattern.compile(abc);
+		assertTrue(p.matcher("123abc").find());
+		assertFalse(p.matcher("123abcdef").find());
+		assertTrue(p.matcher("123abc123def").find());
+		assertFalse(p.matcher("abcdef123").find());
+	}
 }

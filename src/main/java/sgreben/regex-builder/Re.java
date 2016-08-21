@@ -264,13 +264,61 @@ public class Re {
 		return new CaptureGroup(expression);
 	}
 	public static CaptureGroup capture(Object... os) {
-		return new CaptureGroup(sequence(os));
+		return capture(sequence(os));
 	}
 	public static CaptureGroup capture(String e) {
-		return new CaptureGroup(string(e));
+		return capture(string(e));
 	}
 	public static CaptureGroup capture(char e) {
-		return new CaptureGroup(character(e));
+		return capture(character(e));
+	}
+	public static Expression positiveLookbehind(Expression expression) {
+		return new PositiveLookbehind(expression);
+	}
+	public static Expression positiveLookbehind(Object... os) {
+		return positiveLookbehind(sequence(os));
+	}
+	public static Expression positiveLookbehind(String e) {
+		return positiveLookbehind(string(e));
+	}
+	public static Expression positiveLookbehind(char e) {
+		return positiveLookbehind(character(e));
+	}
+	public static Expression negativeLookbehind(Expression expression) {
+		return new NegativeLookbehind(expression);
+	}
+	public static Expression negativeLookbehind(Object... os) {
+		return negativeLookbehind(sequence(os));
+	}
+	public static Expression negativeLookbehind(String e) {
+		return negativeLookbehind(string(e));
+	}
+	public static Expression negativeLookbehind(char e) {
+		return negativeLookbehind(character(e));
+	}
+	public static Expression positiveLookahead(Expression expression) {
+		return new PositiveLookahead(expression);
+	}
+	public static Expression positiveLookahead(Object... os) {
+		return positiveLookahead(sequence(os));
+	}
+	public static Expression positiveLookahead(String e) {
+		return positiveLookahead(string(e));
+	}
+	public static Expression positiveLookahead(char e) {
+		return positiveLookahead(character(e));
+	}
+	public static Expression negativeLookahead(Expression expression) {
+		return new NegativeLookahead(expression);
+	}
+	public static Expression negativeLookahead(Object... os) {
+		return negativeLookahead(sequence(os));
+	}
+	public static Expression negativeLookahead(String e) {
+		return negativeLookahead(string(e));
+	}
+	public static Expression negativeLookahead(char e) {
+		return negativeLookahead(character(e));
 	}
 	public static Expression backReference(CaptureGroup group) {
 		return new BackReference(group);
