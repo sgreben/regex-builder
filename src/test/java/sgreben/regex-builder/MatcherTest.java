@@ -207,10 +207,10 @@ public class MatcherTest {
 			CharClass.digit()
 		));
 		Expression threeHexDigits = Re.repeat(hexDigit, 3);
-		CaptureGroup hexValue = Re.capture(Re.sequence(
+		CaptureGroup hexValue = Re.capture(
 			threeHexDigits,              // #FFF  
 			Re.optional(threeHexDigits)  // #FFFFFF
-	    ));
+	    );
 		Expression hexColor = Re.sequence('#', hexValue);
 		Pattern p = Pattern.compile(hexColor);
 		Matcher m = p.matcher("#0FAFF3 and #1bf");

@@ -263,6 +263,9 @@ public class Re {
 	public static CaptureGroup capture(Expression expression) {
 		return new CaptureGroup(expression);
 	}
+	public static CaptureGroup capture(Object... os) {
+		return new CaptureGroup(sequence(os));
+	}
 	public static CaptureGroup capture(String e) {
 		return new CaptureGroup(string(e));
 	}
