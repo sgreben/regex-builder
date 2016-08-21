@@ -280,4 +280,19 @@ public class MatcherTest {
 		Matcher m = p.matcher("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxy");
 		assertEquals(true, m.matches());
 	}
+	
+	@Test
+	public void charClassIntersectionTest() {
+		Expression d = Re.charClass(CharClass.intersection(
+			CharClass.oneOf("abcd"),
+			CharClass.oneOf("defg"),
+			CharClass.wordChar()
+		));
+		Pattern p = Pattern.compile(d);
+		Matcher m1 = p.matcher("a");
+		Matcher m2 = p.matcher("d");
+		assertFalse(m1.matches());
+		assertTrue(m2.matches());
+		
+	}
 }

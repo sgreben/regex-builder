@@ -17,8 +17,20 @@ public abstract class CharClass {
 	public static CharClass union(CharClass... cs) {
 		return new Union(cs);
 	}
+	public static CharClass union(Object... cs) {
+		return union(convertStrings(cs));
+	}
+	public static CharClass intersection(CharClass... cs) {
+		return new Intersection(cs);
+	}
+	public static CharClass intersection(Object... cs) {
+		return intersection(convertStrings(cs));
+	}
 	public static CharClass complement(CharClass cs) {
 		return new Complement(cs);
+	}
+	public static CharClass complement(Object... cs) {
+		return complement(convertStrings(cs));
 	}
 	public static CharClass anyChar() {
 		return new AnyCharacter();
@@ -34,7 +46,7 @@ public abstract class CharClass {
 	}
 	public static CharClass nonHexDigit() {
 		return complement(hexDigit());
-		} 
+	} 
 	public static CharClass wordChar() {
 		return new WordCharacter();
 	}
@@ -73,5 +85,21 @@ public abstract class CharClass {
 	}
 	public static CharClass endInputBeforeFinalTerminator() {
 		return new EndInputBeforeFinalTerminator();
+	}
+	public static CharClass oneOf(String chars) {
+		return new OneOf(chars);
+	}
+	private static CharClass[] convertStrings(Object[] os) {
+		CharClass[] charClasses = new CharClass[os.length];
+		for(int i = 0; i < os.length; ++i) {
+			Object o = os[i];
+			if(o instanceof String) {
+				charClasses[i] = oneOf((String)o);
+			}
+			if(o instanceof CharClass) {
+				charClasses[i] = (CharClass) o;
+			}
+		}
+		return charClasses;
 	}
 }

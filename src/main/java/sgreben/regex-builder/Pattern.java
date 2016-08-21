@@ -1,5 +1,6 @@
 package sgreben.regex_builder;
 
+import sgreben.regex_builder.Expression;
 import sgreben.regex_builder.compiler.Compiler;
 
 public class Pattern {
@@ -39,6 +40,10 @@ public class Pattern {
 	
 	public java.util.stream.Stream<String> splitAsStream(CharSequence input) {
 		return rawPattern.splitAsStream(input);
+	}
+	
+	public String pattern() {
+		return rawPattern.pattern();
 	}
 	
 	@Override
