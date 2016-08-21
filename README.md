@@ -55,10 +55,10 @@ assertEquals("22", m.group(second));
 - Java code:
 ```java
 Expression threeHexDigits = Re.repeat(Re.hexDigit(), 3);
-CaptureGroup hexValue = Re.capture(Re.sequence(
+CaptureGroup hexValue = Re.capture(
     threeHexDigits,              // #FFF  
     Re.optional(threeHexDigits)  // #FFFFFF
-));
+);
 Expression hexColor = Re.sequence(
   '#', hexValue
 );
@@ -71,9 +71,35 @@ Matcher m = p.matcher("#0FAFF3 and #1bf");
 m.find();
 assertEquals("0FAFF3", m.group(hexValue));
 m.find();
-assertEquals("1bf", m.group(hexValue));```
+assertEquals("1bf", m.group(hexValue));
 ```
 
+### IPv4 Address
+
+- Regex string: 
+
+    (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.↵
+    (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.↵
+    (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.↵
+    (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)
+    
+- Java code:
+```java
+Expression b250_255 = Re.sequence("25", CharClass.range('0','5'));
+Expression b200_249 = Re.sequence('2', CharClass.range('0','4'), Re.digit()
+);
+Expression b000_199 = Re.sequence(
+  Re.optional(Re.choice('0','1')),
+  Re.digit(),
+  Re.optional(Re.digit())
+);
+Expression ipByte = Re.choice(b250_255, b200_249, b000_199);
+CaptureGroup byte1 = Re.capture(ipByte);
+CaptureGroup byte2 = Re.capture(ipByte);
+CaptureGroup byte3 = Re.capture(ipByte);
+CaptureGroup byte4 = Re.capture(ipByte);
+Expression ipv4 = Re.sequence(byte1, '.', byte2, '.', byte3, '.', byte4);
+```
 
 ## API
 
@@ -83,9 +109,19 @@ assertEquals("1bf", m.group(hexValue));```
 |--------------------------------|--------------------------|
 | Re.repeat(e, N)                | e{N}                     |
 | Re.many(e)                     | e*                       |
+| Re.many(e).possessive()        | e*+                      |
+| Re.manyPossessive(e)           | e*+                      |
 | Re.many1(e)                    | e+                       |
+| Re.many1(e).possessive()       | e++                      |
+| Re.many1Possessive(e)          | e++                      |
 | Re.optional(e)                 | e?                       |
+| Re.optional(e).possessive()    | e?+                      |
+| Re.optionalPossessive(e)       | e?+                      |
 | Re.capture(e)                  | (e)                      |
+| Re.positiveLookahead(e)        | (?=e)                    |
+| Re.negativeLookahead(e)        | (?!e)                    |
+| Re.positiveLookbehind(e)       | (?<=e)                   |
+| Re.negativeLookbehind(e)       | (?<!e)                   |
 | Re.backReference(g)            | \g                       |
 | Re.separatedBy(sep, e)         | (?:e((?:sep)(?:e))*)?    |
 | Re.separatedBy1(sep, e)        | e(?:(?:sep)(?:e))*       |
