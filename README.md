@@ -74,32 +74,6 @@ m.find();
 assertEquals("1bf", m.group(hexValue));
 ```
 
-### IPv4 Address
-
-- Regex string: 
-
-    (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.
-    (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.
-    (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.
-    (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)
-    
-- Java code:
-```java
-Expression b250_255 = Re.sequence("25", CharClass.range('0','5'));
-Expression b200_249 = Re.sequence('2', CharClass.range('0','4'), Re.digit()
-);
-Expression b000_199 = Re.sequence(
-  Re.optional(Re.choice('0','1')),
-  Re.digit(),
-  Re.optional(Re.digit())
-);
-Expression ipByte = Re.choice(b250_255, b200_249, b000_199);
-CaptureGroup byte1 = Re.capture(ipByte);
-CaptureGroup byte2 = Re.capture(ipByte);
-CaptureGroup byte3 = Re.capture(ipByte);
-CaptureGroup byte4 = Re.capture(ipByte);
-Expression ipv4 = Re.sequence(byte1, '.', byte2, '.', byte3, '.', byte4);
-```
 
 ## API
 
