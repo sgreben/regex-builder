@@ -260,6 +260,18 @@ public class Re {
 	public static Expression whitespace1() {
 		return many1(charClass(CharClass.whitespaceChar()));
 	}
+	public static Expression atomic(Expression expression) {
+		return new Atomic(expression);
+	}
+	public static Expression atomic(Object... os) {
+		return atomic(sequence(os));
+	}
+	public static Expression atomic(String e) {
+		return atomic(string(e));
+	}
+	public static Expression atomic(char e) {
+		return atomic(character(e));
+	}	
 	public static CaptureGroup capture(Expression expression) {
 		return new CaptureGroup(expression);
 	}
