@@ -21,10 +21,10 @@ public class Re {
 		return charClass(CharClass.endInputBeforeFinalTerminator());
 	}
 	public static Expression beginLine() {
-		return new Raw("^");
+		return new BeginLine();
 	}
 	public static Expression endLine() {
-		return new Raw("$");
+		return new EndLine();
 	}
 	public static Expression charClass(CharClass charClass) {
 		return new CharClassExpression(charClass);
