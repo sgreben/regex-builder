@@ -401,7 +401,9 @@ public class Re {
 		}
 		return replacement;
 	}
-	
+	/** Converts vararg actuals consisting of expressions, strings, 
+	 *  characters and character classes into an array of expressions.
+	 */
 	private static Expression[] convertStrings(Object[] os) {
 		Expression[] es = new Expression[os.length];
 		for(int i = 0; i < os.length; ++i) {
