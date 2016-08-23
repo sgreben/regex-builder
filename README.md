@@ -74,6 +74,44 @@ m.find();
 assertEquals("1bf", m.group(hexValue));
 ```
 
+### ISBN-10
+
+- Regex string: `^(?:ISBN(?:-10)?:?\ )?(?=[0-9X]{10}$|(?=(?:[0-9]+[-\ ]){3})[-\ 0-9X]{13}$)[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9][\- ]?[0-9X]$`
+
+- Java code:
+```java
+CharClass separator = CharClass.oneOf("- ");
+CharClass digitOrX = CharClass.union(CharClass.digit(), 'X');
+CharClass isbnChar = CharClass.union(digitOrX, separator);
+
+Expression isbnPrefix = Re.optional(
+    "ISBN", Re.optional("-10"), Re.optional(":"), " "
+);
+Expression formatPreCheck = Re.positiveLookahead(
+  Re.choice(
+    Re.repeat(digitOrX, 10),
+    Re.sequence(
+      Re.positiveLookahead(Re.many1(CharClass.digit()), Re.repeat(separator,3)),
+      Re.repeat(isbnChar, 13),
+      CharClass.endInput(),
+    )
+  )
+);
+Expression groupId = Re.sequence(
+  Re.repeat(CharClass.digit(), 1, 5), Re.optional(separator)
+);
+Expression publisherId  = Re.sequence(
+  Re.many1(CharClass.digit()), Re.optional(separator)
+);
+Expression titleId = publisherId;
+Expression checksumDigit = digitOrX;  
+
+Expression isbn10 = Re.sequence(
+  CharClass.beginInput(),
+  formatPreCheck, publisherId, titleId, checksumDigit
+  CharClass.endInput(),
+);
+```
 
 ## API
 
