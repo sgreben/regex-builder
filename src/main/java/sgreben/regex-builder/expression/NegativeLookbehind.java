@@ -8,9 +8,7 @@ public class NegativeLookbehind extends Unary {
 	
 	public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
 		output.add(new START_NEGATIVE_LOOKBEHIND());
-		for(Expression child : children()) {
-			child.compile(index, output);
-		}
+		child().compile(index, output);
 		output.add(new END_GROUP());
 	}
 }
