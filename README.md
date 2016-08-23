@@ -76,7 +76,7 @@ assertEquals("1bf", m.group(hexValue));
 
 ### ISBN-10
 
-- Regex string: `^(?:ISBN(?:-10)?:?\ )?(?=[0-9X]{10}$|(?=(?:[0-9]+[-\ ]){3})[-\ 0-9X]{13}$)[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9][\- ]?[0-9X]$`
+- Regex string: `(?:ISBN(?:-10)?:?\ )?(?=[0-9X]{10}$|(?=(?:[0-9]+[-\ ]){3})[-\ 0-9X]{13}$)[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9][\- ]?[0-9X]`
 
 - Java code:
 ```java
@@ -93,25 +93,24 @@ Expression formatPreCheck = Re.positiveLookahead(
     Re.sequence(
       Re.positiveLookahead(Re.many1(CharClass.digit()), Re.repeat(separator,3)),
       Re.repeat(isbnChar, 13),
-      CharClass.endInput(),
+      CharClass.endInput()
     )
   )
 );
 Expression groupId = Re.sequence(
   Re.repeat(CharClass.digit(), 1, 5), Re.optional(separator)
 );
-Expression publisherId  = Re.sequence(
+Expression publisherId = Re.sequence(
   Re.many1(CharClass.digit()), Re.optional(separator)
 );
 Expression titleId = publisherId;
 Expression checksumDigit = digitOrX;  
 
 Expression isbn10 = Re.sequence(
-  CharClass.beginInput(),
-  formatPreCheck, publisherId, titleId, checksumDigit
-  CharClass.endInput(),
+  isbnPrefix, formatPreCheck, publisherId, titleId, checksumDigit
 );
 ```
+
 
 ## API
 
@@ -152,6 +151,7 @@ Expression isbn10 = Re.sequence(
 |---------------------------------------|--------------------------|
 | CharClass.range(from, to)             | [from-to]                |
 | CharClass.range(f1, t1, ..., fN, tN)  | [f1-t1f2-t2...fN-tN]     |
+| CharClass.oneOf("abcde")              | [abcde]                  |
 | CharClass.union(class1, ..., classN)  | [[class1]...[classN]]    |
 | CharClass.complement(class1)          | [^[class1]]              |
 | CharClass.anyChar()                   | .                        |
