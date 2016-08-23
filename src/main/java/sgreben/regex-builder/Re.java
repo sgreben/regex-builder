@@ -62,6 +62,15 @@ public class Re {
 	public static ManyGreedy manyPossessive(char e) {
 		return manyPossessive(character(e));
 	}
+	public static ManyReluctant manyReluctant(Expression e) {
+		return new ManyReluctant(e);
+	}
+	public static ManyReluctant manyReluctant(String e) {
+		return manyReluctant(string(e));
+	}
+	public static ManyReluctant manyReluctant(char e) {
+		return manyReluctant(character(e));
+	}
 	public static Repeat repeat(Expression e, int times) {
 		return new Repeat(e, times);
 	}
@@ -98,6 +107,24 @@ public class Re {
 	public static Expression repeatPossessive(char e, int timesMin, int timesMax) {
 		return repeatPossessive(character(e), timesMin, timesMax);
 	}
+	public static Expression repeatReluctant(Expression e, int times) {
+		return new RepeatReluctant(e, times);
+	}
+	public static Expression repeatReluctant(String e, int times) {
+		return repeatReluctant(string(e), times);
+	}
+	public static Expression repeatReluctant(char e, int times) {
+		return repeatReluctant(character(e), times);
+	}
+	public static Expression repeatReluctant(Expression e, int timesMin, int timesMax) {
+		return new RepeatReluctant(e, timesMin, timesMax);
+	}
+	public static Expression repeatReluctant(String e, int timesMin, int timesMax) {
+		return repeatReluctant(string(e), timesMin, timesMax);
+	}
+	public static Expression repeatReluctant(char e, int timesMin, int timesMax) {
+		return repeatReluctant(character(e), timesMin, timesMax);
+	}
 	public static Many1 many1(Expression e) {
 		return new Many1(e);
 	}
@@ -107,14 +134,23 @@ public class Re {
 	public static Many1 many1(char e) {
 		return many1(character(e));
 	}
-	public static Many1Greedy many1Possessive(Expression e) {
+	public static Expression many1Possessive(Expression e) {
 		return new Many1Greedy(e);
 	}
-	public static Many1Greedy many1Possessive(String e) {
+	public static Expression many1Possessive(String e) {
 		return many1Possessive(string(e));
 	}
-	public static Many1Greedy many1Possessive(char e) {
+	public static Expression many1Possessive(char e) {
 		return many1Possessive(character(e));
+	}
+	public static Expression many1Reluctant(Expression e) {
+		return new Many1Reluctant(e);
+	}
+	public static Expression many1Reluctant(String e) {
+		return many1Reluctant(string(e));
+	}
+	public static Expression many1Reluctant(char e) {
+		return many1Reluctant(character(e));
 	}
 	public static Expression sequence(Expression... es) {
 		return new Sequence(es);
@@ -137,14 +173,23 @@ public class Re {
 	public static Optional optional(char e) {
 		return optional(character(e));
 	}
-	public static Expression optionalGreedy(Expression e) {
+	public static Expression optionalPossessive(Expression e) {
 		return new OptionalGreedy(e);
 	}
-	public static Expression optionalGreedy(String e) {
-		return optionalGreedy(string(e));
+	public static Expression optionalPossessive(String e) {
+		return optionalPossessive(string(e));
 	}
-	public static Expression optionalGreedy(char e) {
-		return optionalGreedy(character(e));
+	public static Expression optionalPossessive(char e) {
+		return optionalPossessive(character(e));
+	}
+	public static Expression optionalReluctant(Expression e) {
+		return new OptionalReluctant(e);
+	}
+	public static Expression optionalReluctant(String e) {
+		return optionalReluctant(string(e));
+	}
+	public static Expression optionalReluctant(char e) {
+		return optionalReluctant(character(e));
 	}
 	public static Expression separatedBy(Expression separator, Expression e) {
 		return optional(separatedBy1(separator, e));
@@ -198,10 +243,10 @@ public class Re {
 		return separatedBy1(character(separator), character(e));
 	}
 	public static Expression separatedByPossessive(Expression separator, Expression e) {
-		return optionalGreedy(separatedBy1Possessive(separator, e));
+		return optionalPossessive(separatedBy1Possessive(separator, e));
 	}
 	public static Expression separatedByPossessive(char separator, Expression e) {
-		return optionalGreedy(separatedBy1Possessive(character(separator), e));
+		return optionalPossessive(separatedBy1Possessive(character(separator), e));
 	}
 	public static Expression separatedByPossessive(String separator, Expression e) {
 		return separatedBy(string(separator), e);

@@ -93,6 +93,9 @@ public abstract class CharClass {
 		CharClass[] charClasses = new CharClass[os.length];
 		for(int i = 0; i < os.length; ++i) {
 			Object o = os[i];
+			if(o instanceof Character) {
+				charClasses[i] = oneOf(""+(Character)o);
+			}
 			if(o instanceof String) {
 				charClasses[i] = oneOf((String)o);
 			}

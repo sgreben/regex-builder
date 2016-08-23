@@ -17,4 +17,7 @@ public class Many1 extends Unary {
 	public Expression possessive() {
 		return new Many1Greedy(child());
 	}
+	public Expression reluctant() {
+		return new Many1Reluctant(child());
+	}
 }

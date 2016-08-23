@@ -35,4 +35,8 @@ public class Repeat extends Unary {
 	public Expression possessive() {
 		return new RepeatGreedy(child(), lowerBound, upperBound);
 	}
+	
+	public Expression reluctant() {
+		return new RepeatReluctant(child(), lowerBound, upperBound);
+	}
 }
