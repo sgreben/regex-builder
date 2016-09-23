@@ -5,8 +5,8 @@
   <artifactId>regex-builder</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>mre</name>
-  <url>http://maven.apache.org</url>
+  <name>regex-builder</name>
+  <url>https://github.com/sgreben/regex-builder/</url>
   <prerequisites>
 	  <maven>3.0</maven>
   </prerequisites>
