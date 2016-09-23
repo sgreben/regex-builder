@@ -23,7 +23,7 @@ public class Repeat extends Unary {
 			child.compile(index, output);
 		}
 		output.add(new END_GROUP());
-		if(lowerBound != null && upperBound != null && lowerBound != upperBound) {
+		if(lowerBound != null && upperBound != null && !lowerBound.equals(upperBound)) {
 			output.add(new BRACES(lowerBound, upperBound));
 		} else if (lowerBound != null) {
 			output.add(new BRACES(lowerBound, null));

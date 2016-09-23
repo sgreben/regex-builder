@@ -1,7 +1,5 @@
 package sgreben.regex_builder.tokens;
 
-import java.util.regex.Pattern;
-
 public class RAW implements TOKEN {
 	private final String rawRegex;
 	

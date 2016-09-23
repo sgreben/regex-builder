@@ -2,7 +2,6 @@ package sgreben.regex_builder;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.junit.Before;
 
 import sgreben.regex_builder.CaptureGroup;
 import sgreben.regex_builder.Matcher;

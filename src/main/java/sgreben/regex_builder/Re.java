@@ -1,7 +1,6 @@
 package sgreben.regex_builder;
 
 import sgreben.regex_builder.expression.*;
-import sgreben.regex_builder.compiler.Compiler;
 import sgreben.regex_builder.CharClass;
 
 public class Re {

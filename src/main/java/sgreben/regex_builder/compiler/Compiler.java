@@ -1,15 +1,11 @@
 package sgreben.regex_builder.compiler;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.LinkedList;
-import java.util.List;
 
 import sgreben.regex_builder.CaptureGroup;
 import sgreben.regex_builder.CaptureGroupIndex;
 import sgreben.regex_builder.Pattern;
 import sgreben.regex_builder.Expression;
-import sgreben.regex_builder.expression.*;
 import sgreben.regex_builder.tokens.*;
 
 public class Compiler {

@@ -1,11 +1,9 @@
 package sgreben.regex_builder.tokens;
 
 public class BRACES implements TOKEN {
-	private final Integer[] numbers;
 	private final String bracesString;
 	
 	public BRACES(Integer... numbers) {
-		this.numbers = numbers;
 		if(numbers.length == 0) {
 			bracesString = "";
 		} else if (numbers.length == 1) {

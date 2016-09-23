@@ -1,6 +1,5 @@
 package sgreben.regex_builder.charclass;
 
-import java.lang.Iterable;
 import sgreben.regex_builder.CharClass;
 
 public abstract class CharClassBase extends CharClass {

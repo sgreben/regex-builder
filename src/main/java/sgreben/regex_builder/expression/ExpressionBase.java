@@ -1,6 +1,5 @@
 package sgreben.regex_builder.expression;
 
-import java.lang.Iterable;
 import sgreben.regex_builder.Expression;
 
 public abstract class ExpressionBase implements Expression {

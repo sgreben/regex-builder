@@ -29,9 +29,6 @@ public abstract class CharClass {
 	public static CharClass complement(CharClass cs) {
 		return new Complement(cs);
 	}
-	public static CharClass complement(Object... cs) {
-		return complement(convertStrings(cs));
-	}
 	public static CharClass anyChar() {
 		return new AnyCharacter();
 	}
