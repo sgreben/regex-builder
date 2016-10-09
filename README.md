@@ -6,6 +6,16 @@ The **regex-builder** library is implemented as a light-weight wrapper around `j
 
 There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgrebenregexbuilder_write_regular/) of this project over on the Java reddit.
 
+## Maven dependency
+
+```xml
+<dependency>
+  <groupId>com.github.sgreben</groupId>
+  <artifactId>regex-builder</artifactId>
+  <version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
 ## Examples
 
 Imports:
