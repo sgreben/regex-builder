@@ -1,13 +1,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>sgreben.regex_builder</groupId>
+  <groupId>com.github.sgreben</groupId>
   <artifactId>regex-builder</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>regex-builder</name>
+  <version>1.0</version>
+  <name>${project.groupId}:${project.artifactId}</name>
   <description>Construct regular expressions as pure Java code.</description>
   <url>https://github.com/sgreben/regex-builder/</url>
+  <developers>
+    <developer>
+      <name>Sergey Grebenshchikov</name>
+      <email>sgreben@gmail.com</email>
+      <organizationUrl>https://github.com/sgreben</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/sgreben/regex-builder.git</connection>
+    <developerConnection>scm:git:ssh://github.com:sgreben/regex-builder.git</developerConnection>
+    <url>http://github.com/sgreben/regex-builder/tree/master</url>
+  </scm>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+  </licenses>
   <prerequisites>
 	  <maven>3.0</maven>
   </prerequisites>
