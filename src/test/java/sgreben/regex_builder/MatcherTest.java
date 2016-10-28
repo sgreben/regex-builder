@@ -3,12 +3,6 @@ package sgreben.regex_builder;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import sgreben.regex_builder.CaptureGroup;
-import sgreben.regex_builder.Matcher;
-import sgreben.regex_builder.Expression;
-import sgreben.regex_builder.CharClass;
-import sgreben.regex_builder.Re;
-
 public class MatcherTest {
 	@Test
 	public void matchNumber_matchedIsTrue() {
@@ -33,7 +27,7 @@ public class MatcherTest {
 	@Test
 	public void matchAnyNumberAny_matchedIsTrue() {
 		String s = "abc 123 def";
-		Expression nonNumbers = Re.many(Re.nonDigit()); 
+		Expression nonNumbers = Re.repeat(Re.nonDigit());
 		Pattern p = Pattern.compile(Re.sequence(
 			nonNumbers,
 			Re.number(),
@@ -57,7 +51,7 @@ public class MatcherTest {
 	public void matchAnyNumberAnyCaptureNumber_returnsNumber() {
 		String s = "abc 123 def";
 		CaptureGroup number = Re.capture(Re.number());
-		Expression nonNumbers = Re.many(Re.nonDigit()); 
+		Expression nonNumbers = Re.repeat(Re.nonDigit());
 		Pattern p = Pattern.compile(Re.sequence(
 			nonNumbers,
 			number,
@@ -255,9 +249,9 @@ public class MatcherTest {
 	@Test
 	public void possessiveQualifierTest() {
 		Expression xxy = Re.sequence(
-			Re.manyPossessive(Re.sequence(
-				Re.manyPossessive('x'),
-				Re.manyPossessive('x')
+			Re.repeatPossessive(Re.sequence(
+				Re.repeatPossessive('x'),
+				Re.repeatPossessive('x')
 			)),
 			'y'
 		);
@@ -269,9 +263,9 @@ public class MatcherTest {
 	@Test
 	public void possessiveQualifierTest_positive() {
 		Expression xxy = Re.sequence(
-			Re.manyPossessive(Re.sequence(
-				Re.many('x').possessive(),
-				Re.many('x').possessive()
+			Re.repeatPossessive(Re.sequence(
+				Re.repeat('x').possessive(),
+				Re.repeat('x').possessive()
 			)),
 			'y'
 		);

@@ -12,7 +12,7 @@ There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgre
 <dependency>
   <groupId>com.github.sgreben</groupId>
   <artifactId>regex-builder</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -91,12 +91,12 @@ assertEquals("1bf", m.group(hexValue));
 | Builder method                 | `java.util.regex` syntax |
 |--------------------------------|--------------------------|
 | Re.repeat(e, N)                | e{N}                     |
-| Re.many(e)                     | e*                       |
-| Re.many(e).possessive()        | e*+                      |
-| Re.manyPossessive(e)           | e*+                      |
-| Re.many1(e)                    | e+                       |
-| Re.many1(e).possessive()       | e++                      |
-| Re.many1Possessive(e)          | e++                      |
+| Re.repeat(e)                     | e*                       |
+| Re.repeat(e).possessive()        | e*+                      |
+| Re.repeatPossessive(e)           | e*+                      |
+| Re.repeat1(e)                    | e+                       |
+| Re.repeat1(e).possessive()       | e++                      |
+| Re.repeat1Possessive(e)          | e++                      |
 | Re.optional(e)                 | e?                       |
 | Re.optional(e).possessive()    | e?+                      |
 | Re.optionalPossessive(e)       | e?+                      |

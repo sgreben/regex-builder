@@ -3,8 +3,8 @@ package sgreben.regex_builder.expression;
 import sgreben.regex_builder.tokens.*;
 import sgreben.regex_builder.Expression;
 
-public class Many1 extends Unary {
-	public Many1(Expression child) { super(child); }
+public class Repeat1 extends Unary {
+	public Repeat1(Expression child) { super(child); }
 	
 	public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
 		output.add(new START_GROUP_NON_CAPTURING());
@@ -15,9 +15,9 @@ public class Many1 extends Unary {
 		output.add(new PLUS());
 	}
 	public Expression possessive() {
-		return new Many1Greedy(child());
+		return new Repeat1Possessive(child());
 	}
 	public Expression reluctant() {
-		return new Many1Reluctant(child());
+		return new Repeat1Reluctant(child());
 	}
 }

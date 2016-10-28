@@ -16,7 +16,7 @@ public class Optional extends Unary {
 	}
 	
 	public Expression possessive() {
-		return new OptionalGreedy(child());
+		return new OptionalPossessive(child());
 	}
 	
 	public Expression reluctant() {

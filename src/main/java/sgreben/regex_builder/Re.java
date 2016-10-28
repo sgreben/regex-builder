@@ -3,10 +3,12 @@ package sgreben.regex_builder;
 import sgreben.regex_builder.expression.*;
 
 public class Re {
+    /** String literal */
     public static Expression string(String s) {
         return new Literal(s);
     }
 
+    /** Character literal */
     public static Expression character(char c) {
         return string("" + c);
     }
@@ -55,40 +57,36 @@ public class Re {
         return charClass(CharClass.nonDigit());
     }
 
-    public static Many many(Expression e) {
-        return new Many(e);
+    public static Repeat repeat(Expression e) {
+        return new Repeat(e);
     }
 
-    public static Many many(String e) {
-        return many(string(e));
+    public static Repeat repeat(String e) {
+        return repeat(string(e));
     }
 
-    public static Many many(char e) {
-        return many(character(e));
+    public static Repeat repeat(char e) {
+        return repeat(character(e));
     }
 
-    public static ManyGreedy manyPossessive(Expression e) {
-        return new ManyGreedy(e);
+    public static RepeatPossessive repeatPossessive(Expression e) {
+        return new RepeatPossessive(e);
     }
 
-    public static ManyGreedy manyPossessive(String e) {
-        return manyPossessive(string(e));
+    public static RepeatPossessive repeatPossessive(String e) {
+        return repeatPossessive(string(e));
     }
 
-    public static ManyGreedy manyPossessive(char e) {
-        return manyPossessive(character(e));
+    public static RepeatPossessive repeatPossessive(char e) {
+        return repeatPossessive(character(e));
     }
 
-    public static ManyReluctant manyReluctant(Expression e) {
-        return new ManyReluctant(e);
-    }
+    public static RepeatReluctant repeatReluctant(Expression e) { return new RepeatReluctant(e); }
 
-    public static ManyReluctant manyReluctant(String e) {
-        return manyReluctant(string(e));
-    }
+    public static RepeatReluctant repeatReluctant(String e) { return repeatReluctant(string(e)); }
 
-    public static ManyReluctant manyReluctant(char e) {
-        return manyReluctant(character(e));
+    public static RepeatReluctant repeatReluctant(char e) {
+        return repeatReluctant(character(e));
     }
 
     public static Repeat repeat(Expression e, int times) {
@@ -116,7 +114,7 @@ public class Re {
     }
 
     public static Expression repeatPossessive(Expression e, int times) {
-        return new RepeatGreedy(e, times);
+        return new RepeatPossessive(e, times);
     }
 
     public static Expression repeatPossessive(String e, int times) {
@@ -128,7 +126,7 @@ public class Re {
     }
 
     public static Expression repeatPossessive(Expression e, int timesMin, int timesMax) {
-        return new RepeatGreedy(e, timesMin, timesMax);
+        return new RepeatPossessive(e, timesMin, timesMax);
     }
 
     public static Expression repeatPossessive(String e, int timesMin, int timesMax) {
@@ -163,40 +161,40 @@ public class Re {
         return repeatReluctant(character(e), timesMin, timesMax);
     }
 
-    public static Many1 many1(Expression e) {
-        return new Many1(e);
+    public static Repeat1 repeat1(Expression e) {
+        return new Repeat1(e);
     }
 
-    public static Many1 many1(String e) {
-        return many1(string(e));
+    public static Repeat1 repeat1(String e) {
+        return repeat1(string(e));
     }
 
-    public static Many1 many1(char e) {
-        return many1(character(e));
+    public static Repeat1 repeat1(char e) {
+        return repeat1(character(e));
     }
 
-    public static Expression many1Possessive(Expression e) {
-        return new Many1Greedy(e);
+    public static Expression repeat1Possessive(Expression e) {
+        return new Repeat1Possessive(e);
     }
 
-    public static Expression many1Possessive(String e) {
-        return many1Possessive(string(e));
+    public static Expression repeat1Possessive(String e) {
+        return repeat1Possessive(string(e));
     }
 
-    public static Expression many1Possessive(char e) {
-        return many1Possessive(character(e));
+    public static Expression repeat1Possessive(char e) {
+        return repeat1Possessive(character(e));
     }
 
-    public static Expression many1Reluctant(Expression e) {
-        return new Many1Reluctant(e);
+    public static Expression repeat1Reluctant(Expression e) {
+        return new Repeat1Reluctant(e);
     }
 
-    public static Expression many1Reluctant(String e) {
-        return many1Reluctant(string(e));
+    public static Expression repeat1Reluctant(String e) {
+        return repeat1Reluctant(string(e));
     }
 
-    public static Expression many1Reluctant(char e) {
-        return many1Reluctant(character(e));
+    public static Expression repeat1Reluctant(char e) {
+        return repeat1Reluctant(character(e));
     }
 
     public static Expression sequence(Expression... es) {
@@ -228,7 +226,7 @@ public class Re {
     }
 
     public static Expression optionalPossessive(Expression e) {
-        return new OptionalGreedy(e);
+        return new OptionalPossessive(e);
     }
 
     public static Expression optionalPossessive(String e) {
@@ -288,7 +286,7 @@ public class Re {
     }
 
     public static Expression separatedBy1(Expression separator, Expression e) {
-        return sequence(e, many(sequence(separator, e)));
+        return sequence(e, repeat(sequence(separator, e)));
     }
 
     public static Expression separatedBy1(String separator, Expression e) {
@@ -356,7 +354,7 @@ public class Re {
     }
 
     public static Expression separatedBy1Possessive(Expression separator, Expression e) {
-        return sequence(e, manyPossessive(sequence(separator, e)));
+        return sequence(e, repeatPossessive(sequence(separator, e)));
     }
 
     public static Expression separatedBy1Possessive(String separator, Expression e) {
@@ -388,19 +386,19 @@ public class Re {
     }
 
     public static Expression word() {
-        return many1(charClass(CharClass.wordChar()));
+        return repeat1(charClass(CharClass.wordChar()));
     }
 
     public static Expression number() {
-        return many1(digit());
+        return repeat1(digit());
     }
 
     public static Expression whitespace() {
-        return many(charClass(CharClass.whitespaceChar()));
+        return repeat(charClass(CharClass.whitespaceChar()));
     }
 
     public static Expression whitespace1() {
-        return many1(charClass(CharClass.whitespaceChar()));
+        return repeat1(charClass(CharClass.whitespaceChar()));
     }
 
     public static Expression atomic(Expression expression) {

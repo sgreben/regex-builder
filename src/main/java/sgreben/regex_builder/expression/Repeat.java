@@ -6,7 +6,13 @@ import sgreben.regex_builder.Expression;
 public class Repeat extends Unary {
 	private final Integer lowerBound;
 	private final Integer upperBound;
-	
+
+    public Repeat(Expression child) {
+        super(child);
+        this.lowerBound = null;
+        this.upperBound = null;
+    }
+
 	public Repeat(Expression child, Integer lowerBound, Integer upperBound) { 
 		super(child); 
 		this.lowerBound = lowerBound;
@@ -29,11 +35,13 @@ public class Repeat extends Unary {
 			output.add(new BRACES(lowerBound, null));
 		} else if (upperBound != null) {
 			output.add(new BRACES(upperBound));
+		} else {
+			output.add(new STAR());
 		}
 	}
 	
 	public Expression possessive() {
-		return new RepeatGreedy(child(), lowerBound, upperBound);
+		return new RepeatPossessive(child(), lowerBound, upperBound);
 	}
 	
 	public Expression reluctant() {
