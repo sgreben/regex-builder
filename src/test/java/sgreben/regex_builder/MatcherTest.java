@@ -375,5 +375,7 @@ public class MatcherTest {
         assertEquals("HTTP/1.1", m.group(protocol));
         assertEquals("200", m.group(responseCode));
         assertEquals("2048", m.group(size));
+		assertEquals("127.0.0.1 - /home.html - 200", m.replaceAll(replacement(ip, " - ", request, " - ", responseCode)));
+		assertEquals("127.0.0.1 - /home.html - 200", m.replaceFirst(replacement(ip, " - ", request, " - ", responseCode)));
 	}
 }

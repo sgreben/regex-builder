@@ -47,6 +47,11 @@ public class Matcher {
 		String replacementString = replacement.toReplacementString(groupIndex);
 		return matcher.replaceAll(replacementString);
 	}
+
+	public String replaceFirst(Replacement replacement) {
+		String replacementString = replacement.toReplacementString(groupIndex);
+		return matcher.replaceFirst(replacementString);
+	}
 	
 	public Matcher appendReplacement(StringBuffer sb, Replacement replacement) {
 		String replacementString = replacement.toReplacementString(groupIndex);
