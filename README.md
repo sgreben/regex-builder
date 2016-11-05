@@ -34,22 +34,19 @@ import static sgreben.regex_builder.Re.*;
 ```java
 
 CaptureGroup ip, client, user, dateTime, method, request, protocol, responseCode, size;
-Expression nonWhitespace = repeat1(nonWhitespaceChar());
+Expression token = repeat1(nonWhitespaceChar());
 
-ip = capture(nonWhitespace);
-client = capture(nonWhitespace);
-user = capture(nonWhitespace);
+ip = capture(token);
+client = capture(token);
+user = capture(token);
 dateTime = capture(sequence(
-  repeat1(union(wordChar(),':','/')),  // 21/Jul/2014:9:55:27
-  whitespaceChar(),
-  oneOf("+\\-"),     // -
-  repeat(digit(), 4) // 0800
+  repeat1(union(wordChar(),':','/')),  whitespaceChar(), oneOf("+\\-"), repeat(digit(), 4)
 ));
-method = capture(nonWhitespace);
-request = capture(nonWhitespace);
-protocol = capture(nonWhitespace);
+method = capture(token);
+request = capture(token);
+protocol = capture(token);
 responseCode = capture(repeat(digit(), 3));
-size = capture(repeat1(digit()));
+size = capture(number());
 
 Pattern p = Pattern.compile(sequence(
   beginInput(),
@@ -57,8 +54,7 @@ Pattern p = Pattern.compile(sequence(
   endInput()
 ));
 ```
-
-Use the expression like this:
+Note that capture groups are plain java objects - no need to mess around with group indices or string group names. You can use the expression like this:
 ```java
 String logLine = "127.0.0.1 - - [21/Jul/2014:9:55:27 -0800] \"GET /home.html HTTP/1.1\" 200 2048";
 Matcher m = p.matcher(logLine);
@@ -76,6 +72,10 @@ assertEquals("200", m.group(responseCode));
 assertEquals("2048", m.group(size));
 ```
 
+Or, if you'd like to rewrite the log to a simpler "ip - request - response code" format, you can simply do
+```java
+String result = m.replaceAll(replacement(ip, " - ", request, " - ", responseCode));
+```
 ### Date (DD/MM/YYYY HH:MM:SS)
 
 - Regex string: `(\d\d\)/(\d\d)\/(\d\d\d\d) (\d\d):(\d\d):(\d\d)`
