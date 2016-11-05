@@ -915,6 +915,8 @@ public class Re {
                 replacement.addPart(
                         new CaptureGroupReplacementPart((CaptureGroup) o)
                 );
+            } else {
+                throw new IllegalArgumentException("A replacement must be a string, character, or a capture group.");
             }
         }
         return replacement;
@@ -935,6 +937,8 @@ public class Re {
                 es[i] = charClass((CharClass) os[i]);
             } else if (os[i] instanceof Character) {
                 es[i] = character((Character) os[i]);
+            } else {
+                throw new IllegalArgumentException("An expression must be an Expression, string, character, or a character class.");
             }
         }
         return es;
