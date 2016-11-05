@@ -58,6 +58,24 @@ Pattern p = Pattern.compile(sequence(
 ));
 ```
 
+Use the expression like this:
+```java
+String logLine = "127.0.0.1 - - [21/Jul/2014:9:55:27 -0800] \"GET /home.html HTTP/1.1\" 200 2048";
+Matcher m = p.matcher(logLine);
+
+assertTrue(m.matches());
+
+assertEquals("127.0.0.1", m.group(ip));
+assertEquals("-", m.group(client));
+assertEquals("-", m.group(user));
+assertEquals("21/Jul/2014:9:55:27 -0800", m.group(dateTime));
+assertEquals("GET", m.group(method));
+assertEquals("/home.html", m.group(request));
+assertEquals("HTTP/1.1", m.group(protocol));
+assertEquals("200", m.group(responseCode));
+assertEquals("2048", m.group(size));
+```
+
 ### Date (DD/MM/YYYY HH:MM:SS)
 
 - Regex string: `(\d\d\)/(\d\d)\/(\d\d\d\d) (\d\d):(\d\d):(\d\d)`
