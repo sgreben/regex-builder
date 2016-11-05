@@ -4,7 +4,8 @@ import java.util.LinkedList;
 
 public class Replacement {
 	private final LinkedList<ReplacementPart> parts;
-	
+	private String replacementString = null;
+
 	public Replacement() {
 		parts = new LinkedList<ReplacementPart>();
 	}
@@ -14,10 +15,14 @@ public class Replacement {
 	}
 	
 	public String toReplacementString(CaptureGroupIndex index) {
+		if (replacementString != null) {
+			return replacementString;
+		}
 		StringBuilder sb = new StringBuilder();
 		for(ReplacementPart part : parts) {
 			sb.append(part.toReplacementString(index));
 		}
-		return sb.toString();
+		replacementString = sb.toString();
+		return replacementString;
 	}
 }
