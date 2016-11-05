@@ -2,6 +2,8 @@ package sgreben.regex_builder;
 
 import sgreben.regex_builder.expression.*;
 
+/** Regular expression builder
+ * */
 public class Re {
     /** String literal */
     public static Expression string(String s) {
@@ -11,18 +13,6 @@ public class Re {
     /** Character literal */
     public static Expression character(char c) {
         return string("" + c);
-    }
-
-    public static Expression beginInput() {
-        return charClass(CharClass.beginInput());
-    }
-
-    public static Expression endInput() {
-        return charClass(CharClass.endInput());
-    }
-
-    public static Expression endInputBeforeFinalTerminator() {
-        return charClass(CharClass.endInputBeforeFinalTerminator());
     }
 
     public static Expression beginLine() {
@@ -49,202 +39,314 @@ public class Re {
         return charClass(CharClass.complement(CharClass.hexDigit()));
     }
 
-    public static Expression digit() {
-        return charClass(CharClass.digit());
-    }
-
-    public static Expression nonDigit() {
-        return charClass(CharClass.nonDigit());
-    }
-
+    /** Repeat the expression zero or more times. */
     public static Repeat repeat(Expression e) {
         return new Repeat(e);
     }
 
+    /** Repeat the expression zero or more times. */
+    public static Repeat repeat(CharClass c) {
+        return new Repeat(charClass(c));
+    }
+
+    /** Repeat the expression zero or more times. */
     public static Repeat repeat(String e) {
         return repeat(string(e));
     }
 
+    /** Repeat the expression zero or more times. */
     public static Repeat repeat(char e) {
         return repeat(character(e));
     }
 
+    /** Repeat the expression zero or more times (possessive) */
     public static RepeatPossessive repeatPossessive(Expression e) {
         return new RepeatPossessive(e);
     }
 
+    /** Repeat the expression zero or more times (possessive) */
+    public static RepeatPossessive repeatPossessive(CharClass c) {
+        return new RepeatPossessive(charClass(c));
+    }
+
+    /** Repeat the expression zero or more times (possessive) */
     public static RepeatPossessive repeatPossessive(String e) {
         return repeatPossessive(string(e));
     }
 
+    /** Repeat the expression zero or more times (possessive) */
     public static RepeatPossessive repeatPossessive(char e) {
         return repeatPossessive(character(e));
     }
 
+    /** Repeat the expression zero or more times (reluctant) */
     public static RepeatReluctant repeatReluctant(Expression e) { return new RepeatReluctant(e); }
 
+    /** Repeat the expression zero or more times (reluctant) */
+    public static RepeatReluctant repeatReluctant(CharClass c) { return new RepeatReluctant(charClass(c)); }
+
+    /** Repeat the expression zero or more times (reluctant) */
     public static RepeatReluctant repeatReluctant(String e) { return repeatReluctant(string(e)); }
 
+    /** Repeat the expression zero or more times (reluctant) */
     public static RepeatReluctant repeatReluctant(char e) {
         return repeatReluctant(character(e));
     }
 
+    /** Repeat the expression the given number of times */
     public static Repeat repeat(Expression e, int times) {
         return new Repeat(e, times);
     }
 
+    /** Repeat the expression the given number of times */
+    public static Repeat repeat(CharClass c, int times) {
+        return repeat(charClass(c), times);
+    }
+
+    /** Repeat the expression the given number of times */
     public static Repeat repeat(String e, int times) {
         return repeat(string(e), times);
     }
 
+    /** Repeat the expression the given number of times */
     public static Repeat repeat(char e, int times) {
         return repeat(character(e), times);
     }
 
+    /** Repeat the expression a number of times within the given range. */
     public static Repeat repeat(Expression e, int timesMin, int timesMax) {
         return new Repeat(e, timesMin, timesMax);
     }
 
+    /** Repeat the expression a number of times within the given range. */
     public static Repeat repeat(String e, int timesMin, int timesMax) {
         return repeat(string(e), timesMin, timesMax);
     }
 
+    /** Repeat the expression a number of times within the given range. */
+    public static Repeat repeat(CharClass c, int timesMin, int timesMax) {
+        return repeat(charClass(c), timesMin, timesMax);
+    }
+
+    /** Repeat the expression a number of times within the given range. */
     public static Repeat repeat(char e, int timesMin, int timesMax) {
         return repeat(character(e), timesMin, timesMax);
     }
 
+    /** Repeat the expression a number of times (possessive). */
     public static Expression repeatPossessive(Expression e, int times) {
         return new RepeatPossessive(e, times);
     }
 
+    /** Repeat the expression a number of times (possessive). */
+    public static Expression repeatPossessive(CharClass c, int times) {
+        return repeatPossessive(charClass(c), times);
+    }
+
+    /** Repeat the expression a number of times (possessive). */
     public static Expression repeatPossessive(String e, int times) {
         return repeatPossessive(string(e), times);
     }
 
+    /** Repeat the expression a number of times (possessive). */
     public static Expression repeatPossessive(char e, int times) {
         return repeatPossessive(character(e), times);
     }
 
+    /** Repeat the expression a number of times within the given range (possessive). */
     public static Expression repeatPossessive(Expression e, int timesMin, int timesMax) {
         return new RepeatPossessive(e, timesMin, timesMax);
     }
 
+    /** Repeat the expression a number of times within the given range (possessive). */
+    public static Expression repeatPossessive(CharClass c, int timesMin, int timesMax) {
+        return repeatPossessive(charClass(c), timesMin, timesMax);
+    }
+
+    /** Repeat the expression a number of times within the given range (possessive). */
     public static Expression repeatPossessive(String e, int timesMin, int timesMax) {
         return repeatPossessive(string(e), timesMin, timesMax);
     }
 
+    /** Repeat the expression a number of times within the given range (possessive). */
     public static Expression repeatPossessive(char e, int timesMin, int timesMax) {
         return repeatPossessive(character(e), timesMin, timesMax);
     }
 
+    /** Repeat the expression the given number of times (reluctant). */
     public static Expression repeatReluctant(Expression e, int times) {
         return new RepeatReluctant(e, times);
     }
 
+    /** Repeat the expression the given number of times (reluctant). */
     public static Expression repeatReluctant(String e, int times) {
         return repeatReluctant(string(e), times);
     }
 
+    /** Repeat the expression the given number of times (reluctant). */
+    public static Expression repeatReluctant(CharClass c, int times) {
+        return repeatReluctant(charClass(c), times);
+    }
+
+    /** Repeat the expression the given number of times (reluctant). */
     public static Expression repeatReluctant(char e, int times) {
         return repeatReluctant(character(e), times);
     }
 
+    /** Repeat the expression a number of times within the given range (reluctant). */
     public static Expression repeatReluctant(Expression e, int timesMin, int timesMax) {
         return new RepeatReluctant(e, timesMin, timesMax);
     }
 
+    /** Repeat the expression a number of times within the given range (reluctant). */
+    public static Expression repeatReluctant(CharClass c, int timesMin, int timesMax) {
+        return repeatReluctant(charClass(c), timesMin, timesMax);
+    }
+
+    /** Repeat the expression a number of times within the given range (reluctant). */
     public static Expression repeatReluctant(String e, int timesMin, int timesMax) {
         return repeatReluctant(string(e), timesMin, timesMax);
     }
 
+    /** Repeat the expression a number of times within the given range (reluctant). */
     public static Expression repeatReluctant(char e, int timesMin, int timesMax) {
         return repeatReluctant(character(e), timesMin, timesMax);
     }
 
-    public static Repeat1 repeat1(Expression e) {
-        return new Repeat1(e);
+    /** Repeat the expression one or more times. */
+    public static Repeat1 repeat1(Expression e) { return new Repeat1(e); }
+
+    /** Repeat the expression one or more times. */
+    public static Repeat1 repeat1(CharClass c) {
+        return repeat1(charClass(c));
     }
 
+    /** Repeat the expression one or more times. */
     public static Repeat1 repeat1(String e) {
         return repeat1(string(e));
     }
 
+    /** Repeat the expression one or more times. */
     public static Repeat1 repeat1(char e) {
         return repeat1(character(e));
     }
 
+    /** Repeat the expression one or more times (possessive). */
     public static Expression repeat1Possessive(Expression e) {
         return new Repeat1Possessive(e);
     }
 
+    /** Repeat the expression one or more times (possessive). */
     public static Expression repeat1Possessive(String e) {
         return repeat1Possessive(string(e));
     }
 
+    /** Repeat the expression one or more times (possessive). */
     public static Expression repeat1Possessive(char e) {
         return repeat1Possessive(character(e));
     }
 
+    /** Repeat the expression one or more times (possessive). */
+    public static Expression repeat1Possessive(CharClass c) {
+        return repeat1Possessive(charClass(c));
+    }
+
+    /** Repeat the expression one or more times (reluctant). */
     public static Expression repeat1Reluctant(Expression e) {
         return new Repeat1Reluctant(e);
     }
 
+    /** Repeat the expression one or more times (reluctant). */
+    public static Expression repeat1Reluctant(CharClass c) {
+        return repeat1Reluctant(charClass(c));
+    }
+
+    /** Repeat the expression one or more times (reluctant). */
     public static Expression repeat1Reluctant(String e) {
         return repeat1Reluctant(string(e));
     }
 
+    /** Repeat the expression one or more times (reluctant). */
     public static Expression repeat1Reluctant(char e) {
         return repeat1Reluctant(character(e));
     }
 
+    /** Match a sequence of expessions. */
     public static Expression sequence(Expression... es) {
         return new Sequence(es);
     }
 
+    /** Match a sequence of expessions. */
     public static Expression sequence(Object... os) {
         return sequence(convertStrings(os));
     }
 
+    /** Match one of the given expessions. */
     public static Expression choice(Expression... es) {
         return new Choice(es);
     }
 
+    /** Match one of the given expessions. */
     public static Expression choice(Object... es) {
         return sequence(convertStrings(es));
     }
 
+    /** Match the given expession zero or one times. */
     public static Optional optional(Expression e) {
         return new Optional(e);
     }
 
+    /** Match the given expession zero or one times. */
+    public static Optional optional(CharClass c) {
+        return optional(charClass(c));
+    }
+
+    /** Match the given expession zero or one times. */
     public static Optional optional(String e) {
         return optional(string(e));
     }
 
+    /** Match the given expession zero or one times. */
     public static Optional optional(char e) {
         return optional(character(e));
     }
 
+    /** Match the given expession zero or one times (possessive). */
     public static Expression optionalPossessive(Expression e) {
         return new OptionalPossessive(e);
     }
 
+    /** Match the given expession zero or one times (possessive). */
+    public static Expression optionalPossessive(CharClass c) {
+        return optionalPossessive(charClass(c));
+    }
+
+    /** Match the given expession zero or one times (possessive). */
     public static Expression optionalPossessive(String e) {
         return optionalPossessive(string(e));
     }
 
+    /** Match the given expession zero or one times (possessive). */
     public static Expression optionalPossessive(char e) {
         return optionalPossessive(character(e));
     }
 
+    /** Match the given expession zero or one times (reluctant). */
     public static Expression optionalReluctant(Expression e) {
         return new OptionalReluctant(e);
     }
 
+    /** Match the given expession zero or one times (reluctant). */
     public static Expression optionalReluctant(String e) {
         return optionalReluctant(string(e));
     }
 
+    /** Match the given expession zero or one times (reluctant). */
+    public static Expression optionalReluctant(CharClass c) {
+        return optionalReluctant(charClass(c));
+    }
+
+    /** Match the given expession zero or one times (reluctant). */
     public static Expression optionalReluctant(char e) {
         return optionalReluctant(character(e));
     }
@@ -261,6 +363,10 @@ public class Re {
         return separatedBy(string(separator), e);
     }
 
+    public static Expression separatedBy(CharClass separator, Expression e) {
+        return separatedBy(charClass(separator), e);
+    }
+
     public static Expression separatedBy(Expression separator, String e) {
         return separatedBy(separator, string(e));
     }
@@ -269,25 +375,19 @@ public class Re {
         return separatedBy(separator, character(e));
     }
 
-    public static Expression separatedBy(String separator, String e) {
-        return separatedBy(string(separator), string(e));
-    }
+    public static Expression separatedBy(Expression separator, CharClass c) { return separatedBy(separator, charClass(c)); }
 
-    public static Expression separatedBy(char separator, String e) {
-        return separatedBy(character(separator), string(e));
-    }
+    public static Expression separatedBy(CharClass separator, CharClass c) { return separatedBy(charClass(separator), charClass(c)); }
 
-    public static Expression separatedBy(String separator, char e) {
-        return separatedBy(string(separator), character(e));
-    }
+    public static Expression separatedBy(String separator, String e) { return separatedBy(string(separator), string(e)); }
 
-    public static Expression separatedBy(char separator, char e) {
-        return separatedBy(character(separator), character(e));
-    }
+    public static Expression separatedBy(char separator, String e) { return separatedBy(character(separator), string(e)); }
 
-    public static Expression separatedBy1(Expression separator, Expression e) {
-        return sequence(e, repeat(sequence(separator, e)));
-    }
+    public static Expression separatedBy(String separator, char e) { return separatedBy(string(separator), character(e)); }
+
+    public static Expression separatedBy(char separator, char e) { return separatedBy(character(separator), character(e)); }
+
+    public static Expression separatedBy1(Expression separator, Expression e) { return sequence(e, repeat(sequence(separator, e))); }
 
     public static Expression separatedBy1(String separator, Expression e) {
         return separatedBy1(string(separator), e);
@@ -386,19 +486,19 @@ public class Re {
     }
 
     public static Expression word() {
-        return repeat1(charClass(CharClass.wordChar()));
+        return repeat1(CharClass.wordChar());
     }
 
     public static Expression number() {
-        return repeat1(digit());
+        return repeat1(CharClass.digit());
     }
 
     public static Expression whitespace() {
-        return repeat(charClass(CharClass.whitespaceChar()));
+        return repeat(CharClass.whitespaceChar());
     }
 
     public static Expression whitespace1() {
-        return repeat1(charClass(CharClass.whitespaceChar()));
+        return repeat1(CharClass.whitespaceChar());
     }
 
     public static Expression atomic(Expression expression) {

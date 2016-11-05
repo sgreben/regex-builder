@@ -23,8 +23,39 @@ Imports:
 import sgreben.regex_builder.CaptureGroup;
 import sgreben.regex_builder.Expression;
 import sgreben.regex_builder.Pattern;
-import sgreben.regex_builder.CharClass;
-import sgreben.regex_builder.Re;
+import static sgreben.regex_builder.*;
+import static sgreben.regex_builder.Re.*;
+```
+
+### Apache log
+
+- Regex string: `^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\d{3}) (\\d+)$`
+- Java code:
+```java
+
+CaptureGroup ip, client, user, dateTime, method, request, protocol, responseCode, size;
+Expression nonWhitespace = repeat1(nonWhitespaceChar());
+
+ip = capture(nonWhitespace);
+client = capture(nonWhitespace);
+user = capture(nonWhitespace);
+dateTime = capture(sequence(
+        repeat1(union(wordChar(),':','/')),  // 21/Jul/2014:9:55:27
+        whitespaceChar(),
+        oneOf("+\\-"),     // -
+        repeat(digit(), 4) // 0800
+));
+method = capture(nonWhitespace);
+request = capture(nonWhitespace);
+protocol = capture(nonWhitespace);
+responseCode = capture(repeat(digit(), 3));
+size = capture(repeat1(digit()));
+
+Pattern p = Pattern.compile(sequence(
+        beginInput(),
+        ip, ' ', client, ' ', user, " [", dateTime, "] \"", method, ' ', request, ' ', protocol, "\" ", responseCode, ' ', size,
+        endInput()
+));
 ```
 
 ### Date (DD/MM/YYYY HH:MM:SS)
@@ -32,15 +63,15 @@ import sgreben.regex_builder.Re;
 - Regex string: `(\d\d\)/(\d\d)\/(\d\d\d\d) (\d\d):(\d\d):(\d\d)`
 - Java code:
 ```java
-Expression twoDigits = Re.repeat(Re.digit(), 2);
-Expression fourDigits = Re.repeat(Re.digit(), 4);
-CaptureGroup day = Re.capture(twoDigits);
-CaptureGroup month = Re.capture(twoDigits);
-CaptureGroup year = Re.capture(fourDigits);
-CaptureGroup hour = Re.capture(twoDigits);
-CaptureGroup minute = Re.capture(twoDigits);
-CaptureGroup second = Re.capture(twoDigits);
-Expression dateExpression = Re.sequence(
+Expression twoDigits = repeat(digit(), 2);
+Expression fourDigits = repeat(digit(), 4);
+CaptureGroup day = capture(twoDigits);
+CaptureGroup month = capture(twoDigits);
+CaptureGroup year = capture(fourDigits);
+CaptureGroup hour = capture(twoDigits);
+CaptureGroup minute = capture(twoDigits);
+CaptureGroup second = capture(twoDigits);
+Expression dateExpression = sequence(
   day, '/', month, '/', year, ' ', // DD/MM/YYY
   hour, ':', minute, ':', second,    // HH:MM:SS
 );
@@ -64,12 +95,12 @@ assertEquals("22", m.group(second));
 - Regex string: `#([a-fA-F0-9]){3}(([a-fA-F0-9]){3})?`
 - Java code:
 ```java
-Expression threeHexDigits = Re.repeat(Re.hexDigit(), 3);
-CaptureGroup hexValue = Re.capture(
+Expression threeHexDigits = repeat(hexDigit(), 3);
+CaptureGroup hexValue = capture(
     threeHexDigits,              // #FFF  
-    Re.optional(threeHexDigits)  // #FFFFFF
+    optional(threeHexDigits)  // #FFFFFF
 );
-Expression hexColor = Re.sequence(
+Expression hexColor = sequence(
   '#', hexValue
 );
 ```
@@ -88,56 +119,56 @@ assertEquals("1bf", m.group(hexValue));
 
 ### Expression builder
 
-| Builder method                 | `java.util.regex` syntax |
-|--------------------------------|--------------------------|
-| Re.repeat(e, N)                | e{N}                     |
-| Re.repeat(e)                     | e*                       |
-| Re.repeat(e).possessive()        | e*+                      |
-| Re.repeatPossessive(e)           | e*+                      |
-| Re.repeat1(e)                    | e+                       |
-| Re.repeat1(e).possessive()       | e++                      |
-| Re.repeat1Possessive(e)          | e++                      |
-| Re.optional(e)                 | e?                       |
-| Re.optional(e).possessive()    | e?+                      |
-| Re.optionalPossessive(e)       | e?+                      |
-| Re.capture(e)                  | (e)                      |
-| Re.positiveLookahead(e)        | (?=e)                    |
-| Re.negativeLookahead(e)        | (?!e)                    |
-| Re.positiveLookbehind(e)       | (?<=e)                   |
-| Re.negativeLookbehind(e)       | (?<!e)                   |
-| Re.backReference(g)            | \g                       |
-| Re.separatedBy(sep, e)         | (?:e((?:sep)(?:e))*)?    |
-| Re.separatedBy1(sep, e)        | e(?:(?:sep)(?:e))*       |
-| Re.choice(e1,...,eN)           | (?:e1\|...\| eN)         |
-| Re.sequence(e1,...,eN)         | e1...eN                  |
-| Re.string(s)                   | \Qs\E                    |
-| Re.word()                      | \w+                      |
-| Re.number()                    | \d+                      |
-| Re.whitespace()                | \s*                      |
-| Re.whitespace1()               | \s+                      |
-| CaptureGroup g = Re.capture(e) | (?g e)                   |
+| Builder method              | `java.util.regex` syntax |
+|-----------------------------|--------------------------|
+| repeat(e, N)                | e{N}                     |
+| repeat(e)                   | e*                       |
+| repeat(e).possessive()      | e*+                      |
+| repeatPossessive(e)         | e*+                      |
+| repeat1(e)                  | e+                       |
+| repeat1(e).possessive()     | e++                      |
+| repeat1Possessive(e)        | e++                      |
+| optional(e)                 | e?                       |
+| optional(e).possessive()    | e?+                      |
+| optionalPossessive(e)       | e?+                      |
+| capture(e)                  | (e)                      |
+| positiveLookahead(e)        | (?=e)                    |
+| negativeLookahead(e)        | (?!e)                    |
+| positiveLookbehind(e)       | (?<=e)                   |
+| negativeLookbehind(e)       | (?<!e)                   |
+| backReference(g)            | \g                       |
+| separatedBy(sep, e)         | (?:e((?:sep)(?:e))*)?    |
+| separatedBy1(sep, e)        | e(?:(?:sep)(?:e))*       |
+| choice(e1,...,eN)           | (?:e1\|...\| eN)         |
+| sequence(e1,...,eN)         | e1...eN                  |
+| string(s)                   | \Qs\E                    |
+| word()                      | \w+                      |
+| number()                    | \d+                      |
+| whitespace()                | \s*                      |
+| whitespace1()               | \s+                      |
+| CaptureGroup g = capture(e) | (?g e)                   |
 
 ### CharClass builder
 
 | Builder method                        | `java.util.regex` syntax |
 |---------------------------------------|--------------------------|
-| CharClass.range(from, to)             | [from-to]                |
-| CharClass.range(f1, t1, ..., fN, tN)  | [f1-t1f2-t2...fN-tN]     |
-| CharClass.oneOf("abcde")              | [abcde]                  |
-| CharClass.union(class1, ..., classN)  | [[class1]...[classN]]    |
-| CharClass.complement(class1)          | [^[class1]]              |
-| CharClass.anyChar()                   | .                        |
-| CharClass.digit()                     | \d                       |
-| CharClass.nonDigit()                  | \D                       |
-| CharClass.hexDigit()                  | [a-fA-F0-9]              |
-| CharClass.nonHexDigit()               | [^[a-fA-F0-9]]           |
-| CharClass.wordChar()                  | \w                       |
-| CharClass.nonWordChar()               | \W                       |
-| CharClass.wordBoundary()              | \b                       |
-| CharClass.nonWordBoundary()           | \B                       |
-| CharClass.whitespaceChar()            | \s                       |
-| CharClass.nonWhitespaceChar()         | \S                       |
-| CharClass.verticalWhitespaceChar()    | \v                       |
-| CharClass.nonVerticalWhitespaceChar() | \V                       |
-| CharClass.horizontalWhitespaceChar()  | \h                       |
-| CharClass.nonHorizontalWhitespaceChar()| \H                      |
+| range(from, to)             | [from-to]                |
+| range(f1, t1, ..., fN, tN)  | [f1-t1f2-t2...fN-tN]     |
+| oneOf("abcde")              | [abcde]                  |
+| union(class1, ..., classN)  | [[class1]...[classN]]    |
+| complement(class1)          | [\^[class1]]              |
+| anyChar()                   | .                        |
+| digit()                     | \d                       |
+| nonDigit()                  | \D                       |
+| hexDigit()                  | [a-fA-F0-9]              |
+| nonHexDigit()               | [\^[a-fA-F0-9]]           |
+| wordChar()                  | \w                       |
+| nonWordChar()               | \W                       |
+| wordBoundary()              | \b                       |
+| nonWordBoundary()           | \B                       |
+| whitespaceChar()            | \s                       |
+| nonWhitespaceChar()         | \S                       |
+| verticalWhitespaceChar()    | \v                       |
+| nonVerticalWhitespaceChar() | \V                       |
+| horizontalWhitespaceChar()  | \h                       |
+| nonHorizontalWhitespaceChar()| \H                      |

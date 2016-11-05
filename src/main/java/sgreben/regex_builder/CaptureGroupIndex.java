@@ -2,6 +2,7 @@ package sgreben.regex_builder;
 
 import java.util.*;
 
+/** A mapping between CaptureGroup objects and the underlying regex group indices. */
 public class CaptureGroupIndex {
 	private final Map<CaptureGroup, Integer> groupIndex;
 	

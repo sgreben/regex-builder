@@ -1,6 +1,8 @@
 package sgreben.regex_builder;
 
 import static org.junit.Assert.*;
+import static sgreben.regex_builder.CharClass.*;
+import static sgreben.regex_builder.Re.*;
 import org.junit.Test;
 
 public class MatcherTest {
@@ -27,7 +29,7 @@ public class MatcherTest {
 	@Test
 	public void matchAnyNumberAny_matchedIsTrue() {
 		String s = "abc 123 def";
-		Expression nonNumbers = Re.repeat(Re.nonDigit());
+		Expression nonNumbers = Re.repeat(nonDigit());
 		Pattern p = Pattern.compile(Re.sequence(
 			nonNumbers,
 			Re.number(),
@@ -51,7 +53,7 @@ public class MatcherTest {
 	public void matchAnyNumberAnyCaptureNumber_returnsNumber() {
 		String s = "abc 123 def";
 		CaptureGroup number = Re.capture(Re.number());
-		Expression nonNumbers = Re.repeat(Re.nonDigit());
+		Expression nonNumbers = Re.repeat(nonDigit());
 		Pattern p = Pattern.compile(Re.sequence(
 			nonNumbers,
 			number,
@@ -263,10 +265,10 @@ public class MatcherTest {
 	@Test
 	public void possessiveQualifierTest_positive() {
 		Expression xxy = Re.sequence(
-			Re.repeatPossessive(Re.sequence(
+			Re.repeat(Re.sequence(
 				Re.repeat('x').possessive(),
 				Re.repeat('x').possessive()
-			)),
+			)).possessive(),
 			'y'
 		);
 		Pattern p = Pattern.compile(xxy);
@@ -331,5 +333,47 @@ public class MatcherTest {
 		assertFalse(p.matcher("123abcdef").find());
 		assertTrue(p.matcher("123abc123def").find());
 		assertFalse(p.matcher("abcdef123").find());
+	}
+
+	@Test
+	public void apacheLogLine() {
+		String logLine = "127.0.0.1 - - [21/Jul/2014:9:55:27 -0800] \"GET /home.html HTTP/1.1\" 200 2048";
+		// "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\d{3}) (\\d+)";
+
+        CaptureGroup ip, client, user, dateTime, method, request, protocol, responseCode, size;
+        Expression nonWhitespace = repeat1(nonWhitespaceChar());
+
+        ip = capture(nonWhitespace);
+		client = capture(nonWhitespace);
+		user = capture(nonWhitespace);
+		dateTime = capture(sequence(
+				repeat1(union(wordChar(),':','/')),  // 21/Jul/2014:9:55:27
+				whitespaceChar(),
+				oneOf("+\\-"),     // -
+				repeat(digit(), 4) // 0800
+		));
+		method = capture(nonWhitespace);
+		request = capture(nonWhitespace);
+		protocol = capture(nonWhitespace);
+		responseCode = capture(repeat(digit(), 3));
+        size = capture(repeat1(digit()));
+
+        Pattern p = Pattern.compile(sequence(
+                beginInput(),
+                ip, ' ', client, ' ', user, " [", dateTime, "] \"", method, ' ', request, ' ', protocol, "\" ", responseCode, ' ', size,
+                endInput()
+        ));
+
+        Matcher m = p.matcher(logLine);
+        assertTrue(m.matches());
+        assertEquals("127.0.0.1", m.group(ip));
+        assertEquals("-", m.group(client));
+        assertEquals("-", m.group(user));
+        assertEquals("21/Jul/2014:9:55:27 -0800", m.group(dateTime));
+        assertEquals("GET", m.group(method));
+        assertEquals("/home.html", m.group(request));
+        assertEquals("HTTP/1.1", m.group(protocol));
+        assertEquals("200", m.group(responseCode));
+        assertEquals("2048", m.group(size));
 	}
 }

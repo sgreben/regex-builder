@@ -3,6 +3,7 @@ package sgreben.regex_builder;
 import sgreben.regex_builder.expression.*;
 import sgreben.regex_builder.tokens.*;
 
+/** A regex capture group "(...)" */
 public class CaptureGroup extends Unary implements Expression {
 
 	public CaptureGroup(Expression expression) { super(expression); }
