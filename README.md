@@ -40,10 +40,7 @@ ip = capture(token);
 client = capture(token);
 user = capture(token);
 dateTime = capture(sequence(
-  repeat1(union(wordChar(),':','/')),  // 21/Jul/2014:9:55:27
-  whitespaceChar(),
-  oneOf("+\\-"),     // -
-  repeat(digit(), 4) // 0800
+  repeat1(union(wordChar(),':','/')),  whitespaceChar(), oneOf("+\\-"), repeat(digit(), 4)
 ));
 method = capture(token);
 request = capture(token);
