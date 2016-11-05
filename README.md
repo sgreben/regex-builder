@@ -40,10 +40,10 @@ ip = capture(nonWhitespace);
 client = capture(nonWhitespace);
 user = capture(nonWhitespace);
 dateTime = capture(sequence(
-        repeat1(union(wordChar(),':','/')),  // 21/Jul/2014:9:55:27
-        whitespaceChar(),
-        oneOf("+\\-"),     // -
-        repeat(digit(), 4) // 0800
+  repeat1(union(wordChar(),':','/')),  // 21/Jul/2014:9:55:27
+  whitespaceChar(),
+  oneOf("+\\-"),     // -
+  repeat(digit(), 4) // 0800
 ));
 method = capture(nonWhitespace);
 request = capture(nonWhitespace);
@@ -52,9 +52,9 @@ responseCode = capture(repeat(digit(), 3));
 size = capture(repeat1(digit()));
 
 Pattern p = Pattern.compile(sequence(
-        beginInput(),
-        ip, ' ', client, ' ', user, " [", dateTime, "] \"", method, ' ', request, ' ', protocol, "\" ", responseCode, ' ', size,
-        endInput()
+  beginInput(),
+  ip, ' ', client, ' ', user, " [", dateTime, "] \"", method, ' ', request, ' ', protocol, "\" ", responseCode, ' ', size,
+  endInput()
 ));
 ```
 
