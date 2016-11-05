@@ -34,20 +34,20 @@ import static sgreben.regex_builder.Re.*;
 ```java
 
 CaptureGroup ip, client, user, dateTime, method, request, protocol, responseCode, size;
-Expression nonWhitespace = repeat1(nonWhitespaceChar());
+Expression token = repeat1(nonWhitespaceChar());
 
-ip = capture(nonWhitespace);
-client = capture(nonWhitespace);
-user = capture(nonWhitespace);
+ip = capture(token);
+client = capture(token);
+user = capture(token);
 dateTime = capture(sequence(
   repeat1(union(wordChar(),':','/')),  // 21/Jul/2014:9:55:27
   whitespaceChar(),
   oneOf("+\\-"),     // -
   repeat(digit(), 4) // 0800
 ));
-method = capture(nonWhitespace);
-request = capture(nonWhitespace);
-protocol = capture(nonWhitespace);
+method = capture(token);
+request = capture(token);
+protocol = capture(token);
 responseCode = capture(repeat(digit(), 3));
 size = capture(repeat1(digit()));
 
