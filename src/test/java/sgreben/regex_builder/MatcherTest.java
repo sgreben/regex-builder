@@ -234,8 +234,7 @@ public class MatcherTest {
 	}
 	@Test
 	public void hexColorExampleFromReadme_alternativeBuildUsingBuiltinHexdigit() {
-		Expression hexDigit = Re.hexDigit();
-		Expression threeHexDigits = Re.repeat(hexDigit, 3);
+		Expression threeHexDigits = Re.repeat(hexDigit(), 3);
 		CaptureGroup hexValue = Re.capture(Re.sequence(
 			threeHexDigits,              // #FFF  
 			Re.optional(threeHexDigits)  // #FFFFFF
