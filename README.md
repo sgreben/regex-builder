@@ -46,7 +46,7 @@ method = capture(token);
 request = capture(token);
 protocol = capture(token);
 responseCode = capture(repeat(digit(), 3));
-size = capture(repeat1(digit()));
+size = capture(number());
 
 Pattern p = Pattern.compile(sequence(
   beginInput(),
