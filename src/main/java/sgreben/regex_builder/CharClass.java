@@ -132,6 +132,8 @@ public abstract class CharClass {
     public abstract void compile(java.util.List<TOKEN> output);
 
     public static class Posix {
+        private Posix() {}
+
         public static CharClass Lower() {
             return new sgreben.regex_builder.charclass.Posix("Lower");
         }
@@ -186,6 +188,8 @@ public abstract class CharClass {
     }
 
     public static class Java {
+        private Java() {}
+
         public static CharClass LowerCase() {
             return new sgreben.regex_builder.charclass.Java("javaLowerCase");
         }

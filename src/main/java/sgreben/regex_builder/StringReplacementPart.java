@@ -6,7 +6,8 @@ class StringReplacementPart implements ReplacementPart {
 	public StringReplacementPart(String string) {
 		this.string = string;
 	}
-	
+
+	@Override
 	public String toReplacementString(CaptureGroupIndex index) {
 		return string;
 	}

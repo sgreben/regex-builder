@@ -14,6 +14,7 @@ public class RepeatAtLeast extends Unary {
         this.lowerBound = lowerBound;
     }
 
+    @Override
     public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
         output.add(new START_GROUP_NON_CAPTURING());
         for (Expression child : children()) {
@@ -23,10 +24,12 @@ public class RepeatAtLeast extends Unary {
         output.add(new BRACES(lowerBound, null));
     }
 
+    @Override
     public Expression possessive() {
         return new RepeatAtLeastPossessive(child(), lowerBound);
     }
 
+    @Override
     public Expression reluctant() {
         return new RepeatAtLeastReluctant(child(), lowerBound);
     }

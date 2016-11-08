@@ -23,6 +23,7 @@ public class Repeat extends Unary {
         this(child, bound, bound);
     }
 
+    @Override
     public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
         output.add(new START_GROUP_NON_CAPTURING());
         for (Expression child : children()) {
@@ -40,10 +41,12 @@ public class Repeat extends Unary {
         }
     }
 
+    @Override
     public Expression possessive() {
         return new RepeatPossessive(child(), lowerBound, upperBound);
     }
 
+    @Override
     public Expression reluctant() {
         return new RepeatReluctant(child(), lowerBound, upperBound);
     }

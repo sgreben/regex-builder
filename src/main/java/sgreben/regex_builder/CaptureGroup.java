@@ -14,6 +14,7 @@ public class CaptureGroup extends Unary implements Expression {
         super(expression);
     }
 
+    @Override
     public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
         output.add(new START_GROUP());
         for (Expression child : children()) {

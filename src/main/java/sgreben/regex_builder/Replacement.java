@@ -7,7 +7,7 @@ public class Replacement {
     private String replacementString = null;
 
     public Replacement() {
-        parts = new LinkedList<ReplacementPart>();
+        parts = new LinkedList<>();
     }
 
     public void addPart(ReplacementPart part) {

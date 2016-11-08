@@ -6,6 +6,7 @@ import sgreben.regex_builder.expression.*;
  * Regular expression builder
  */
 public class Re {
+    private Re() {}
     /**
      * Match a string literal.
      */
@@ -17,7 +18,7 @@ public class Re {
      * Match a character literal.
      */
     public static Expression character(char c) {
-        return string("" + c);
+        return string(Character.toString(c));
     }
 
     /**

@@ -6,6 +6,7 @@ import sgreben.regex_builder.Expression;
 public class Choice extends Nary {
 	public Choice(Expression... children) { super(children); }
 
+	@Override
 	public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
 		boolean first = true;
 		output.add(new START_GROUP_NON_CAPTURING());

@@ -25,7 +25,7 @@ public class FluentRe {
     }
 
     public static FluentRe match(char c) {
-        return match("" + c);
+        return match(Character.toString(c));
     }
 
     public FluentRe or(FluentRe e) {

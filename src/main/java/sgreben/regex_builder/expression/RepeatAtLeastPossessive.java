@@ -10,6 +10,7 @@ public class RepeatAtLeastPossessive extends RepeatAtLeast {
         super(child, lowerBound);
     }
 
+    @Override
     public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
         super.compile(index, output);
         output.add(new PLUS());

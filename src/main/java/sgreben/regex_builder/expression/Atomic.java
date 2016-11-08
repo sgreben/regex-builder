@@ -5,7 +5,8 @@ import sgreben.regex_builder.Expression;
 
 public class Atomic extends Unary {
 	public Atomic(Expression child) { super(child); }
-	
+
+	@Override
 	public void compile(sgreben.regex_builder.CaptureGroupIndex index, java.util.List<TOKEN> output) {
 		output.add(new START_GROUP_ATOMIC_NON_CAPTURING());
 		for(Expression child : children()) {
