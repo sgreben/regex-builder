@@ -2,7 +2,7 @@
 
 Write regexes as **plain Java code**. Unlike opaque regex strings, commenting your expressions and reusing regex fragments is straightforward.
 
-The **regex-builder** library is implemented as a light-weight wrapper around `java.util.regex`.     
+The **regex-builder** library is implemented as a light-weight wrapper around `java.util.regex`. It consists of three main components: the expression builder `Re`, its fluent API equivalent `FluentRe`, and the character class builder  `CharClass`. The components are introduced in the examples below as well as in the API overview tables at the end of this document.     
 
 There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgrebenregexbuilder_write_regular/) of this project over on the Java reddit.
 
