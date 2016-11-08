@@ -36,6 +36,10 @@ public class FluentRe {
         return new FluentRe(Re.repeat(expression));
     }
 
+    public FluentRe repeat1() {
+        return new FluentRe(Re.repeat1(expression));
+    }
+
     public FluentRe repeat(int n) {
         return new FluentRe(Re.repeat(expression, n));
     }
