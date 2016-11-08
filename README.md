@@ -76,6 +76,49 @@ Or, if you'd like to rewrite the log to a simpler "ip - request - response code"
 ```java
 String result = m.replaceAll(replacement(ip, " - ", request, " - ", responseCode));
 ```
+
+### Apache log (fluent API)
+
+The above example can also be expressed using the fluent API implemented in `FluentRe`. To use it, you have import it as
+
+```java
+import static sgreben.regex_builder.CharClass.*;
+import sgreben.regex_builder.FluentRe;
+``` 
+
+```java
+CaptureGroup ip, client, user, dateTime, method, request, protocol, responseCode, size;
+FluentRe nonWhitespace = FluentRe.match(nonWhitespaceChar()).repeat1();
+
+ip = nonWhitespace.capture();
+client = nonWhitespace.capture();
+user = nonWhitespace.capture();
+dateTime = FluentRe
+    .match(union(wordChar(), oneOf(":/"))).repeat1()
+    .then(whitespaceChar())
+    .then(oneOf("+\\-"))
+    .then(FluentRe.match(digit()).repeat(4))
+    .capture();
+method = nonWhitespace.capture();
+request = nonWhitespace.capture();
+protocol = nonWhitespace.capture();
+responseCode = FluentRe.match(digit()).repeat(3).capture();
+size = FluentRe.match(digit()).repeat1().capture();
+
+Pattern p = FluentRe.match(beginInput())
+    .then(ip).then(' ')
+    .then(client).then(' ')
+    .then(user).then(" [")
+    .then(dateTime).then("] \"")
+    .then(method).then(' ')
+    .then(request).then(' ')
+    .then(protocol).then("\" ")
+    .then(responseCode).then(' ')
+    .then(size)
+    .then(endInput())
+    .compile();
+```
+
 ### Date (DD/MM/YYYY HH:MM:SS)
 
 - Regex string: `(\d\d\)/(\d\d)\/(\d\d\d\d) (\d\d):(\d\d):(\d\d)`

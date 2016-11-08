@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static sgreben.regex_builder.CharClass.*;
+import static sgreben.regex_builder.Re.replacement;
 
 public class FluentReTest {
     @Test
@@ -71,5 +73,56 @@ public class FluentReTest {
         CaptureGroup abcOrGhiGroup = FluentRe.match("Def").or("Ghi").capture();
         Pattern p = FluentRe.match("abc").then(abcOrGhiGroup).compile();
         assertEquals("(\\Qabc\\E((?:\\QDef\\E|\\QGhi\\E)))", p.toString());
+    }
+
+    @Test
+    public void apacheLogLine() {
+        String logLine = "127.0.0.1 - - [21/Jul/2014:9:55:27 -0800] \"GET /home.html HTTP/1.1\" 200 2048";
+        // "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\d{3}) (\\d+)";
+
+        CaptureGroup ip, client, user, dateTime, method, request, protocol, responseCode, size;
+        FluentRe nonWhitespace = FluentRe.match(nonWhitespaceChar()).repeat1();
+
+        ip = nonWhitespace.capture();
+        client = nonWhitespace.capture();
+        user = nonWhitespace.capture();
+        dateTime = FluentRe
+                .match(union(wordChar(), oneOf(":/"))).repeat1()
+                .then(whitespaceChar())
+                .then(oneOf("+\\-"))
+                .then(FluentRe.match(digit()).repeat(4))
+                .capture();
+        method = nonWhitespace.capture();
+        request = nonWhitespace.capture();
+        protocol = nonWhitespace.capture();
+        responseCode = FluentRe.match(digit()).repeat(3).capture();
+        size = FluentRe.match(digit()).repeat1().capture();
+
+        Pattern p = FluentRe.match(beginInput())
+                .then(ip).then(' ')
+                .then(client).then(' ')
+                .then(user).then(" [")
+                .then(dateTime).then("] \"")
+                .then(method).then(' ')
+                .then(request).then(' ')
+                .then(protocol).then("\" ")
+                .then(responseCode).then(' ')
+                .then(size)
+                .then(endInput())
+                .compile();
+
+        Matcher m = p.matcher(logLine);
+        assertTrue(m.matches());
+        assertEquals("127.0.0.1", m.group(ip));
+        assertEquals("-", m.group(client));
+        assertEquals("-", m.group(user));
+        assertEquals("21/Jul/2014:9:55:27 -0800", m.group(dateTime));
+        assertEquals("GET", m.group(method));
+        assertEquals("/home.html", m.group(request));
+        assertEquals("HTTP/1.1", m.group(protocol));
+        assertEquals("200", m.group(responseCode));
+        assertEquals("2048", m.group(size));
+        assertEquals("127.0.0.1 - /home.html - 200", m.replaceAll(replacement(ip, " - ", request, " - ", responseCode)));
+        assertEquals("127.0.0.1 - /home.html - 200", m.replaceFirst(replacement(ip, " - ", request, " - ", responseCode)));
     }
 }
