@@ -385,6 +385,66 @@ public class Re {
     }
 
     /**
+     * Repeat the expression at least the given number of times.
+     */
+    public static Expression repeatAtLeast(Expression expression, int n) { return new RepeatAtLeast(expression, n); }
+
+    /**
+     * Repeat the expression at least the given number of times.
+     */
+    public static Expression repeatAtLeast(String s, int n) { return repeatAtLeast(string(s), n); }
+
+    /**
+     * Repeat the expression at least the given number of times.
+     */
+    public static Expression repeatAtLeast(char c, int n) { return repeatAtLeast(character(c), n); }
+
+    /**
+     * Repeat the expression at least the given number of times.
+     */
+    public static Expression repeatAtLeast(CharClass c, int n) { return repeatAtLeast(charClass(c), n); }
+
+    /**
+     * Repeat the expression at least the given number of times (reluctant).
+     */
+    public static Expression repeatAtLeastReluctant(Expression expression, int n) { return new RepeatAtLeastReluctant(expression, n); }
+
+    /**
+     * Repeat the expression at least the given number of times (reluctant).
+     */
+    public static Expression repeatAtLeastReluctant(String s, int n) { return repeatAtLeastReluctant(string(s), n); }
+
+    /**
+     * Repeat the expression at least the given number of times (reluctant).
+     */
+    public static Expression repeatAtLeastReluctant(char c, int n) { return repeatAtLeastReluctant(character(c), n); }
+
+    /**
+     * Repeat the expression at least the given number of times (reluctant).
+     */
+    public static Expression repeatAtLeastReluctant(CharClass c, int n) { return repeatAtLeastReluctant(charClass(c), n); }
+
+    /**
+     * Repeat the expression at least the given number of times (possessive).
+     */
+    public static Expression repeatAtLeastPossessive(Expression expression, int n) { return new RepeatAtLeastPossessive(expression, n); }
+
+    /**
+     * Repeat the expression at least the given number of times (possessive).
+     */
+    public static Expression repeatAtLeastPossessive(String s, int n) { return repeatAtLeastPossessive(string(s), n); }
+
+    /**
+     * Repeat the expression at least the given number of times (possessive).
+     */
+    public static Expression repeatAtLeastPossessive(char c, int n) { return repeatAtLeastPossessive(character(c), n); }
+
+    /**
+     * Repeat the expression at least the given number of times (possessive).
+     */
+    public static Expression repeatAtLeastPossessive(CharClass c, int n) { return repeatAtLeastPossessive(charClass(c), n); }
+
+    /**
      * Match a sequence of expessions.
      */
     public static Expression sequence(Expression... es) {
@@ -409,7 +469,7 @@ public class Re {
      * Match one of the given expessions.
      */
     public static Expression choice(Object... es) {
-        return sequence(convertStrings(es));
+        return choice(convertStrings(es));
     }
 
     /**
@@ -653,6 +713,13 @@ public class Re {
     /**
      * Match a nonempty sequence of matches of [e], separated by matches of [separator].
      */
+    public static Expression separatedBy1(char separator, Expression e) {
+        return separatedBy1(character(separator), e);
+    }
+
+    /**
+     * Match a nonempty sequence of matches of [e], separated by matches of [separator].
+     */
     public static Expression separatedBy1(String separator, char e) {
         return separatedBy1(string(separator), character(e));
     }
@@ -713,86 +780,170 @@ public class Re {
         return separatedBy1(separator, charClass(e));
     }
 
+    /**
+     * Match a (possibly empty) sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedByPossessive(Expression separator, Expression e) {
         return optionalPossessive(separatedBy1Possessive(separator, e));
     }
 
+    /**
+     * Match a (possibly empty) sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedByPossessive(char separator, Expression e) {
         return optionalPossessive(separatedBy1Possessive(character(separator), e));
     }
 
+    /**
+     * Match a (possibly empty) sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
+    public static Expression separatedByPossessive(CharClass separator, Expression e) {
+        return optionalPossessive(separatedBy1Possessive(charClass(separator), e));
+    }
+
+    /**
+     * Match a (possibly empty) sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedByPossessive(String separator, Expression e) {
         return separatedBy(string(separator), e);
     }
 
+    /**
+     * Match a (possibly empty) sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedByPossessive(Expression separator, String e) {
         return separatedBy(separator, string(e));
     }
 
+    /**
+     * Match a (possibly empty) sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedByPossessive(Expression separator, char e) {
         return separatedBy(separator, character(e));
     }
 
+    /**
+     * Match a (possibly empty) sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedByPossessive(String separator, String e) {
         return separatedBy(string(separator), string(e));
     }
 
+    /**
+     * Match a (possibly empty) sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedByPossessive(char separator, String e) {
         return separatedBy(character(separator), string(e));
     }
 
+    /**
+     * Match a (possibly empty) sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedByPossessive(String separator, char e) {
         return separatedBy(string(separator), character(e));
     }
 
+    /**
+     * Match a (possibly empty) sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedByPossessive(char separator, char e) {
         return separatedBy(character(separator), character(e));
     }
 
+    /**
+     * Match a (possibly empty) sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedBy1Possessive(Expression separator, Expression e) {
         return sequence(e, repeatPossessive(sequence(separator, e)));
     }
 
+    /**
+     * Match a nonempty sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedBy1Possessive(String separator, Expression e) {
         return separatedBy1Possessive(string(separator), e);
     }
 
+    /**
+     * Match a nonempty sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
+    public static Expression separatedBy1Possessive(char separator, Expression e) {
+        return separatedBy1Possessive(character(separator), e);
+    }
+
+    /**
+     * Match a nonempty sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
+    public static Expression separatedBy1Possessive(CharClass separator, Expression e) {
+        return separatedBy1Possessive(charClass(separator), e);
+    }
+
+    /**
+     * Match a nonempty sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedBy1Possessive(Expression separator, String e) {
         return separatedBy1Possessive(separator, string(e));
     }
 
+    /**
+     * Match a nonempty sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedBy1Possessive(Expression separator, char e) {
         return separatedBy1Possessive(separator, character(e));
     }
 
+    /**
+     * Match a nonempty sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedBy1Possessive(String separator, String e) {
         return separatedBy1Possessive(string(separator), string(e));
     }
 
+    /**
+     * Match a nonempty sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedBy1Possessive(char separator, String e) {
         return separatedBy1Possessive(character(separator), string(e));
     }
 
+    /**
+     * Match a nonempty sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedBy1Possessive(String separator, char e) {
         return separatedBy1Possessive(string(separator), character(e));
     }
 
+    /**
+     * Match a nonempty sequence of matches of [e], separated by matches of [separator] (possessive).
+     */
     public static Expression separatedBy1Possessive(char separator, char e) {
         return separatedBy1Possessive(character(separator), character(e));
     }
 
+    /**
+     * Match a nonempty sequence of word characters.
+     */
     public static Expression word() {
         return repeat1(CharClass.wordChar());
     }
 
+    /**
+     * Match a nonempty sequence of digits.
+     */
     public static Expression number() {
         return repeat1(CharClass.digit());
     }
 
+    /**
+     * Match a sequence of whitespace characters
+     */
     public static Expression whitespace() {
         return repeat(CharClass.whitespaceChar());
     }
 
+    /**
+     * Match a nonempty sequence of whitespace characters
+     */
     public static Expression whitespace1() {
         return repeat1(CharClass.whitespaceChar());
     }
@@ -813,18 +964,37 @@ public class Re {
         return atomic(character(e));
     }
 
+    /**
+     * Return a capture group for the given expression.
+     */
     public static CaptureGroup capture(Expression expression) {
         return new CaptureGroup(expression);
     }
 
+    /**
+     * Create a capture group for the given sequence of expressions.
+     */
     public static CaptureGroup capture(Object... os) {
         return capture(sequence(os));
     }
 
+    /**
+     * Create a capture group for the given expression.
+     */
     public static CaptureGroup capture(String e) {
         return capture(string(e));
     }
 
+    /**
+     * Create a capture group for the given expression.
+     */
+    public static CaptureGroup capture(CharClass e) {
+        return capture(charClass(e));
+    }
+
+    /**
+     * Create a capture group for the given expression.
+     */
     public static CaptureGroup capture(char e) {
         return capture(character(e));
     }
@@ -839,6 +1009,10 @@ public class Re {
 
     public static Expression positiveLookbehind(String e) {
         return positiveLookbehind(string(e));
+    }
+
+    public static Expression positiveLookbehind(CharClass e) {
+        return positiveLookbehind(charClass(e));
     }
 
     public static Expression positiveLookbehind(char e) {
@@ -857,6 +1031,10 @@ public class Re {
         return negativeLookbehind(string(e));
     }
 
+    public static Expression negativeLookbehind(CharClass e) {
+        return negativeLookbehind(charClass(e));
+    }
+
     public static Expression negativeLookbehind(char e) {
         return negativeLookbehind(character(e));
     }
@@ -871,6 +1049,10 @@ public class Re {
 
     public static Expression positiveLookahead(String e) {
         return positiveLookahead(string(e));
+    }
+
+    public static Expression positiveLookahead(CharClass e) {
+        return positiveLookahead(charClass(e));
     }
 
     public static Expression positiveLookahead(char e) {
@@ -889,10 +1071,20 @@ public class Re {
         return negativeLookahead(string(e));
     }
 
+    public static Expression negativeLookahead(CharClass e) {
+        return negativeLookahead(charClass(e));
+    }
+
     public static Expression negativeLookahead(char e) {
         return negativeLookahead(character(e));
     }
 
+    /**
+     * Back-reference: re-matches the string matched by a capture group.
+     *
+     * @param group
+     * @return
+     */
     public static Expression backReference(CaptureGroup group) {
         return new BackReference(group);
     }
@@ -943,4 +1135,5 @@ public class Re {
         }
         return es;
     }
+
 }
