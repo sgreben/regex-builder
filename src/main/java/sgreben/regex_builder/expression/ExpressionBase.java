@@ -10,4 +10,6 @@ public abstract class ExpressionBase implements Expression {
 		}
 		visitor.visitPost(this);
 	}
+	public Expression possessive() { return this; }
+	public Expression reluctant() { return this; }
 }
