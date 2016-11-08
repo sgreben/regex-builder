@@ -15,7 +15,7 @@ public class BRACES implements TOKEN {
 			sb.append("{");
 			sb.append(numbers[0]);
 			for(int i = 1; i < numbers.length; ++i) {
-				sb.append(", ");
+				sb.append(",");
 				sb.append(numbers[i]);
 			}
 			sb.append("}");
