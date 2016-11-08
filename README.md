@@ -74,7 +74,7 @@ assertEquals("2048", m.group(size));
 
 Or, if you'd like to rewrite the log to a simpler "ip - request - response code" format, you can simply do
 ```java
-String result = m.replaceAll(replacement(ip, " - ", request, " - ", responseCode));
+String result = m.replaceFirst(replacement(ip, " - ", request, " - ", responseCode));
 ```
 
 ### Apache log (fluent API)
