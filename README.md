@@ -13,6 +13,7 @@ There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgre
     - [Date (DD/MM/YYYY HH:MM:SS)](#date-ddmmyyyy-hhmmss)
     - [Hex color](#hex-color)
 - [Reusing expressions with ExpressionWrapper](#reusing-expressions)
+    - [Reusable Apache log expression](#reusable-apache-log-expression)
 - [API](#api)
     - [Expression builder](#expression-builder)
     - [CharClass builder](#charclass-builder)
@@ -196,6 +197,8 @@ which exposes a method `setExpression(Expression expr)` and implements the `Expr
 ```java
 import com.github.sgreben.regex_builder.ExpressionWrapper;
 ```
+
+### Reusable Apache log expression
 Using `ExpressionWrapper`, we can package the Apache log 
 example above as follows:
 ```java
