@@ -6,6 +6,17 @@ The **regex-builder** library is implemented as a light-weight wrapper around `j
 
 There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgrebenregexbuilder_write_regular/) of this project over on the Java reddit.
 
+- [Installation / Maven dependency](#maven-dependency)
+- [Examples](#examples)
+    - [Apache log](#apache-log)
+    - [Apache log (fluent API)](#apache-log-fluent-api)
+    - [Date (DD/MM/YYYY HH:MM:SS)](#date-ddmmyyyy-hhmmss)
+    - [Hex color](#hex-color)
+- [Reusing expressions with ExpressionWrapper](#reusing-expressions)
+- [API](#api)
+    - [Expression builder](#expression-builder)
+    - [CharClass builder](#charclass-builder)
+
 ## Maven dependency
 
 ```xml
