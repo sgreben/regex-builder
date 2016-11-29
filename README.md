@@ -198,13 +198,15 @@ which exposes a method `setExpression(Expression expr)` and implements the `Expr
 import com.github.sgreben.regex_builder.ExpressionWrapper;
 ```
 
+To use the class, simply extend it and call `setExpression` in your constructor or initialization block. 
+You can then pass it to any `regex-builder` method that expects an `Expression`.
+
 ### Reusable Apache log expression
 Using `ExpressionWrapper`, we can package the Apache log 
 example above as follows:
 ```java
 public class ApacheLog extends ExpressionWrapper {
     public final CaptureGroup ip, client, user, dateTime, method, request, protocol, responseCode, size;
-    private final Expression expression;
 
     {
         Expression nonWhitespace = repeat1(CharClass.nonWhitespaceChar());
@@ -223,7 +225,7 @@ public class ApacheLog extends ExpressionWrapper {
         responseCode = capture(repeat(CharClass.digit(), 3));
         size = capture(repeat1(CharClass.digit()));
 
-        expression = sequence(
+        Expression expression = sequence(
             ip, ' ', client, ' ', user, " [", dateTime, "] \"", method, ' ', request, ' ', protocol, "\" ", responseCode, ' ', size,
         );
         setExpression(expression);
