@@ -20,11 +20,11 @@ There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgre
 
 Imports:
 ```java
-import sgreben.regex_builder.CaptureGroup;
-import sgreben.regex_builder.Expression;
-import sgreben.regex_builder.Pattern;
-import static sgreben.regex_builder.CharClass.*;
-import static sgreben.regex_builder.Re.*;
+import com.github.sgreben.regex_builder.CaptureGroup;
+import com.github.sgreben.regex_builder.Expression;
+import com.github.sgreben.regex_builder.Pattern;
+import static com.github.sgreben.regex_builder.CharClass.*;
+import static com.github.sgreben.regex_builder.Re.*;
 ```
 
 ### Apache log
@@ -82,8 +82,8 @@ String result = m.replaceFirst(replacement(ip, " - ", request, " - ", responseCo
 The above example can also be expressed using the fluent API implemented in `FluentRe`. To use it, you have import it as
 
 ```java
-import static sgreben.regex_builder.CharClass.*;
-import sgreben.regex_builder.FluentRe;
+import static com.github.sgreben.regex_builder.CharClass.*;
+import com.github.sgreben.regex_builder.FluentRe;
 ``` 
 
 ```java
