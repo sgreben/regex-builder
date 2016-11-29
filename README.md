@@ -29,7 +29,7 @@ import static com.github.sgreben.regex_builder.Re.*;
 
 ### Apache log
 
-- Regex string: `^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\d{3}) (\\d+)$`
+- Regex string: `(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\d{3}) (\\d+)`
 - Java code:
 ```java
 
@@ -49,9 +49,7 @@ responseCode = capture(repeat(digit(), 3));
 size = capture(number());
 
 Pattern p = Pattern.compile(sequence(
-  beginInput(),
-  ip, ' ', client, ' ', user, " [", dateTime, "] \"", method, ' ', request, ' ', protocol, "\" ", responseCode, ' ', size,
-  endInput()
+  ip, ' ', client, ' ', user, " [", dateTime, "] \"", method, ' ', request, ' ', protocol, "\" ", responseCode, ' ', size
 ));
 ```
 Note that capture groups are plain java objects - no need to mess around with group indices or string group names. You can use the expression like this:
@@ -175,6 +173,65 @@ assertEquals("0FAFF3", m.group(hexValue));
 m.find();
 assertEquals("1bf", m.group(hexValue));
 ```
+
+## Reusing expressions
+
+To reuse an expression cleanly, it should be packaged as a class. To access the capture groups contained in the expression,
+each capture group should be exposed as a final field or method.
+ 
+To allow the resulting object to be used as an expression, `regex-builder` provides a utility class `ExpressionWrapper`,
+which exposes a method `setExpression(Expression expr)` and implements the `Expresssion` interface.
+
+```java
+import com.github.sgreben.regex_builder.ExpressionWrapper;
+```
+Using `ExpressionWrapper`, we can package the Apache log 
+example above as follows:
+```java
+public class ApacheLog extends ExpressionWrapper {
+    public final CaptureGroup ip, client, user, dateTime, method, request, protocol, responseCode, size;
+    private final Expression expression;
+
+    {
+        Expression nonWhitespace = repeat1(CharClass.nonWhitespaceChar());
+        ip = capture(nonWhitespace);
+        client = capture(nonWhitespace);
+        user = capture(nonWhitespace);
+        dateTime = capture(sequence(
+            repeat1(union(wordChar(), ':', '/')),
+            whitespaceChar(),
+            oneOf("+\\-"),
+            repeat(digit(), 4)
+        ));
+        method = capture(nonWhitespace);
+        request = capture(nonWhitespace);
+        protocol = capture(nonWhitespace);
+        responseCode = capture(repeat(CharClass.digit(), 3));
+        size = capture(repeat1(CharClass.digit()));
+
+        expression = sequence(
+            ip, ' ', client, ' ', user, " [", dateTime, "] \"", method, ' ', request, ' ', protocol, "\" ", responseCode, ' ', size,
+        );
+        setExpression(expression);
+    }
+}
+```
+
+We can then use instances of the packaged expression like this:
+
+```java
+public static boolean sameIP(String twoLogs) {
+    ApacheLog log1 = new ApacheLog();
+    ApacheLog log2 = new ApacheLog();
+    Pattern p = Pattern.compile(sequence(
+        log1, ' ', log2
+    ));
+    Matcher m = p.matcher(twoLogs);
+    m.find();
+    return m.group(log1.ip).equals(m.group(log2.ip));
+}
+```
+
 
 ## API
 
