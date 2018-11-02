@@ -2,9 +2,9 @@
 
 Write regexes as **plain Java code**. Unlike opaque regex strings, commenting your expressions and reusing regex fragments is straightforward.
 
-The **regex-builder** library is implemented as a light-weight wrapper around `java.util.regex`. It consists of three main components: the expression builder `Re`, its fluent API equivalent `FluentRe`, and the character class builder  `CharClass`. The components are introduced in the examples below as well as in the API overview tables at the end of this document.     
+The **regex-builder** library is implemented as a light-weight wrapper around `java.util.regex`. It consists of three main components: the expression builder `Re`, its fluent API equivalent `FluentRe`, and the character class builder  `CharClass`. The components are introduced in the examples below as well as in the API overview tables at the end of this document.
 
-There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgrebenregexbuilder_write_regular/) of this project over on the Java reddit.
+There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgrebenregexbuilder_write_regular/) of this project over on the Java subreddit.
 
 - [Installation / Maven dependency](#maven-dependency)
 - [Examples](#examples)
@@ -24,7 +24,7 @@ There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgre
 <dependency>
   <groupId>com.github.sgreben</groupId>
   <artifactId>regex-builder</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
@@ -94,7 +94,7 @@ The above example can also be expressed using the fluent API implemented in `Flu
 ```java
 import static com.github.sgreben.regex_builder.CharClass.*;
 import com.github.sgreben.regex_builder.FluentRe;
-``` 
+```
 
 ```java
 CaptureGroup ip, client, user, dateTime, method, request, protocol, responseCode, size;
@@ -168,7 +168,7 @@ assertEquals("22", m.group(second));
 ```java
 Expression threeHexDigits = repeat(hexDigit(), 3);
 CaptureGroup hexValue = capture(
-    threeHexDigits,              // #FFF  
+    threeHexDigits,              // #FFF
     optional(threeHexDigits)  // #FFFFFF
 );
 Expression hexColor = sequence(
@@ -190,7 +190,7 @@ assertEquals("1bf", m.group(hexValue));
 
 To reuse an expression cleanly, it should be packaged as a class. To access the capture groups contained in the expression,
 each capture group should be exposed as a final field or method.
- 
+
 To allow the resulting object to be used as an expression, `regex-builder` provides a utility class `ExpressionWrapper`,
 which exposes a method `setExpression(Expression expr)` and implements the `Expresssion` interface.
 
@@ -198,11 +198,11 @@ which exposes a method `setExpression(Expression expr)` and implements the `Expr
 import com.github.sgreben.regex_builder.ExpressionWrapper;
 ```
 
-To use the class, simply extend it and call `setExpression` in your constructor or initialization block. 
+To use the class, simply extend it and call `setExpression` in your constructor or initialization block.
 You can then pass it to any `regex-builder` method that expects an `Expression`.
 
 ### Reusable Apache log expression
-Using `ExpressionWrapper`, we can package the Apache log 
+Using `ExpressionWrapper`, we can package the Apache log
 example above as follows:
 ```java
 public class ApacheLog extends ExpressionWrapper {

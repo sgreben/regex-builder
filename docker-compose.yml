@@ -1,0 +1,67 @@
+version: '3.4'
+services:
+  export-gpg-key:
+    image: regex-builder:export-gpg-key
+    build:
+      context: .
+      target: generate-gpg-key
+    volumes:
+    - type: bind
+      source: ./gpg-home
+      target: /output
+    entrypoint: /bin/sh
+    command:
+    - -euxc
+    - cd "$$GNUPGHOME" && cp -rv . /output
+  publish-gpg-key:
+    image: regex-builder:export-gpg-key
+    build:
+      context: .
+      target: generate-gpg-key
+    entrypoint: /bin/sh
+    command:
+    - -euxc
+    - |
+      KEY_ID=$$(gpg --list-keys --with-colons | awk -F: '/^pub:/ { print $$5 }');
+      gpg --keyserver hkp://pool.sks-keyservers.net --send-keys "$$KEY_ID" &
+      gpg --keyserver hkp://eu.pool.sks-keyservers.net --send-keys "$$KEY_ID" &
+      gpg --keyserver hkp://na.pool.sks-keyservers.net --send-keys "$$KEY_ID" &
+      gpg --keyserver hkp://oc.pool.sks-keyservers.net --send-keys "$$KEY_ID" &
+      gpg --keyserver hkp://keyserver.ubuntu.com --send-keys "$$KEY_ID" &
+      wait
+  build-jar:
+    image: regex-builder:build-jar
+    build:
+      context: .
+      target: build-jar
+    volumes:
+    - type: bind
+      source: ./target
+      target: /output
+    entrypoint: /bin/sh
+    command:
+    - -euxc
+    - cp -rv target/*.jar /output
+  build-signed-jar:
+    image: regex-builder:build-signed-jar
+    build:
+      context: .
+      target: build-signed-jar
+    volumes:
+    - type: bind
+      source: ./target
+      target: /output
+    entrypoint: /bin/sh
+    command:
+    - -euxc
+    - cp -rv target/*.jar /output
+  deploy-release:
+    image: regex-builder:release
+    build:
+      context: .
+      target: deploy-release
+  deploy-snapshot:
+    image: regex-builder:snapshot
+    build:
+      context: .
+      target: deploy-snapshot

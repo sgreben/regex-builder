@@ -1,0 +1,21 @@
+<settings>
+    <servers>
+      <server>
+        <id>ossrh</id>
+        <username>TODO: USERNAME</username>
+        <password>TODO: PASSWORD</password>
+      </server>
+    </servers>
+    <profiles>
+      <profile>
+        <id>ossrh</id>
+        <activation>
+          <activeByDefault>true</activeByDefault>
+        </activation>
+        <properties>
+          <gpg.executable>gpg1</gpg.executable>
+          <gpg.passphrase>TODO: PASSPHRASE</gpg.passphrase>
+        </properties>
+      </profile>
+  </profiles>
+</settings>

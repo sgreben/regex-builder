@@ -1,1 +1,4 @@
-target/
+/target/
+/settings.xml
+/gpg-params
+/gpg-home
