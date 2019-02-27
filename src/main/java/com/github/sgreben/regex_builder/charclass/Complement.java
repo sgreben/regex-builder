@@ -9,8 +9,8 @@ import com.github.sgreben.regex_builder.CharClass;
 public class Complement extends Unary {
 	public Complement(CharClass child) { super(child); }
 	public void compile(java.util.List<TOKEN> output) {
-		output.add(new CARET());
 		output.add(new START_CHAR_CLASS());
+		output.add(new CARET());
 		for(CharClass child : children()) {
 			child.compile(output);
 		}
