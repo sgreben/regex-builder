@@ -6,17 +6,17 @@ The **regex-builder** library is implemented as a light-weight wrapper around `j
 
 There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgrebenregexbuilder_write_regular/) of this project over on the Java subreddit.
 
-- [Installation / Maven dependency](#maven-dependency)
+- [Maven dependency](#maven-dependency)
 - [Examples](#examples)
-    - [Apache log](#apache-log)
-    - [Apache log (fluent API)](#apache-log-fluent-api)
-    - [Date (DD/MM/YYYY HH:MM:SS)](#date-ddmmyyyy-hhmmss)
-    - [Hex color](#hex-color)
-- [Reusing expressions with ExpressionWrapper](#reusing-expressions)
-    - [Reusable Apache log expression](#reusable-apache-log-expression)
+  - [Apache log](#apache-log)
+  - [Apache log (fluent API)](#apache-log-fluent-api)
+  - [Date (DD/MM/YYYY HH:MM:SS)](#date-ddmmyyyy-hhmmss)
+  - [Hex color](#hex-color)
+- [Reusing expressions](#reusing-expressions)
+  - [Reusable Apache log expression](#reusable-apache-log-expression)
 - [API](#api)
-    - [Expression builder](#expression-builder)
-    - [CharClass builder](#charclass-builder)
+  - [Expression builder](#expression-builder)
+  - [CharClass builder](#charclass-builder)
 
 ## Maven dependency
 
@@ -24,7 +24,7 @@ There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgre
 <dependency>
   <groupId>com.github.sgreben</groupId>
   <artifactId>regex-builder</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 ```
 
