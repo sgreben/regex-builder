@@ -108,6 +108,10 @@ public abstract class CharClass {
         return new OneOf(chars);
     }
 
+    public static CharClass noneOf(String chars) {
+        return new NoneOf(chars);
+    }
+
     private static CharClass[] convertStrings(Object[] os) {
         CharClass[] charClasses = new CharClass[os.length];
         for (int i = 0; i < os.length; ++i) {
