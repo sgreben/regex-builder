@@ -2,3 +2,7 @@
 /settings.xml
 /gpg-params
 /gpg-home
+/.project
+/.classpath
+/.settings
+/.vscode

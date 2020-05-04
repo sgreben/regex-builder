@@ -133,6 +133,8 @@ public abstract class CharClass {
 
     public abstract void accept(CharClassVisitor visitor);
 
+    public abstract CharClass complement();
+
     public abstract void compile(java.util.List<TOKEN> output);
 
     public static class Posix {

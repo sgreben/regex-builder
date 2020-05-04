@@ -1,15 +1,16 @@
 package com.github.sgreben.regex_builder;
 
+import static com.github.sgreben.regex_builder.CharClass.complement;
+import static com.github.sgreben.regex_builder.CharClass.hexDigit;
+import static com.github.sgreben.regex_builder.CharClass.nonHexDigit;
+import static com.github.sgreben.regex_builder.CharClass.noneOf;
+import static com.github.sgreben.regex_builder.CharClass.oneOf;
+import static com.github.sgreben.regex_builder.CharClass.whitespaceChar;
+import static com.github.sgreben.regex_builder.Re.repeat;
+import static com.github.sgreben.regex_builder.hamcrest.MatchesPattern.matchesPattern;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Ignore;
 import org.junit.Test;
-
-import static com.github.sgreben.regex_builder.hamcrest.MatchesPattern.*;
-import static com.github.sgreben.regex_builder.Re.*;
-import static com.github.sgreben.regex_builder.CharClass.*;
-
-import static org.hamcrest.CoreMatchers.*;
 
 public class CharClassTest {
 
@@ -24,16 +25,27 @@ public class CharClassTest {
 		assertCharClassMismatch(hexDigit(), "]");
 	}
 
-	@Ignore
 	@Test
 	public void testNonHexDigit() throws Exception {
 		assertCharClassMismatch(nonHexDigit(), "0123456789");
 		assertCharClassMismatch(nonHexDigit(), "abcdef");
-		assertCharClassMatch(nonHexDigit(), "ABCDEF");
+		assertCharClassMismatch(nonHexDigit(), "ABCDEF");
 
 		assertCharClassMatch(nonHexDigit(), "G");
 		assertCharClassMatch(nonHexDigit(), "[");
 		assertCharClassMatch(nonHexDigit(), "]");
+	}
+
+	@Test
+	public void testComplement() throws Exception {
+		assertCharClassMismatch(complement(oneOf("abc")), "abc");
+		assertCharClassMatch(complement(oneOf("abc")), "xyz");
+
+		assertCharClassMismatch(complement(whitespaceChar()), "  ");
+		assertCharClassMatch(complement(whitespaceChar()), "123");
+
+		assertCharClassMismatch(complement(oneOf("bc")), "bcbc");
+		assertCharClassMatch(complement(complement(oneOf("bc"))), "bcbc");
 	}
 
 	@Test

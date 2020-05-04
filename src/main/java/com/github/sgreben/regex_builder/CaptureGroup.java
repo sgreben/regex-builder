@@ -8,7 +8,7 @@ import com.github.sgreben.regex_builder.tokens.TOKEN;
 /**
  * A regex capture group "(...)"
  */
-public class CaptureGroup extends Unary implements Expression {
+public class CaptureGroup extends Unary {
 
     public CaptureGroup(Expression expression) {
         super(expression);

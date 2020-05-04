@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-abstract class Nullary extends ExpressionBase implements Expression {
+abstract class Nullary extends ExpressionBase {
     private static final List<Expression> empty =
             Collections.unmodifiableList(new LinkedList<Expression>());
 

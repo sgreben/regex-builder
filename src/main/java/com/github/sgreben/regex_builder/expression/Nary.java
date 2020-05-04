@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-abstract class Nary extends ExpressionBase implements Expression {
+abstract class Nary extends ExpressionBase {
     private final List<Expression> children;
 
     public Nary(final Expression... childrenArray) {

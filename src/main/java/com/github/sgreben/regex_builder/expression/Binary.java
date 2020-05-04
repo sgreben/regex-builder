@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-abstract class Binary extends ExpressionBase implements Expression {
+abstract class Binary extends ExpressionBase {
     private final List<Expression> children;
 
     public Binary(Expression leftChild, Expression rightChild) {

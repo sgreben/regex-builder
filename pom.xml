@@ -4,7 +4,7 @@
   <groupId>com.github.sgreben</groupId>
   <artifactId>regex-builder</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.2</version>
+  <version>1.1.0</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>Construct regular expressions as pure Java code.</description>
   <url>https://github.com/sgreben/regex-builder/</url>
