@@ -24,7 +24,7 @@ There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgre
 <dependency>
   <groupId>com.github.sgreben</groupId>
   <artifactId>regex-builder</artifactId>
-  <version>1.0.2</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 
@@ -254,7 +254,7 @@ public static boolean sameIP(String twoLogs) {
 ### Expression builder
 
 | Builder method              | `java.util.regex` syntax |
-|-----------------------------|--------------------------|
+| --------------------------- | ------------------------ |
 | repeat(e, N)                | e{N}                     |
 | repeat(e)                   | e*                       |
 | repeat(e).possessive()      | e*+                      |
@@ -284,25 +284,25 @@ public static boolean sameIP(String twoLogs) {
 
 ### CharClass builder
 
-| Builder method                        | `java.util.regex` syntax |
-|---------------------------------------|--------------------------|
-| range(from, to)             | [from-to]                |
-| range(f1, t1, ..., fN, tN)  | [f1-t1f2-t2...fN-tN]     |
-| oneOf("abcde")              | [abcde]                  |
-| union(class1, ..., classN)  | [[class1]...[classN]]    |
-| complement(class1)          | [\^[class1]]              |
-| anyChar()                   | .                        |
-| digit()                     | \d                       |
-| nonDigit()                  | \D                       |
-| hexDigit()                  | [a-fA-F0-9]              |
-| nonHexDigit()               | [\^[a-fA-F0-9]]           |
-| wordChar()                  | \w                       |
-| nonWordChar()               | \W                       |
-| wordBoundary()              | \b                       |
-| nonWordBoundary()           | \B                       |
-| whitespaceChar()            | \s                       |
-| nonWhitespaceChar()         | \S                       |
-| verticalWhitespaceChar()    | \v                       |
-| nonVerticalWhitespaceChar() | \V                       |
-| horizontalWhitespaceChar()  | \h                       |
-| nonHorizontalWhitespaceChar()| \H                      |
+| Builder method                | `java.util.regex` syntax |
+| ----------------------------- | ------------------------ |
+| range(from, to)               | [from-to]                |
+| range(f1, t1, ..., fN, tN)    | [f1-t1f2-t2...fN-tN]     |
+| oneOf("abcde")                | [abcde]                  |
+| union(class1, ..., classN)    | [[class1]...[classN]]    |
+| complement(class1)            | [\^[class1]]             |
+| anyChar()                     | .                        |
+| digit()                       | \d                       |
+| nonDigit()                    | \D                       |
+| hexDigit()                    | [a-fA-F0-9]              |
+| nonHexDigit()                 | [\^[a-fA-F0-9]]          |
+| wordChar()                    | \w                       |
+| nonWordChar()                 | \W                       |
+| wordBoundary()                | \b                       |
+| nonWordBoundary()             | \B                       |
+| whitespaceChar()              | \s                       |
+| nonWhitespaceChar()           | \S                       |
+| verticalWhitespaceChar()      | \v                       |
+| nonVerticalWhitespaceChar()   | \V                       |
+| horizontalWhitespaceChar()    | \h                       |
+| nonHorizontalWhitespaceChar() | \H                       |
