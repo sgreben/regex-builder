@@ -1,10 +1,9 @@
 package com.github.sgreben.regex_builder.charclass;
 
+import java.util.List;
 import com.github.sgreben.regex_builder.CharClass;
 import com.github.sgreben.regex_builder.tokens.CHAR_CLASS_NAMED;
 import com.github.sgreben.regex_builder.tokens.TOKEN;
-
-import java.util.List;
 
 /**
  * Created by Sergey on 04.10.2016.
@@ -12,10 +11,13 @@ import java.util.List;
 public class Java extends Nullary {
     private final String name;
 
-    public CharClass complement() { return new RawComplement(this); }
-
     public Java(String name) {
         this.name = name;
+    }
+
+    @Override
+    public CharClass complement() {
+        return new RawComplement(this);
     }
 
     @Override

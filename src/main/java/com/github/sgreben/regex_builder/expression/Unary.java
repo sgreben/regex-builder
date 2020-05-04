@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class Unary extends ExpressionBase implements Expression {
+public abstract class Unary extends ExpressionBase {
     private final Expression child;
     private final List<Expression> children;
 

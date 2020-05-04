@@ -5,10 +5,15 @@ import com.github.sgreben.regex_builder.tokens.RAW;
 import com.github.sgreben.regex_builder.tokens.TOKEN;
 
 public class WordBoundary extends Nullary {
-	public WordBoundary() {}
+	public WordBoundary() {
+	}
 
-	public CharClass complement() { return new NonWordBoundary(); }
+	@Override
+	public CharClass complement() {
+		return new NonWordBoundary();
+	}
 
+	@Override
 	public void compile(java.util.List<TOKEN> output) {
 		output.add(new RAW("\\b"));
 	}
