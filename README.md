@@ -290,12 +290,12 @@ public static boolean sameIP(String twoLogs) {
 | range(f1, t1, ..., fN, tN)    | [f1-t1f2-t2...fN-tN]     |
 | oneOf("abcde")                | [abcde]                  |
 | union(class1, ..., classN)    | [[class1]...[classN]]    |
-| complement(class1)            | [\^[class1]]             |
+| complement(class1)            | [\^class1]               |
 | anyChar()                     | .                        |
 | digit()                       | \d                       |
 | nonDigit()                    | \D                       |
 | hexDigit()                    | [a-fA-F0-9]              |
-| nonHexDigit()                 | [\^[a-fA-F0-9]]          |
+| nonHexDigit()                 | [\^a-fA-F0-9]            |
 | wordChar()                    | \w                       |
 | nonWordChar()                 | \W                       |
 | wordBoundary()                | \b                       |
