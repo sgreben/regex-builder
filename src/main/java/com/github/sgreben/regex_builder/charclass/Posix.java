@@ -1,5 +1,6 @@
 package com.github.sgreben.regex_builder.charclass;
 
+import com.github.sgreben.regex_builder.CharClass;
 import com.github.sgreben.regex_builder.tokens.CHAR_CLASS_NAMED;
 import com.github.sgreben.regex_builder.tokens.TOKEN;
 
@@ -10,6 +11,9 @@ public class Posix extends Nullary {
     public Posix(String name) {
         this.name = name;
     }
+
+    @Override
+    public CharClass complement() { return new RawComplement(this); }
 
     @Override
     public void compile(List<TOKEN> output) {

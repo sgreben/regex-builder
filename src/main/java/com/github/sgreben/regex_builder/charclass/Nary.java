@@ -8,13 +8,13 @@ import java.util.Collections;
 
 abstract class Nary extends CharClassBase {
 	private final List<CharClass> children;
-	
+
 	public Nary(final CharClass... childrenArray) {
 		this.children = Collections.unmodifiableList(
 			Arrays.asList(childrenArray)
 		);
 	}
-	
+
 	public Iterable<CharClass> children() {
 		return children;
 	}

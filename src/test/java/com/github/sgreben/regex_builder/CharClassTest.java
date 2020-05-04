@@ -2,7 +2,6 @@ package com.github.sgreben.regex_builder;
 
 import static org.junit.Assert.assertThat;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.github.sgreben.regex_builder.hamcrest.MatchesPattern.*;
@@ -24,12 +23,11 @@ public class CharClassTest {
 		assertCharClassMismatch(hexDigit(), "]");
 	}
 
-	@Ignore
 	@Test
 	public void testNonHexDigit() throws Exception {
 		assertCharClassMismatch(nonHexDigit(), "0123456789");
 		assertCharClassMismatch(nonHexDigit(), "abcdef");
-		assertCharClassMatch(nonHexDigit(), "ABCDEF");
+		assertCharClassMismatch(nonHexDigit(), "ABCDEF");
 
 		assertCharClassMatch(nonHexDigit(), "G");
 		assertCharClassMatch(nonHexDigit(), "[");

@@ -1,5 +1,6 @@
 package com.github.sgreben.regex_builder.charclass;
 
+import com.github.sgreben.regex_builder.CharClass;
 import com.github.sgreben.regex_builder.tokens.END_CHAR_CLASS;
 import com.github.sgreben.regex_builder.tokens.RAW;
 import com.github.sgreben.regex_builder.tokens.START_CHAR_CLASS;
@@ -10,6 +11,7 @@ public class OneOf extends Nullary {
 	public OneOf(String chars) {
 		this.chars = chars;
 	}
+	public CharClass complement() { return new NoneOf(chars); }
 	public void compile(java.util.List<TOKEN> output) {
 		output.add(new START_CHAR_CLASS());
 		output.add(new RAW(chars));
