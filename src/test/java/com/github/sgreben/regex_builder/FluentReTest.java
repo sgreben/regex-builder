@@ -1,11 +1,17 @@
 package com.github.sgreben.regex_builder;
 
-import org.junit.Test;
-
+import static com.github.sgreben.regex_builder.CharClass.beginInput;
+import static com.github.sgreben.regex_builder.CharClass.digit;
+import static com.github.sgreben.regex_builder.CharClass.endInput;
+import static com.github.sgreben.regex_builder.CharClass.nonWhitespaceChar;
+import static com.github.sgreben.regex_builder.CharClass.oneOf;
+import static com.github.sgreben.regex_builder.CharClass.union;
+import static com.github.sgreben.regex_builder.CharClass.whitespaceChar;
+import static com.github.sgreben.regex_builder.CharClass.wordChar;
+import static com.github.sgreben.regex_builder.Re.replacement;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static com.github.sgreben.regex_builder.CharClass.*;
-import static com.github.sgreben.regex_builder.Re.replacement;
+import org.junit.Test;
 
 public class FluentReTest {
     @Test
@@ -76,40 +82,42 @@ public class FluentReTest {
     }
 
     @Test
+    public void namedGroup_thenUnnamedGroup() {
+        CaptureGroup namedGroup = FluentRe.match("foo").captureNamed("namedGroup");
+        CaptureGroup unnamedGroup = FluentRe.match("bar").capture();
+        Pattern p = FluentRe.match(namedGroup).then(unnamedGroup).compile();
+        assertEquals("((?<namedGroup>\\Qfoo\\E)(\\Qbar\\E))", p.toString());
+    }
+
+    @Test
     public void apacheLogLine() {
-        String logLine = "127.0.0.1 - - [21/Jul/2014:9:55:27 -0800] \"GET /home.html HTTP/1.1\" 200 2048";
-        // "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\d{3}) (\\d+)";
+        String logLine =
+                "127.0.0.1 - - [21/Jul/2014:9:55:27 -0800] \"GET /home.html HTTP/1.1\" 200 2048";
+        // "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+) (\\S+) (\\S+)\" (\\d{3})
+        // (\\d+)";
 
         CaptureGroup ip, client, user, dateTime, method, request, protocol, responseCode, size;
         FluentRe nonWhitespace = FluentRe.match(nonWhitespaceChar()).repeat1();
 
-        ip = nonWhitespace.capture();
+        ip = nonWhitespace.captureNamed("ip");
         client = nonWhitespace.capture();
         user = nonWhitespace.capture();
-        dateTime = FluentRe
-                .match(union(wordChar(), oneOf(":/"))).repeat1()
-                .then(whitespaceChar())
-                .then(oneOf("+\\-"))
-                .then(FluentRe.match(digit()).repeat(4))
-                .capture();
+        dateTime = FluentRe.match(union(wordChar(), oneOf(":/"))).repeat1().then(whitespaceChar())
+                .then(oneOf("+\\-")).then(FluentRe.match(digit()).repeat(4)).capture();
         method = nonWhitespace.capture();
         request = nonWhitespace.capture();
         protocol = nonWhitespace.capture();
-        responseCode = FluentRe.match(digit()).repeat(3).capture();
+        responseCode = FluentRe.match(digit()).repeat(3).captureNamed("code");
         size = FluentRe.match(digit()).repeat1().capture();
 
-        Pattern p = FluentRe.match(beginInput())
-                .then(ip).then(' ')
-                .then(client).then(' ')
-                .then(user).then(" [")
-                .then(dateTime).then("] \"")
-                .then(method).then(' ')
-                .then(request).then(' ')
-                .then(protocol).then("\" ")
-                .then(responseCode).then(' ')
-                .then(size)
-                .then(endInput())
-                .compile();
+        Pattern p = FluentRe.match(beginInput()).then(ip).then(' ').then(client).then(' ')
+                .then(user).then(" [").then(dateTime).then("] \"").then(method).then(' ')
+                .then(request).then(' ').then(protocol).then("\" ").then(responseCode).then(' ')
+                .then(size).then(endInput()).compile();
+
+        assertEquals(
+                "(\\A(?<ip>(?:\\S)+)\\Q \\E((?:\\S)+)\\Q \\E((?:\\S)+)\\Q [\\E((?:[\\w[:/]])+\\s[+\\-](?:\\d){4})\\Q] \"\\E((?:\\S)+)\\Q \\E((?:\\S)+)\\Q \\E((?:\\S)+)\\Q\" \\E(?<code>(?:\\d){3})\\Q \\E((?:\\d)+)\\z)",
+                p.toString());
 
         Matcher m = p.matcher(logLine);
         assertTrue(m.matches());
@@ -122,7 +130,9 @@ public class FluentReTest {
         assertEquals("HTTP/1.1", m.group(protocol));
         assertEquals("200", m.group(responseCode));
         assertEquals("2048", m.group(size));
-        assertEquals("127.0.0.1 - /home.html - 200", m.replaceAll(replacement(ip, " - ", request, " - ", responseCode)));
-        assertEquals("127.0.0.1 - /home.html - 200", m.replaceFirst(replacement(ip, " - ", request, " - ", responseCode)));
+        assertEquals("127.0.0.1 - /home.html - 200",
+                m.replaceAll(replacement(ip, " - ", request, " - ", responseCode)));
+        assertEquals("127.0.0.1 - /home.html - 200",
+                m.replaceFirst(replacement(ip, " - ", request, " - ", responseCode)));
     }
 }

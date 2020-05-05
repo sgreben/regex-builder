@@ -1,6 +1,7 @@
 package com.github.sgreben.regex_builder;
 
 import static com.github.sgreben.regex_builder.Re.capture;
+import static com.github.sgreben.regex_builder.Re.captureNamed;
 import static com.github.sgreben.regex_builder.Re.repeat;
 import static com.github.sgreben.regex_builder.Re.repeat1;
 import static com.github.sgreben.regex_builder.Re.replacement;
@@ -155,6 +156,28 @@ public class MatcherTest {
 		String s = "abc ABC def ghi";
 		CaptureGroup a = Re.capture(Re.character('a'));
 		CaptureGroup b = Re.capture(Re.character('b'));
+		Pattern p = Pattern.compile(Re.sequence(a, b), CASE_INSENSITIVE);
+		Matcher m = p.matcher(s);
+		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
+		assertEquals("<bb>c <BB>C def ghi", result);
+	}
+
+	@Test
+	public void matchCharTwoGroup_replaceByDoubled_caseInsensitive_namedGroup() {
+		String s = "abc ABC def ghi";
+		CaptureGroup a = Re.captureNamed("a", Re.character('a'));
+		CaptureGroup b = Re.capture(Re.character('b'));
+		Pattern p = Pattern.compile(Re.sequence(a, b), CASE_INSENSITIVE);
+		Matcher m = p.matcher(s);
+		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
+		assertEquals("<bb>c <BB>C def ghi", result);
+	}
+
+	@Test
+	public void matchCharTwoGroup_replaceByDoubled_caseInsensitive_namedGroups() {
+		String s = "abc ABC def ghi";
+		CaptureGroup a = Re.captureNamed("groupA", Re.character('a'));
+		CaptureGroup b = Re.captureNamed("groupB", Re.character('b'));
 		Pattern p = Pattern.compile(Re.sequence(a, b), CASE_INSENSITIVE);
 		Matcher m = p.matcher(s);
 		String result = m.replaceAll(Re.replacement("<", b, b, ">"));
@@ -319,7 +342,7 @@ public class MatcherTest {
 		CaptureGroup ip, client, user, dateTime, method, request, protocol, responseCode, size;
 		Expression nonWhitespace = repeat1(CharClass.nonWhitespaceChar());
 
-		ip = capture(nonWhitespace);
+		ip = captureNamed("ip", nonWhitespace);
 		client = capture(nonWhitespace);
 		user = capture(nonWhitespace);
 		dateTime = capture(sequence(repeat1(CharClass.union(CharClass.wordChar(), ':', '/')), // 21/Jul/2014:9:55:27
@@ -329,7 +352,7 @@ public class MatcherTest {
 		method = capture(nonWhitespace);
 		request = capture(nonWhitespace);
 		protocol = capture(nonWhitespace);
-		responseCode = capture(repeat(CharClass.digit(), 3));
+		responseCode = captureNamed("code", repeat(CharClass.digit(), 3));
 		size = capture(repeat1(CharClass.digit()));
 
 		Pattern p = Pattern.compile(sequence(CharClass.beginInput(), ip, ' ', client, ' ', user,

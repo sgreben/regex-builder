@@ -86,6 +86,10 @@ public class FluentRe {
         return Re.capture(expression);
     }
 
+    public CaptureGroup captureNamed(String name) {
+        return Re.captureNamed(name, expression);
+    }
+
     public FluentRe separatedBy1(FluentRe e) {
         return new FluentRe(Re.separatedBy1(e.expression, expression));
     }
@@ -192,5 +196,9 @@ public class FluentRe {
 
     public Pattern compile() {
         return Pattern.compile(expression);
+    }
+
+    public Pattern compile(int flags) {
+        return Pattern.compile(expression, flags);
     }
 }
