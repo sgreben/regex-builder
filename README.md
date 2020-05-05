@@ -24,7 +24,7 @@ There's a [discussion](https://www.reddit.com/r/java/comments/4tyk90/github_sgre
 <dependency>
   <groupId>com.github.sgreben</groupId>
   <artifactId>regex-builder</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 
