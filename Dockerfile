@@ -1,11 +1,11 @@
 FROM alpine:3.12 AS download-maven
 RUN apk add --no-cache curl
-ARG MAVEN_VERSION=3.5.4
-ARG SHA=ce50b1c91364cb77efe3776f756a6d92b76d9038b0a0782f7d53acf1e997a14d
+ARG MAVEN_VERSION=3.6.3
+ARG SHA512=c35a1803a6e70a126e80b2b3ae33eed961f83ed74d18fcd16909b2d44d7dada3203f1ffe726c17ef8dcca2dcaa9fca676987befeadc9b9f759967a8cb77181c0
 ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
 RUN mkdir -p /app /app/ref \
   && curl -fsSL -o /maven.tar.gz ${BASE_URL}/apache-maven-"${MAVEN_VERSION}"-bin.tar.gz \
-  && echo "${SHA}  /maven.tar.gz" | sha256sum -c - \
+  && echo "${SHA512}  /maven.tar.gz" | sha512sum -c - \
   && tar -xzf /maven.tar.gz -C /app --strip-components=1
 
 FROM alpine:3.12 AS generate-gpg-key
@@ -31,7 +31,7 @@ RUN mvn clean compile test
 RUN mvn -DskipTests=true package
 
 FROM build-jar AS build-signed-jar
-RUN apt-get update && apt-get install -y gnupg1 && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -o APT::Immediate-Configure=0 --no-install-recommends -y gnupg1 && rm -rf /var/lib/apt/lists/*
 ENV GNUPGHOME=/key
 COPY --from=generate-gpg-key /key "${GNUPGHOME}"
 COPY settings.xml /root/.m2/
