@@ -1,4 +1,4 @@
-FROM alpine:3.8 AS download-maven
+FROM alpine:3.12 AS download-maven
 RUN apk add --no-cache curl
 ARG MAVEN_VERSION=3.5.4
 ARG SHA=ce50b1c91364cb77efe3776f756a6d92b76d9038b0a0782f7d53acf1e997a14d
@@ -8,7 +8,7 @@ RUN mkdir -p /app /app/ref \
   && echo "${SHA}  /maven.tar.gz" | sha256sum -c - \
   && tar -xzf /maven.tar.gz -C /app --strip-components=1
 
-FROM alpine:3.8 AS generate-gpg-key
+FROM alpine:3.12 AS generate-gpg-key
 RUN apk add --no-cache gnupg1
 ENV GNUPGHOME=/key
 RUN mkdir -p "${GNUPGHOME}"
